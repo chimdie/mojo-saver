@@ -80,7 +80,7 @@ export default function RegistrationLayout({
             fontSize="0.875rem"
             marginBottom="0.5rem"
           >
-            {subHeader}
+            {subHeader ? subHeader : " "}
           </Text>
         </Box>
         <Box
@@ -119,6 +119,11 @@ export default function RegistrationLayout({
           </Text>
         </Box>
       ) : (
+        <></>
+      )}
+
+      {/*  */}
+      {router.pathname === "/signup" ? (
         <Box
           color="#fff"
           // display="grid"
@@ -145,6 +150,8 @@ export default function RegistrationLayout({
             </a>
           </Link>
         </Box>
+      ) : (
+        <></>
       )}
     </Box>
   );
