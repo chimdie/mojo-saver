@@ -18,6 +18,10 @@ export default function RegistrationLayout({
       return "login";
     } else if (router.pathname === "/signup") {
       return "signup";
+    } else if (router.pathname === "/forgot-password") {
+      return "forgot-password";
+    } else if (router.pathname === "/reset-password") {
+      return "reset-password";
     }
   }
 
@@ -26,6 +30,7 @@ export default function RegistrationLayout({
   });
   return (
     <Box
+      as="main"
       bg="#0b6d47"
       display="flex"
       flexDirection="column"
@@ -80,7 +85,7 @@ export default function RegistrationLayout({
             fontSize="0.875rem"
             marginBottom="0.5rem"
           >
-            {subHeader ? subHeader : " "}
+            {subHeader ? subHeader : ""}
           </Text>
         </Box>
         <Box
@@ -123,7 +128,7 @@ export default function RegistrationLayout({
       )}
 
       {/*  */}
-      {router.pathname === "/signup" ? (
+      {router.pathname === "/login" ? (
         <Box
           color="#fff"
           // display="grid"
@@ -132,10 +137,10 @@ export default function RegistrationLayout({
           //   md: "repeat(2, minmax(0, 1fr))",
           // }}
           // gap="16px"
-          display="flex"
-          flexDirection="column"
-          alignItems="left"
-          justifyContent="space-between"
+          // display="flex"
+          // flexDirection="column"
+          // alignItems="left"
+          // justifyContent="space-between"
           padding="1.5rem"
         >
           <Text paddingY="1rem">
