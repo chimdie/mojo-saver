@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import Head from "next/head";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { Box, Text, Button } from "@chakra-ui/react";
+import { SignupFooter } from "../components/signup";
+import { LoginFooter } from "../components/login";
 
 export default function RegistrationLayout({
   header,
@@ -49,7 +50,13 @@ export default function RegistrationLayout({
         <title>mojoSave | {routeName}</title>
       </Head>
       <Box paddingY="2rem">
-        <Text as="h1" color="white" fontSize="2.5rem" fontWeight="extrabold">
+        <Text
+          as="a"
+          href="/"
+          color="white"
+          fontSize="2.5rem"
+          fontWeight="extrabold"
+        >
           mojoSave
         </Text>
       </Box>
@@ -97,7 +104,6 @@ export default function RegistrationLayout({
           flexBasis="0"
           paddingY="1.5rem"
           minHeight="min-content"
-          overflowY=""
         >
           {children}
         </Box>
@@ -114,50 +120,8 @@ export default function RegistrationLayout({
           </Button>
         </Box>
       </Box>
-      {router.pathname === "/signup" ? (
-        <Box paddingY="1.5rem">
-          <Text color="#fff">
-            Already have an account? {""}
-            <Link href="/login">
-              <a _hover={{ textDecoration: "underline" }}>Login</a>
-            </Link>
-          </Text>
-        </Box>
-      ) : (
-        <></>
-      )}
-
-      {/*  */}
-      {router.pathname === "/login" ? (
-        <Box
-          color="#fff"
-          // display="grid"
-          // gridTemplateColumns={{
-          //   base: "repeat(1, minmax(0, 1fr))",
-          //   md: "repeat(2, minmax(0, 1fr))",
-          // }}
-          // gap="16px"
-          // display="flex"
-          // flexDirection="column"
-          // alignItems="left"
-          // justifyContent="space-between"
-          padding="1.5rem"
-        >
-          <Text paddingY="1rem">
-            Don`t have an account? {""}
-            <Link href="/signup">
-              <a _hover={{ textDecoration: "underline" }}> Register</a>
-            </Link>
-          </Text>{" "}
-          <Link href="/forgot-password">
-            <a _hover={{ textDecoration: "underline" }} paddingY="1rem">
-              Forgot Password?
-            </a>
-          </Link>
-        </Box>
-      ) : (
-        <></>
-      )}
+      {router.pathname === "/login" ? <LoginFooter /> : <></>}
+      {router.pathname === "/signup" ? <SignupFooter /> : <></>}
     </Box>
   );
 }

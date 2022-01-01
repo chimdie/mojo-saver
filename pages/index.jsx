@@ -5,7 +5,9 @@ import { Box, Text } from "@chakra-ui/react";
 export default function Home() {
   return (
     <Box className="text-red-600 flex items-center justify-center h-screen">
-      <Text as="h1">Goat meat</Text>
+      <Text as="h1" className="text-7xl">
+        Goat meat
+      </Text>
     </Box>
   );
 }
