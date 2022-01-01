@@ -1,3 +1,4 @@
 import RegistrationLayout from "./registrationLayout";
+import DashboardLayout from "./dashboardLayout";
 
-export { RegistrationLayout };
+export { RegistrationLayout, DashboardLayout };
