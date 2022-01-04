@@ -2,16 +2,12 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Box, Text, Button } from "@chakra-ui/react";
-import { Card } from "../components/homepage";
+import { Card, Footer } from "../components/homepage";
+import { MainLayout } from "../layouts";
 
 export default function Home() {
   return (
-    <Box
-      className="h-screen flex flex-col"
-      fontFamily="DM Sans,sans-serif!important;"
-      margin="auto"
-      maxWidth="1165px"
-    >
+    <MainLayout>
       <Box as="header" className="w-full py-6 px-5">
         <Box>
           <Text as="a" href="/" className="text-4xl font-bold cursor-pointer">
@@ -51,7 +47,7 @@ export default function Home() {
           </Box>
           <Box as="" className="flex flex-col justify-center px-4">
             <Image
-              src="/homepage/finance.svg"
+              src="/homepage/invoices_b.svg"
               width="572px"
               height="572px"
               alt=""
@@ -67,7 +63,7 @@ export default function Home() {
             className="flex flex-col justify-center px-4 order-1 md:order-2"
           >
             <Image
-              src="/homepage/vault.svg"
+              src="/homepage/secure.svg"
               width="572px"
               height="572px"
               alt=""
@@ -116,13 +112,10 @@ export default function Home() {
               </Link>
             </Box>
           </Box>
-          {/* card */}
+          {/* cards */}
           <Card />
         </Box>
       </Box>
-      <Box as="footer">
-        <Text as="p"></Text>
-      </Box>
-    </Box>
+    </MainLayout>
   );
 }
