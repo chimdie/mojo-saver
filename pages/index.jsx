@@ -3,7 +3,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { Box, Text, Button } from "@chakra-ui/react";
 import { Card } from "../components/homepage";
-import { GiPadlock } from "react-icons/gi";
 
 export default function Home() {
   return (
@@ -98,7 +97,8 @@ export default function Home() {
               4 ways to build your savings
             </Text>
             <Text as="p" className="py-1">
-              Earn 5%-15% when you save with any of these PiggyVest plans.
+              Learn how to be committed to saving with any of these mojoSave
+              plans.
             </Text>
             <Box className="py-4">
               <Link href="/signup" passHref>
@@ -116,32 +116,8 @@ export default function Home() {
               </Link>
             </Box>
           </Box>
-          <>
-            <Card
-              icons={<GiPadlock />}
-              caption="Automated Savings"
-              subText="Build a dedicated savings faster on your terms automatically or manually."
-              footer="MojoSave"
-            />
-            <Card
-              icons={<GiPadlock />}
-              caption="Fixed Savings"
-              subText="Build a dedicated savings faster on your terms automatically or manually."
-              footer="Safelock"
-            />
-            <Card
-              icons={<GiPadlock />}
-              caption="Goal-oriented Savings"
-              subText="Reach all your savings goals faster. Save towards multiple goals on your own or with a group."
-              footer="Target Savings"
-            />
-            <Card
-              icons={<GiPadlock />}
-              caption="Flexible Savings"
-              subText="Save, Transfer, withdraw, manage and organize your money for free at any time."
-              footer="Flex Naira"
-            />
-          </>
+          {/* card */}
+          <Card />
         </Box>
       </Box>
       <Box as="footer">
