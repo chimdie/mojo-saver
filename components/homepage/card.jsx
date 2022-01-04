@@ -1,7 +1,5 @@
 import React from "react";
-import Image from "next/image";
 import { Box, Text } from "@chakra-ui/react";
-// import { BsArrowRight } from "react-icons/bs";
 import data from "./data";
 
 export default function Card() {
@@ -22,7 +20,7 @@ export default function Card() {
   );
 }
 
-function CardBody({ icon, caption, subText, footer, footerIcon }) {
+function CardBody({ icon, caption, subText, footer, arrow }) {
   return (
     <Box
       className="flex flex-col justify-evenly p-4 bg-gray-50 rounded-md"
@@ -30,10 +28,9 @@ function CardBody({ icon, caption, subText, footer, footerIcon }) {
       maxWidth="352px"
       marginBottom="40px!important"
       flex="33% 1"
+      marginRight={{ md: "10px" }}
     >
-      {/* <Image src={icon} alt="" width="50" height="50" /> */}
-      {/* <img src={icon} alt="" width="50" height="50" /> */}
-      {/* <Box>{icon}</Box> */}
+      <Box className="py-2">{icon}</Box>
       <Text as="h1" className="text-lg md:text-xl font-semibold py-2">
         {caption}
       </Text>
