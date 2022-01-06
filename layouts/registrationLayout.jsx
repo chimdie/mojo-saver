@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { Box, Text, Button } from "@chakra-ui/react";
 import { SignupFooter } from "../components/signup";
 import { LoginFooter } from "../components/login";
+import Auth from "../auth/auth";
 
 export default function RegistrationLayout({
   header,
@@ -95,6 +96,10 @@ export default function RegistrationLayout({
             {subHeader ? subHeader : ""}
           </Text>
         </Box>
+        {/* <Auth>
+          {(currentUser) => {
+            return (
+              <> */}
         <Box
           as="form"
           display="flex"
@@ -112,6 +117,7 @@ export default function RegistrationLayout({
             bg="#0b6d47"
             color="#fff"
             width="100%"
+            // onClick={currentUser}
             paddingY="1.5rem"
             _hover="#0b6d47"
             _focus="#0b6d47"
@@ -119,7 +125,12 @@ export default function RegistrationLayout({
             {caption}
           </Button>
         </Box>
+        {/* </>
+            );
+          }}
+        </Auth> */}
       </Box>
+
       {router.pathname === "/login" ? <LoginFooter /> : <></>}
       {router.pathname === "/signup" ? <SignupFooter /> : <></>}
     </Box>
