@@ -1,13 +1,13 @@
 import React from "react";
 import { Box, FormLabel, FormControl, Input } from "@chakra-ui/react";
 import { RegistrationLayout } from "../../layouts";
+import AuthBtn from "../../components/authBtn";
 
 export default function Login() {
   return (
     <RegistrationLayout
       header="Login to your account"
       subHeader="Don't share your login details"
-      caption="LOGIN"
     >
       <FormControl className="mb-5">
         <FormLabel htmlFor="email">Email Address</FormLabel>
@@ -36,6 +36,7 @@ export default function Login() {
           borderRadius=".25rem"
           textShadow="none"
         />
+        <AuthBtn caption="LOGIN" />
       </FormControl>
     </RegistrationLayout>
   );

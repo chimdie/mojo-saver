@@ -1,14 +1,23 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { signUp } from "../../redux/account";
 import { Box, FormLabel, FormControl, Input, Button } from "@chakra-ui/react";
 import { RegistrationLayout } from "../../layouts";
-export default function Signup() {
+import AuthBtn from "../../components/authBtn";
+
+export default function SignupPage() {
+  const dispatch = useDispatch();
+  const loadingStatus = useSelector((state) => state.account.loadingStatus);
+  function registerUser() {
+    dispatch(signUp({ email: "emmajnrs@gmail.com", password: "Africa@40" }));
+  }
   return (
     <>
       <RegistrationLayout
         header="Create a Secure Account"
         subHeader="Explore the secret of saving by contribution"
-        caption="CREATE ACCOUNT"
       >
+        <h4>{loadingStatus}</h4>
         <FormControl className="mb-5">
           <FormLabel htmlFor="fullName">Full Name</FormLabel>
           <Input
@@ -79,19 +88,7 @@ export default function Signup() {
             textShadow="none"
           />
         </FormControl>
-        <Box>
-          <Button
-            bg="#0b6d47"
-            color="#fff"
-            width="100%"
-            // onClick={currentUser}
-            paddingY="1.5rem"
-            _hover="#0b6d47"
-            _focus="#0b6d47"
-          >
-            submit
-          </Button>
-        </Box>
+        <AuthBtn caption="CREATE ACCOUNT" onClick={registerUser} />
       </RegistrationLayout>
     </>
   );

@@ -1,10 +1,11 @@
 import React from "react";
 import { FormLabel, FormControl, Input } from "@chakra-ui/react";
 import { RegistrationLayout } from "../../layouts";
+import AuthBtn from "../../components/authBtn";
 
 export default function ForgotPassword() {
   return (
-    <RegistrationLayout header="Forgot Password" caption="SUBMIT">
+    <RegistrationLayout header="Forgot Password">
       <FormControl className="mb-5">
         <FormLabel htmlFor="email">Email Address</FormLabel>
         <Input
@@ -19,6 +20,7 @@ export default function ForgotPassword() {
           textShadow="none"
         />
       </FormControl>
+      <AuthBtn caption="SUBMIT" />
     </RegistrationLayout>
   );
 }
