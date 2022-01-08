@@ -12,7 +12,7 @@ export function login(email, password) {
   return signInWithEmailAndPassword(auth, email, password);
 }
 
-export function signUp(email, password) {
+export function fireBaseSignUp(email, password) {
   return createUserWithEmailAndPassword(auth, email, password);
 }
 
