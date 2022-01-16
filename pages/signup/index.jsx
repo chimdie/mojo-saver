@@ -9,7 +9,7 @@ export default function SignupPage() {
   const dispatch = useDispatch();
   const loadingStatus = useSelector((state) => state.account.loadingStatus);
   function registerUser() {
-    dispatch(signUp({ email: "emmajnrs@gmail.com", password: "Africa@40" }));
+    dispatch(signUp({ email: "emmajr@gmail.com", password: "Africa@40" }));
   }
   return (
     <>
