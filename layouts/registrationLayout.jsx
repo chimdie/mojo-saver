@@ -44,7 +44,7 @@ export default function RegistrationLayout({ header, subHeader, children }) {
         <meta name="twitter:card" content="summary_large_image" />
         <title>mojoSave | {routeName}</title>
       </Head>
-      <Box paddingY="2rem">
+      <Box as="header" paddingY="2rem">
         <Text
           as="a"
           href="/"
@@ -56,6 +56,7 @@ export default function RegistrationLayout({ header, subHeader, children }) {
         </Text>
       </Box>
       <Box
+        as="section"
         bg="white"
         width="89%"
         maxWidth="28rem"
@@ -66,6 +67,7 @@ export default function RegistrationLayout({ header, subHeader, children }) {
         flexDirection="column"
       >
         <Box
+          as="section"
           display="flex"
           flexDirection="column"
           alignItems="center"
@@ -90,18 +92,7 @@ export default function RegistrationLayout({ header, subHeader, children }) {
             {subHeader}
           </Text>
         </Box>
-        <Box
-          as="form"
-          display="flex"
-          flexDirection="column"
-          flexGrow="1"
-          flexShrink="1"
-          flexBasis="0"
-          paddingY="1.5rem"
-          minHeight="min-content"
-        >
-          {children}
-        </Box>
+        {children}
       </Box>
       {/* page footer */}
       {router.pathname === "/login" ? <LoginFooter /> : <></>}
