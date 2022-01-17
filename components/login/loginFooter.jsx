@@ -5,6 +5,7 @@ import { Box, Text } from "@chakra-ui/react";
 export default function LoginFooter() {
   return (
     <Box
+      as="section"
       color="#fff"
       display="grid"
       gridTemplateColumns={{
