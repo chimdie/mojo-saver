@@ -40,7 +40,7 @@ export default function SignupPage() {
         header="Create a Secure Account"
         subHeader="Explore the secret of saving by contribution"
       >
-        {/* <h4>{loadingStatus}</h4> */}
+        <h4>{loadingStatus}</h4>
         <Box
           as="form"
           display="flex"

@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { fireBaseSignUp } from "../../firebase/auth";
+import { HTTP_STATUS } from "../../utils";
 
 const initialState = {
   user: {},
@@ -27,6 +28,22 @@ export const signUp = createAsyncThunk(
   }
 );
 
+// export const signUp = createAsyncThunk(
+//   `${NAME_SPACE}/signup`,
+//   async (_data) => {
+//     const { data } = await Api.post("/auth/signup", _data);
+//     return data;
+//   }
+// );
+
+export const login = createAsyncThunk(
+  "users/fetchByIdStatus",
+  async (_data) => {
+    const { data } = await Api.post("/auth/login", _data);
+    return data;
+  }
+);
+
 export const AccountSlice = createSlice({
   name: "user",
   initialState,
@@ -36,14 +53,6 @@ export const AccountSlice = createSlice({
     // },
   },
   extraReducers: (builder) => {
-    // Add reducers for additional action types here, and handle loading state as needed
-    builder.addCase(signUp.fulfilled, (state, action) => {
-      // Add user to the state array
-      console.log("fulfilled");
-      state.loadingStatus = "fulfilled";
-      state.user = action.payload;
-    });
-
     //when the request is sent and still pending
     builder.addCase(signUp.pending, (state, action) => {
       // Add user to the state array
@@ -52,6 +61,32 @@ export const AccountSlice = createSlice({
 
       state.user = action.payload;
     });
+
+    // Add reducers for additional action types here, and handle loading state as needed
+    builder.addCase(signUp.fulfilled, (state, action) => {
+      // Add user to the state array
+      console.log("fulfilled");
+      state.loadingStatus = "fulfilled";
+      state.user = action.payload;
+    });
+
+    // builder
+    //   .addCase(signUp.pending, (state, action) => {
+    //     state.loadingStatus = HTTP_STATUS.LOADING;
+    //   })
+    //   .addCase(signUp.fulfilled, (state, action) => {
+    //     state.loadingStatus = HTTP_STATUS.DONE;
+    //     if (action.payload.success) {
+    //       state.user = action.payload.result;
+    //     } else {
+    //       toast.error(action.payload.message);
+    //     }
+    //   })
+    //   .addCase(signUp.rejected, (state, { error }) => {
+    //     state.loadingStatus = HTTP_STATUS.ERROR;
+    //     toast.error("server error");
+    //   });
+
     //when there is an error with the request
     builder.addCase(signUp.rejected, (state, action) => {
       // Add user to the state array
