@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -20,7 +21,16 @@ const schema = yup.object().shape({
 
 export default function SignupPage() {
   const dispatch = useDispatch();
-  const loadingStatus = useSelector((state) => state.account.loadingStatus);
+  const { loadingStatus, user } = useSelector(
+    (state) => state.account.loadingStatus
+  );
+  const router = useRouter();
+
+  useEffect(() => {
+    if (loadingStatus === "fulfilled" && user.email) {
+      router.push("/login");
+    }
+  }, [loadingStatus, router, user]);
 
   const {
     register,
