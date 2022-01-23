@@ -11,6 +11,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { RiLogoutCircleLine } from "react-icons/ri";
+import { ModalComp } from "../components/utilities";
 
 export default function Layout({ children }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -27,7 +28,6 @@ export default function Layout({ children }) {
         onClose={onClose}
         returnFocusOnClose={false}
         onOverlayClick={onClose}
-        // size="md"
       >
         <DrawerOverlay />
         <DrawerContent>
@@ -39,11 +39,12 @@ export default function Layout({ children }) {
               variant="dash"
               mr={3}
               fontSize="xl"
-              onClick={onClose}
+              onClick={onOpen}
             >
               <RiLogoutCircleLine />
               Logout
             </Button>
+            <ModalComp isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
