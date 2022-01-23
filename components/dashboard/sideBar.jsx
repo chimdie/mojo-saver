@@ -17,7 +17,7 @@ export default function SideBar({ onClose, ...rest }) {
   return (
     <Flex
       as="aside"
-      bg="#0b6d47"
+      bg="whatsapp.600"
       color="white"
       pos="fixed"
       w={{ base: "full", md: 60 }}

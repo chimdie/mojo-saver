@@ -108,7 +108,7 @@ export default function SignupPage() {
             />
             {errors.phoneNumber && (
               <p className="text-sm italic text-red-500">
-                {errors.phoneNumber.message}
+                {(errors.phoneNumber.message = "Phone Number is required")}
               </p>
             )}
           </FormControl>

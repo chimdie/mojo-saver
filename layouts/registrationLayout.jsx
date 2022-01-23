@@ -27,7 +27,7 @@ export default function RegistrationLayout({ header, subHeader, children }) {
   return (
     <Box
       as="main"
-      bg="#0b6d47"
+      bg="whatsapp.600"
       display="flex"
       flexDirection="column"
       alignItems="center"
@@ -75,7 +75,7 @@ export default function RegistrationLayout({ header, subHeader, children }) {
         >
           <Text
             as="h1"
-            color="#0b6d47"
+            color="whatsapp.600"
             textAlign="center"
             fontWeight="bold"
             fontSize="1.5rem"

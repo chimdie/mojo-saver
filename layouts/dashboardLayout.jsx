@@ -1,6 +1,16 @@
 import React from "react";
 import { Header, SideBar } from "../components/dashboard";
-import { Box, Drawer, DrawerContent, useDisclosure } from "@chakra-ui/react";
+import {
+  Box,
+  Drawer,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerBody,
+  DrawerFooter,
+  Button,
+  useDisclosure,
+} from "@chakra-ui/react";
+import { RiLogoutCircleLine } from "react-icons/ri";
 
 export default function Layout({ children }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -19,8 +29,22 @@ export default function Layout({ children }) {
         onOverlayClick={onClose}
         // size="md"
       >
+        <DrawerOverlay />
         <DrawerContent>
+          <DrawerBody />
           <SideBar onClose={onClose} />
+          <DrawerFooter display="flex" justifyContent="center">
+            <Button
+              color="white"
+              variant="dash"
+              mr={3}
+              fontSize="xl"
+              onClick={onClose}
+            >
+              <RiLogoutCircleLine />
+              Logout
+            </Button>
+          </DrawerFooter>
         </DrawerContent>
       </Drawer>
       <Header onOpen={onOpen} />
