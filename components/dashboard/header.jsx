@@ -6,7 +6,8 @@ export default function Header({ onOpen, ...rest }) {
   return (
     <Box as="header">
       <Flex
-        bg="#0b6d47"
+        // bg="#0b6d47"
+        bg="whatsapp.600"
         color="white"
         position="sticky"
         height="20"
@@ -25,14 +26,17 @@ export default function Header({ onOpen, ...rest }) {
           aria-label="open menu"
           icon={<FiMenu />}
         />
-
-        <Text
-          display={{ base: "flex", md: "none" }}
-          fontSize="2xl"
-          fontWeight="bold"
-        >
-          mojoSave
-        </Text>
+        <Box>
+          <Text
+            as="a"
+            href="/dashboard"
+            display={{ base: "flex", md: "none" }}
+            fontSize="2xl"
+            fontWeight="bold"
+          >
+            mojoSave
+          </Text>
+        </Box>
 
         <UserProfile />
       </Flex>

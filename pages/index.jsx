@@ -36,7 +36,7 @@ export default function Home() {
                   bg="#000"
                   color="#fff"
                   fontSize="18px"
-                  _hover="#0b6d47"
+                  _hover="whatsapp.600"
                   paddingY={{ base: "5", md: "7" }}
                   borderRadius="10px"
                 >
@@ -103,7 +103,7 @@ export default function Home() {
                   bg="#000"
                   color="#fff"
                   fontSize="18px"
-                  _hover="#0b6d47"
+                  _hover="whatsapp.600"
                   paddingY={{ base: "5", md: "7" }}
                   borderRadius="10px"
                 >

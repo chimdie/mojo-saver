@@ -4,12 +4,12 @@ export default function AuthBtn({ caption, onClick }) {
   return (
     <Button
       type="submit"
-      bg="#0b6d47"
+      bg="whatsapp.600"
       color="#fff"
       width="100%"
       paddingY="1.5rem"
-      _hover={{ bg: "#0b6d47", textDecoration: "underline" }}
-      _focus="#0b6d47"
+      _hover={{ bg: "whatsapp.600", textDecoration: "underline" }}
+      _focus="whatsapp.600"
       onClick={onClick}
     >
       {caption}
