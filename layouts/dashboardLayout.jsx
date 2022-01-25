@@ -11,10 +11,14 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { RiLogoutCircleLine } from "react-icons/ri";
-import { ModalComp } from "../components/utilities";
+import { ModalComp, PopOver } from "../components/utilities";
 
 export default function Layout({ children }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const [open, seOpen] = React.useState(false);
+  const handleOpen = () => seOpen(!open);
+  const close = () => seOpen(false);
   return (
     <Box minH="100vh" bg="white">
       <SideBar
@@ -39,12 +43,14 @@ export default function Layout({ children }) {
               variant="dash"
               mr={3}
               fontSize="xl"
-              onClick={onOpen}
+              // onClick={onOpen}
+              onClick={handleOpen}
             >
               <RiLogoutCircleLine />
               Logout
             </Button>
-            <ModalComp isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
+            {/* <ModalComp isOpen={isOpen} onOpen={onOpen} onClose={onClose} /> */}
+            {/* <PopOver isOpen={isOpen} onOpen={onOpen} onClose={onClose} /> */}
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
