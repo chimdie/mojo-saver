@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-duplicate-props */
 import React from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -38,7 +39,7 @@ export default function ResetPassword() {
         onSubmit={handleSubmit(onSubmit)}
       >
         <FormControl className="mb-5">
-          <FormLabel htmlFor="password">New Password</FormLabel>
+          {/* <FormLabel htmlFor="password">New Password</FormLabel> */}
           <Input
             {...register("newPassword")}
             type="password"
@@ -50,6 +51,7 @@ export default function ResetPassword() {
             border="0 solid #e2e8f0"
             borderRadius=".25rem"
             textShadow="none"
+            placeholder="New Password"
           />{" "}
           {errors.newPassword && (
             <p className="text-sm italic text-red-500">
@@ -58,7 +60,7 @@ export default function ResetPassword() {
           )}
         </FormControl>
         <FormControl className="mb-5">
-          <FormLabel htmlFor="password">Confirm Password</FormLabel>
+          {/* <FormLabel htmlFor="password">Confirm Password</FormLabel> */}
           <Input
             {...register("confirmPassword")}
             type="password"
@@ -70,6 +72,7 @@ export default function ResetPassword() {
             border="0 solid #e2e8f0"
             borderRadius=".25rem"
             textShadow="none"
+            placeholder="Confirmew Password"
           />
           {errors.confirmPassword && (
             <p className="text-sm italic text-red-500">

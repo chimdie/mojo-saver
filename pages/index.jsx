@@ -1,29 +1,58 @@
 import React from "react";
-import Link from "next/link";
+import NextLink from "next/link";
 import Image from "next/image";
-import { Box, Text, Button } from "@chakra-ui/react";
-import { Card, Footer } from "../components/homepage";
+import { Box, Text, Button, Link } from "@chakra-ui/react";
+import { Card } from "../components/homepage";
 import { MainLayout } from "../layouts";
 
 export default function Home() {
   return (
     <MainLayout>
-      <Box as="header" className="w-full py-6 px-5">
-        <Box>
+      <Box as="header">
+        <Box className="flex justify-between w-full py-6 px-5">
           <Text as="a" href="/" className="text-4xl font-bold cursor-pointer">
             mojoSave
           </Text>
+
+          <Box as="nav">
+            <div className="hidden md:grid grid-cols-2 gap-4 w-full">
+              <NextLink href="/login">
+                <Link
+                  bg="#fff"
+                  color="#000"
+                  fontSize="18px"
+                  _hover={{ bg: "#f1f1f1" }}
+                  borderRadius="10px"
+                  boxShadow="0px 1px 10px rgb(0 0 1 / 7%)"
+                  className="px-6 py-2 text-center"
+                >
+                  Login
+                </Link>
+              </NextLink>
+              <NextLink href="/signup" passHref>
+                <Link
+                  bg="#000"
+                  color="#fff"
+                  fontSize="18px"
+                  _hover={{ bg: "#333" }}
+                  borderRadius="10px"
+                  className="px-6 py-2"
+                >
+                  Create an account
+                </Link>
+              </NextLink>
+            </div>
+          </Box>
         </Box>
-        <Box as="nav"></Box>
       </Box>
       <Box as="main" className="w-full h-full flex-1">
         <Box
           as="section"
-          className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 text-center md:text-left py-10"
+          className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 px-4 md:px-0 py-4"
         >
           <Box as="" className="flex flex-col justify-center md:px-4">
             <Text as="h1" className="text-4xl md:text-6xl font-bold">
-              Now Start Saving by Contributions.
+              Now Start Saving by Contributions
             </Text>
             <Text as="p" className="py-4 text-lg font-medium">
               MojoSave is helping organisations, co-workers, friends and lots
@@ -36,8 +65,8 @@ export default function Home() {
                   bg="#000"
                   color="#fff"
                   fontSize="18px"
-                  _hover="#0b6d47"
-                  paddingY={{ base: "5", md: "7" }}
+                  _hover={{ bg: "#333" }}
+                  paddingY={{ base: "5px", md: "10px" }}
                   borderRadius="10px"
                 >
                   Create an account
@@ -56,7 +85,7 @@ export default function Home() {
         </Box>
         <Box
           as="section"
-          className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 text-center md:text-left py-"
+          className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 text-center md:text-left py-4"
         >
           <Box
             as=""
@@ -81,7 +110,7 @@ export default function Home() {
           className="flex md:flex-wrap flex-col md:flex-row py-10 px-5"
         >
           <Box
-            className="text-center md:text-left py-4 flex flex-col justify-center"
+            className="py-4 flex flex-col justify-center"
             maxWidth={{ base: "100%", md: "33%" }}
             flex={{ base: "100%", md: "33% 1" }}
             marginBottom="25px!important"
@@ -103,8 +132,8 @@ export default function Home() {
                   bg="#000"
                   color="#fff"
                   fontSize="18px"
-                  _hover="#0b6d47"
-                  paddingY={{ base: "5", md: "7" }}
+                  _hover={{ bg: "whatsapp.600" }}
+                  // paddingY={{ base: "5", md: "7" }}
                   borderRadius="10px"
                 >
                   Start Saving

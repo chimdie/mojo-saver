@@ -42,7 +42,7 @@ export default function Login() {
         onSubmit={handleSubmit(onSubmit)}
       >
         <FormControl className="mb-5">
-          <FormLabel htmlFor="email">Email Address</FormLabel>
+          {/* <FormLabel htmlFor="email">Email Address</FormLabel> */}
           <Input
             {...register("email")}
             id="email"
@@ -54,6 +54,7 @@ export default function Login() {
             border="0 solid #e2e8f0"
             borderRadius=".25rem"
             textShadow="none"
+            placeholder="Email Address"
           />
           {errors.email && (
             <p className="text-sm italic text-red-500">
@@ -62,7 +63,7 @@ export default function Login() {
           )}
         </FormControl>
         <FormControl className="mb-5">
-          <FormLabel htmlFor="password">Password</FormLabel>
+          {/* <FormLabel htmlFor="password">Password</FormLabel> */}
           <Input
             {...register("password")}
             id="password"
@@ -74,6 +75,7 @@ export default function Login() {
             border="0 solid #e2e8f0"
             borderRadius=".25rem"
             textShadow="none"
+            placeholder="Password"
           />
           {errors.password && (
             <p className="text-sm italic text-red-500">

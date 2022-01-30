@@ -54,7 +54,7 @@ function CardBody({ icon, caption, subText, footer, arrow }) {
             ></circle>
             <path
               d="M18.8477 11.1533L17.7179 12.2831L21.3877 15.9609L8.43118 15.9609L8.43118 17.5635L21.3877 17.5635L17.7099 21.2413L18.8477 22.3711L24.4565 16.7622L18.8477 11.1533Z"
-              fill="#0b6d47"
+              fill="whatsapp.600"
             ></path>
           </svg>
         </Text>

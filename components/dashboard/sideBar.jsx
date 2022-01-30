@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useRouter } from "next/router";
-import { Box, CloseButton, Flex, Text } from "@chakra-ui/react";
-import LinkItems from "./linkItems";
+import { Divider, CloseButton, Flex, Text } from "@chakra-ui/react";
+import { LinkItems, adminLink } from "./linkItems";
 import NavLink from "./navLink";
 
 export default function SideBar({ onClose, ...rest }) {
@@ -17,7 +17,7 @@ export default function SideBar({ onClose, ...rest }) {
   return (
     <Flex
       as="aside"
-      bg="#0b6d47"
+      bg="whatsapp.600"
       color="white"
       pos="fixed"
       w={{ base: "full", md: 60 }}
@@ -32,6 +32,13 @@ export default function SideBar({ onClose, ...rest }) {
         </Text>
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
       </Flex>
+      <div className="flex justify-center w-2/4 md:w-3/4">
+        <Text>Admin</Text>
+      </div>
+      {adminLink.map((link, i) => (
+        <NavLink key={i} link={link} />
+      ))}
+      <Divider />
       {LinkItems.map((link, i) => (
         <NavLink key={i} link={link} />
       ))}
