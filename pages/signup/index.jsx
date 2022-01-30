@@ -53,7 +53,7 @@ export default function SignupPage() {
           onSubmit={handleSubmit(registerUser)}
         >
           <FormControl className="mb-5">
-            <FormLabel htmlFor="fullName">Full Name</FormLabel>
+            {/* <FormLabel htmlFor="fullName">Full Name</FormLabel> */}
             <Input
               {...register("fullName")}
               id="fullName"
@@ -65,6 +65,7 @@ export default function SignupPage() {
               border="0 solid #e2e8f0"
               borderRadius=".25rem"
               textShadow="none"
+              placeholder="Full Name"
             />
             {errors.fullName && (
               <p className="text-sm italic text-red-500">
@@ -73,7 +74,7 @@ export default function SignupPage() {
             )}
           </FormControl>
           <FormControl className="mb-5">
-            <FormLabel htmlFor="email">Email Address</FormLabel>
+            {/* <FormLabel htmlFor="email">Email Address</FormLabel> */}
             <Input
               {...register("email")}
               id="email"
@@ -85,6 +86,7 @@ export default function SignupPage() {
               border="0 solid #e2e8f0"
               borderRadius=".25rem"
               textShadow="none"
+              placeholder="Email Address"
             />
             {errors.email && (
               <p className="text-sm italic text-red-500">
@@ -93,7 +95,7 @@ export default function SignupPage() {
             )}
           </FormControl>
           <FormControl className="mb-5">
-            <FormLabel htmlFor="phoneNumber">Phone Number</FormLabel>
+            {/* <FormLabel htmlFor="phoneNumber">Phone Number</FormLabel> */}
             <Input
               {...register("phoneNumber")}
               id="phoneNumber"
@@ -105,6 +107,7 @@ export default function SignupPage() {
               border="0 solid #e2e8f0"
               borderRadius=".25rem"
               textShadow="none"
+              placeholder="Phone Number"
             />
             {errors.phoneNumber && (
               <p className="text-sm italic text-red-500">
@@ -113,7 +116,7 @@ export default function SignupPage() {
             )}
           </FormControl>
           <FormControl className="mb-5">
-            <FormLabel htmlFor="password">Password</FormLabel>
+            {/* <FormLabel htmlFor="password">Password</FormLabel> */}
             <Input
               {...register("password")}
               id="password"
@@ -125,6 +128,7 @@ export default function SignupPage() {
               border="0 solid #e2e8f0"
               borderRadius=".25rem"
               textShadow="none"
+              placeholder="Password"
             />
             {errors.password && (
               <p className="text-sm italic text-red-500">
@@ -133,7 +137,7 @@ export default function SignupPage() {
             )}
           </FormControl>
           <FormControl className="mb-5">
-            <FormLabel htmlFor="password">Confirm Password</FormLabel>
+            {/* <FormLabel htmlFor="password">Confirm Password</FormLabel> */}
             <Input
               {...register("confirmPassword")}
               id="confirmPassword"
@@ -145,6 +149,7 @@ export default function SignupPage() {
               border="0 solid #e2e8f0"
               borderRadius=".25rem"
               textShadow="none"
+              placeholder="Confirm Password"
             />
             {errors.confirmPassword && (
               <p className="text-sm italic text-red-500">

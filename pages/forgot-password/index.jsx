@@ -38,7 +38,7 @@ export default function ForgotPassword() {
         onSubmit={handleSubmit(onSubmit)}
       >
         <FormControl className="mb-5">
-          <FormLabel htmlFor="email">Email Address</FormLabel>
+          {/* <FormLabel htmlFor="email">Email Address</FormLabel> */}
           <Input
             {...register("email")}
             id="email"
@@ -50,6 +50,7 @@ export default function ForgotPassword() {
             border="0 solid #e2e8f0"
             borderRadius=".25rem"
             textShadow="none"
+            placeholder="Email Address"
           />
           {errors.email && (
             <p className="text-sm italic text-red-500">
