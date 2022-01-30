@@ -9,7 +9,7 @@ export default function AuthBtn({ caption, onClick }) {
       width="100%"
       paddingY="1.5rem"
       _hover={{ bg: "whatsapp.600", textDecoration: "underline" }}
-      _focus="whatsapp.600"
+      _focus={{ bg: "whatsapp.600" }}
       onClick={onClick}
     >
       {caption}
