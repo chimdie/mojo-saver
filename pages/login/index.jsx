@@ -1,10 +1,12 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { Box, FormLabel, FormControl, Input } from "@chakra-ui/react";
 import { RegistrationLayout } from "../../layouts";
 import AuthBtn from "../../components/authBtn";
+import { login } from "../../redux/account";
 
 const schema = yup.object().shape({
   email: yup.string().email().required("Email Address is required"),
@@ -12,6 +14,7 @@ const schema = yup.object().shape({
 });
 
 export default function Login() {
+  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
@@ -20,9 +23,9 @@ export default function Login() {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = () => {
-    console.log({ data: "logged in" });
-    // dispatch(login());
+  const onSubmit = (data) => {
+    // console.log(login);
+    dispatch(login({ email: data.email, password: data.password }));
   };
 
   return (

@@ -1,5 +1,5 @@
 import { useState, useEffect, createContext } from "react";
-import { auth } from "./firebase-config";
+import { auth } from ".";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -8,7 +8,7 @@ import {
   onAuthStateChanged,
   // signInWithPopup,
 } from "firebase/auth";
-
+import { useDispatch } from "react-redux";
 export const AuthContext = createContext();
 
 export function firebaseLogin(email, password) {
@@ -36,7 +36,11 @@ export function updatePassword(password) {
 }
 
 export const AuthProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState(null);
+  // const [currentUser, setCurrentUser] = useState(null);
+  const dispatch = useDispatch();
+  const habdleSetCurrentUser = (currentUser) => {
+    console.log({ currentUser });
+  };
 
   useEffect(() => {
     return onAuthStateChanged(auth, setCurrentUser);
