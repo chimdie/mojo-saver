@@ -29,7 +29,7 @@ export default function Home() {
                   Login
                 </Link>
               </NextLink>
-              <NextLink href="/signup" passHref>
+              <NextLink href="/signup">
                 <Link
                   bg="#000"
                   color="#fff"
@@ -59,7 +59,7 @@ export default function Home() {
               more save by contributing on a periodic basis.
             </Text>
             <Box className="py-4">
-              <Link href="/signup" passHref>
+              <Link href="/signup">
                 <Button
                   role="link"
                   bg="#000"
@@ -126,7 +126,7 @@ export default function Home() {
               plans.
             </Text>
             <Box className="py-4">
-              <Link href="/signup" passHref>
+              <Link href="/signup">
                 <Button
                   role="link"
                   bg="#000"
