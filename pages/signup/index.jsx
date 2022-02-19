@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { signUp } from "../../redux/account";
-import { Box, FormControl, Input, useToast } from "@chakra-ui/react";
+import { Box, FormControl, Input, useToast, Button } from "@chakra-ui/react";
 import { RegistrationLayout } from "../../layouts";
 import AuthBtn from "../../components/authBtn";
 
@@ -20,21 +19,7 @@ const schema = yup.object().shape({
 });
 
 export default function SignupPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const toast = useToast();
   const dispatch = useDispatch();
-
-  const { loadingStatus, user } = useSelector(
-    (state) => state.account.loadingStatus
-  );
-  const router = useRouter();
-
-  useEffect(() => {
-    if (loadingStatus === "fulfilled" && user.email) {
-      router.push("/login");
-    }
-  }, [loadingStatus, router, user]);
 
   const {
     register,
@@ -44,9 +29,16 @@ export default function SignupPage() {
     resolver: yupResolver(schema),
   });
 
-  function registerUser() {
-    dispatch(signUp({ email: "emar@gmail.com", password: "Africa@40" }));
-    console.log("data stored");
+  function registerUser(data) {
+    dispatch(
+      signUp({
+        email: data.email,
+        password: data.password,
+        fullName: data.fullName,
+        phoneNumber: data.phoneNumber,
+        isSuperAdmin: false,
+      })
+    );
   }
 
   return (
@@ -54,7 +46,6 @@ export default function SignupPage() {
       header="Create a Secure Account"
       subHeader="Explore the secret of saving by contribution"
     >
-      <h4>{loadingStatus}</h4>
       <Box
         as="form"
         display="flex"
