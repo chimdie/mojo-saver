@@ -9,8 +9,8 @@ function MyApp({ Component, pageProps }) {
     <Provider store={store}>
       <ChakraProvider>
         <NextNProgress
-          color="#12b375"
-          options={{ easing: "ease", speed: 300 }}
+          color="linear-gradient(104.44deg, #F43249 1.59%, #BE071D 88.43%)"
+          options={{ easing: "ease", speed: 300, showSpinner: false }}
         />
         <Component {...pageProps} />
       </ChakraProvider>{" "}

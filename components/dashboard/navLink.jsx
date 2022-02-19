@@ -5,7 +5,7 @@ export default function NavLink({ link, ...rest }) {
   const { caption, icon, href } = link;
 
   return (
-    <Link href={href} passHref>
+    <Link href={href}>
       <a>
         <Flex
           align="center"
