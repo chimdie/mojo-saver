@@ -1,4 +1,4 @@
-import { useState, useEffect, createContext } from "react";
+import { useEffect, createContext } from "react";
 import { auth } from ".";
 import {
   createUserWithEmailAndPassword,
@@ -6,9 +6,11 @@ import {
   signOut,
   sendPasswordResetEmail,
   onAuthStateChanged,
-  // signInWithPopup,
 } from "firebase/auth";
-import { useDispatch } from "react-redux";
+import { getDocQuery } from "../firebase/fireStore";
+import { useDispatch, useSelector } from "react-redux";
+import { setUser } from "../redux/account";
+
 export const AuthContext = createContext();
 
 export function firebaseLogin(email, password) {
@@ -36,19 +38,28 @@ export function updatePassword(password) {
 }
 
 export const AuthProvider = ({ children }) => {
-  // const [currentUser, setCurrentUser] = useState(null);
+  const { user } = useSelector((state) => {
+    return state.account;
+  });
   const dispatch = useDispatch();
-  const habdleSetCurrentUser = (currentUser) => {
-    console.log({ currentUser });
+
+  const handleSetCurrentUser = async (currentUser) => {
+    // console.log({ currentUser });
+    let userDoc = await getDocQuery("users", {
+      key: "email",
+      q: "==",
+      val: currentUser.email,
+    });
+    dispatch(
+      setUser({ uid: currentUser.uid, email: currentUser.email, ...userDoc })
+    );
   };
 
   useEffect(() => {
-    return onAuthStateChanged(auth, setCurrentUser);
+    return onAuthStateChanged(auth, (user) => handleSetCurrentUser(user));
   }, []);
 
   return (
-    <AuthContext.Provider value={{ currentUser }}>
-      {children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
   );
 };

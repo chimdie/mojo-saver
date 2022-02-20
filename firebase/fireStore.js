@@ -20,10 +20,8 @@ export async function getDocQuery(collectionName, queryDefinition) {
     where(queryDefinition.key, queryDefinition.q, queryDefinition.val)
   );
   const querySnapshot = await getDocs(q);
-  console.log("ok", querySnapshot);
   return querySnapshot.docs.map((doc) => {
     // doc.data() is never undefined for query doc snapshots
-    console.log(doc.id, " => ", doc.data());
     return doc.data();
   })[0];
 }
