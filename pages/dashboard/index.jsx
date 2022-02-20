@@ -1,10 +1,18 @@
 import React from "react";
 import { DashboardLayout } from "../../layouts";
+import { AuthContext } from "../../firebase/auth";
 
 export default function Dashboard() {
   return (
-    <DashboardLayout>
-      <div className="">Welcome</div>
-    </DashboardLayout>
+    <AuthContext.Consumer>
+      {(user) => {
+        console.log({ user });
+        return (
+          <DashboardLayout>
+            <div className="">Welcome</div>
+          </DashboardLayout>
+        );
+      }}
+    </AuthContext.Consumer>
   );
 }
