@@ -50,6 +50,7 @@ export default function Login() {
             {...register("email")}
             id="email"
             type="email"
+            placeholder="Email Address"
             paddingY="1.5rem"
             outline="none"
             color="#1a202c"
@@ -57,7 +58,6 @@ export default function Login() {
             border="0 solid #e2e8f0"
             borderRadius=".25rem"
             textShadow="none"
-            placeholder="Email Address"
           />
           {errors.email && (
             <p className="text-sm italic text-red-500">
@@ -71,6 +71,7 @@ export default function Login() {
             {...register("password")}
             id="password"
             type="password"
+            placeholder="Password"
             paddingY="1.5rem"
             outline="none"
             color="#1a202c"
@@ -78,7 +79,6 @@ export default function Login() {
             border="0 solid #e2e8f0"
             borderRadius=".25rem"
             textShadow="none"
-            placeholder="Password"
           />
           {errors.password && (
             <p className="text-sm italic text-red-500">

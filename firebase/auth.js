@@ -44,7 +44,7 @@ export const AuthProvider = ({ children }) => {
   const dispatch = useDispatch();
 
   const handleSetCurrentUser = async (currentUser) => {
-    // console.log({ currentUser });
+    console.log({ currentUser });
     let userDoc = await getDocQuery("users", {
       key: "email",
       q: "==",

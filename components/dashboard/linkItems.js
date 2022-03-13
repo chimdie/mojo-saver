@@ -11,6 +11,10 @@ export const LinkItems = [
 
 export const adminLink = [
   // { caption: "Admin", icon: "", item: "" },
-  { caption: "Create Group", icon: AiOutlineUsergroupAdd, href: "" },
-  { caption: "List of Groups", icon: AiOutlineOrderedList, href: "" },
+  {
+    caption: "Create Group",
+    icon: AiOutlineUsergroupAdd,
+    href: "/admin/create-group",
+  },
+  { caption: "List of Groups", icon: AiOutlineOrderedList, href: "/admin" },
 ];

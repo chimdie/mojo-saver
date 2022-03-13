@@ -35,8 +35,9 @@ export default function SideBar({ onClose, ...rest }) {
       </Flex>
       <AuthContext.Consumer>
         {/* if(user.user.isSuperAdmin === true) */}
-        {(user) => (
+        {({ user }) => (
           <React.Fragment>
+            {/* {user?.isSuperAdmin.toString()} */}
             {user.isSuperAdmin && (
               <div>
                 <div className="flex justify-center w-2/4 md:w-3/4">
@@ -50,7 +51,18 @@ export default function SideBar({ onClose, ...rest }) {
           </React.Fragment>
         )}
       </AuthContext.Consumer>
-      <Divider />
+      {/* <Divider /> */}
+      {({ user }) => (
+        <React.Fragment>
+          {!user.isSuperAdmin &&
+            LinkItems.map((link, i) => <NavLink key={i} link={link} />)}
+        </React.Fragment>
+      )}
+      {/* {!user && (
+        <div className="text-center p-3">
+          <span className="spinner-border spinner-border-lg align-center"></span>
+        </div>
+      )} */}
       {LinkItems.map((link, i) => (
         <NavLink key={i} link={link} />
       ))}

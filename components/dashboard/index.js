@@ -1,4 +1,5 @@
 import SideBar from "./sideBar";
 import Header from "./header";
+import Card from "./card";
 
-export { SideBar, Header };
+export { SideBar, Header, Card };
