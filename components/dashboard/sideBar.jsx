@@ -3,8 +3,9 @@ import { useRouter } from "next/router";
 import { Divider, CloseButton, Flex, Text } from "@chakra-ui/react";
 import { LinkItems, adminLink } from "./linkItems";
 import NavLink from "./navLink";
+import { AuthContext } from "../../firebase/auth";
 
-export default function SideBar({ onClose, ...rest }) {
+export default function SideBar({ onClose }) {
   const router = useRouter();
 
   useEffect(() => {
@@ -19,12 +20,9 @@ export default function SideBar({ onClose, ...rest }) {
       as="aside"
       bg="whatsapp.600"
       color="white"
-      pos="fixed"
       w={{ base: "full", md: 60 }}
       h="full"
       flexDirection="column"
-      transition="3s ease"
-      {...rest}
     >
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
         <Text as="a" href="/dashboard" fontSize="2xl" fontWeight="bold">
@@ -32,13 +30,36 @@ export default function SideBar({ onClose, ...rest }) {
         </Text>
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
       </Flex>
-      <div className="flex justify-center w-2/4 md:w-3/4">
-        <Text>Admin</Text>
-      </div>
-      {adminLink.map((link, i) => (
-        <NavLink key={i} link={link} />
-      ))}
-      <Divider />
+      <AuthContext.Consumer>
+        {/* if(user.user.isSuperAdmin === true) */}
+        {({ user }) => (
+          <React.Fragment>
+            {/* {user?.isSuperAdmin.toString()} */}
+            {user.isSuperAdmin && (
+              <div>
+                <div className="flex justify-center w-2/4 md:w-3/4">
+                  <Text>Admin</Text>
+                </div>
+                {adminLink.map((link, i) => (
+                  <NavLink key={i} link={link} />
+                ))}
+              </div>
+            )}
+          </React.Fragment>
+        )}
+      </AuthContext.Consumer>
+      {/* <Divider /> */}
+      {({ user }) => (
+        <React.Fragment>
+          {!user.isSuperAdmin &&
+            LinkItems.map((link, i) => <NavLink key={i} link={link} />)}
+        </React.Fragment>
+      )}
+      {/* {!user && (
+        <div className="text-center p-3">
+          <span className="spinner-border spinner-border-lg align-center"></span>
+        </div>
+      )} */}
       {LinkItems.map((link, i) => (
         <NavLink key={i} link={link} />
       ))}

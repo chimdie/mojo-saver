@@ -22,9 +22,9 @@ export default function MainLayout({ children }) {
       <Box
         as="main"
         className="h-screen flex flex-col"
-        fontFamily="DM Sans,sans-serif!important;"
+        fontFamily="" //TODO
         margin="auto"
-        maxWidth="1165px"
+        maxWidth="1165px" //TODO
         flex="1"
       >
         {children}
