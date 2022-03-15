@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Header, SideBar } from "../components/dashboard";
 import {
   Box,
@@ -16,9 +16,9 @@ import { ModalComp, PopOver } from "../components/utilities";
 export default function Layout({ children }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const [open, seOpen] = React.useState(false);
+  const [open, seOpen] = useState(false);
   const handleOpen = () => seOpen(!open);
-  const close = () => seOpen(false);
+  // const close = () => seOpen(false);
   return (
     <Box minH="100vh" bg="white">
       <SideBar
@@ -26,15 +26,13 @@ export default function Layout({ children }) {
         display={{ base: "none", md: "block" }}
       />
       <Drawer
-        autoFocus={false}
         isOpen={isOpen}
         placement="left"
         onClose={onClose}
-        returnFocusOnClose={false}
         onOverlayClick={onClose}
       >
         <DrawerOverlay />
-        <DrawerContent>
+        <DrawerContent position="">
           <DrawerBody />
           <SideBar onClose={onClose} />
           <DrawerFooter display="flex" justifyContent="center">

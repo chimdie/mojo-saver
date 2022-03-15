@@ -5,7 +5,7 @@ import { LinkItems, adminLink } from "./linkItems";
 import NavLink from "./navLink";
 import { AuthContext } from "../../firebase/auth";
 
-export default function SideBar({ onClose, ...rest }) {
+export default function SideBar({ onClose }) {
   const router = useRouter();
 
   useEffect(() => {
@@ -20,12 +20,9 @@ export default function SideBar({ onClose, ...rest }) {
       as="aside"
       bg="whatsapp.600"
       color="white"
-      pos="fixed"
       w={{ base: "full", md: 60 }}
       h="full"
       flexDirection="column"
-      transition="3s ease"
-      {...rest}
     >
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
         <Text as="a" href="/dashboard" fontSize="2xl" fontWeight="bold">

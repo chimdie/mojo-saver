@@ -3,9 +3,15 @@ import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { Box, FormLabel, FormControl, Input } from "@chakra-ui/react";
+import {
+  Box,
+  FormErrorMessage,
+  FormControl,
+  Input,
+  Button,
+} from "@chakra-ui/react";
 import { RegistrationLayout } from "../../layouts";
-import AuthBtn from "../../components/authBtn";
+
 import { login } from "../../redux/account";
 
 const schema = yup.object().shape({
@@ -45,7 +51,6 @@ export default function Login() {
         onSubmit={handleSubmit(onSubmit)}
       >
         <FormControl className="mb-5">
-          {/* <FormLabel htmlFor="email">Email Address</FormLabel> */}
           <Input
             {...register("email")}
             id="email"
@@ -59,14 +64,15 @@ export default function Login() {
             borderRadius=".25rem"
             textShadow="none"
           />
-          {errors.email && (
-            <p className="text-sm italic text-red-500">
-              {errors.email.message}
-            </p>
-          )}
+          <FormErrorMessage>
+            {errors.email && (
+              <p className="text-sm italic text-red-500">
+                {errors.email.message}
+              </p>
+            )}
+          </FormErrorMessage>
         </FormControl>
         <FormControl className="mb-5">
-          {/* <FormLabel htmlFor="password">Password</FormLabel> */}
           <Input
             {...register("password")}
             id="password"
@@ -80,13 +86,24 @@ export default function Login() {
             borderRadius=".25rem"
             textShadow="none"
           />
-          {errors.password && (
-            <p className="text-sm italic text-red-500">
-              {errors.password.message}
-            </p>
-          )}
+          <FormErrorMessage>
+            {errors.password && (
+              <p className="text-sm italic text-red-500">
+                {errors.password.message}
+              </p>
+            )}
+          </FormErrorMessage>
           <Box paddingY="15px">
-            <AuthBtn caption="LOGIN" />
+            <Button
+              type="submit"
+              bg="whatsapp.600"
+              color="#fff"
+              width="100%"
+              paddingY="1.5rem"
+              _hover={{ bg: "whatsapp.700" }}
+            >
+              LOGIN
+            </Button>
           </Box>
         </FormControl>
       </Box>

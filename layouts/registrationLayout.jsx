@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Head from "next/head";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { Box, Text, Button } from "@chakra-ui/react";
 import { SignupFooter } from "../components/signup";
@@ -19,11 +20,12 @@ export default function RegistrationLayout({ header, subHeader, children }) {
     } else if (router.pathname === "/reset-password") {
       return "reset-password";
     }
+    return "";
   }
 
   useEffect(() => {
     setRouteName(changeRouteName);
-  });
+  }, []);
   return (
     <Box
       as="main"
@@ -45,15 +47,16 @@ export default function RegistrationLayout({ header, subHeader, children }) {
         <title>mojoSave | {routeName}</title>
       </Head>
       <Box as="header" paddingY="2rem">
-        <Text
-          as="a"
-          href="/"
-          color="white"
-          fontSize="2.5rem"
-          fontWeight="extrabold"
-        >
-          mojoSave
-        </Text>
+        <Link href="/" passHref>
+          <Text
+            color="white"
+            fontSize="2.5rem"
+            fontWeight="extrabold"
+            _hover={{ cursor: "pointer" }}
+          >
+            mojoSave
+          </Text>
+        </Link>
       </Box>
       <Box
         as="section"
@@ -95,8 +98,8 @@ export default function RegistrationLayout({ header, subHeader, children }) {
         {children}
       </Box>
       {/* page footer */}
-      {router.pathname === "/login" ? <LoginFooter /> : <></>}
-      {router.pathname === "/signup" ? <SignupFooter /> : <></>}
+      {router.pathname === "/login" && <LoginFooter />}
+      {router.pathname === "/signup" && <SignupFooter />}
     </Box>
   );
 }

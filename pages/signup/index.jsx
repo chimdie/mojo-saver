@@ -4,9 +4,14 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { signUp } from "../../redux/account";
-import { Box, FormControl, Input, useToast, Button } from "@chakra-ui/react";
+import {
+  Box,
+  FormControl,
+  Input,
+  FormErrorMessage,
+  Button,
+} from "@chakra-ui/react";
 import { RegistrationLayout } from "../../layouts";
-import AuthBtn from "../../components/authBtn";
 
 const schema = yup.object().shape({
   fullName: yup.string().required("Full Name is required"),
@@ -71,11 +76,13 @@ export default function SignupPage() {
             textShadow="none"
             placeholder="Full Name"
           />
-          {errors.fullName && (
-            <p className="text-sm italic text-red-500">
-              {errors.fullName.message}
-            </p>
-          )}
+          <FormErrorMessage>
+            {errors.fullName && (
+              <p className="text-sm italic text-red-500">
+                {errors.fullName.message}
+              </p>
+            )}
+          </FormErrorMessage>
         </FormControl>
         <FormControl className="mb-5">
           <Input
@@ -91,11 +98,13 @@ export default function SignupPage() {
             textShadow="none"
             placeholder="Email Address"
           />
-          {errors.email && (
-            <p className="text-sm italic text-red-500">
-              {errors.email.message}
-            </p>
-          )}
+          <FormErrorMessage>
+            {errors.email && (
+              <p className="text-sm italic text-red-500">
+                {errors.email.message}
+              </p>
+            )}
+          </FormErrorMessage>
         </FormControl>
         <FormControl className="mb-5">
           <Input
@@ -111,11 +120,13 @@ export default function SignupPage() {
             textShadow="none"
             placeholder="Phone Number"
           />
-          {errors.phoneNumber && (
-            <p className="text-sm italic text-red-500">
-              {(errors.phoneNumber.message = "Phone Number is required")}
-            </p>
-          )}
+          <FormErrorMessage>
+            {errors.phoneNumber && (
+              <p className="text-sm italic text-red-500">
+                {(errors.phoneNumber.message = "Phone Number is required")}
+              </p>
+            )}
+          </FormErrorMessage>
         </FormControl>
         <FormControl className="mb-5">
           <Input
@@ -131,11 +142,13 @@ export default function SignupPage() {
             textShadow="none"
             placeholder="Password"
           />
-          {errors.password && (
-            <p className="text-sm italic text-red-500">
-              {errors.password.message}
-            </p>
-          )}
+          <FormErrorMessage>
+            {errors.password && (
+              <p className="text-sm italic text-red-500">
+                {errors.password.message}
+              </p>
+            )}
+          </FormErrorMessage>
         </FormControl>
         <FormControl className="mb-5">
           <Input
@@ -151,13 +164,24 @@ export default function SignupPage() {
             textShadow="none"
             placeholder="Confirm Password"
           />
-          {errors.confirmPassword && (
-            <p className="text-sm italic text-red-500">
-              {errors.confirmPassword.message}
-            </p>
-          )}
+          <FormErrorMessage>
+            {errors.confirmPassword && (
+              <p className="text-sm italic text-red-500">
+                {errors.confirmPassword.message}
+              </p>
+            )}
+          </FormErrorMessage>
         </FormControl>
-        <AuthBtn caption="CREATE ACCOUNT" />
+        <Button
+          type="submit"
+          bg="whatsapp.600"
+          color="#fff"
+          width="100%"
+          paddingY="1.5rem"
+          _hover={{ bg: "whatsapp.700" }}
+        >
+          CREATE ACCOUNT
+        </Button>
       </Box>
     </RegistrationLayout>
   );

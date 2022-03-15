@@ -2,9 +2,14 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { Box, FormLabel, FormControl, Input } from "@chakra-ui/react";
+import {
+  Box,
+  FormErrorMessage,
+  FormControl,
+  Input,
+  Button,
+} from "@chakra-ui/react";
 import { RegistrationLayout } from "../../layouts";
-import AuthBtn from "../../components/authBtn";
 
 const schema = yup.object().shape({
   email: yup.string().email().required("Email Address is required"),
@@ -19,10 +24,7 @@ export default function ForgotPassword() {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (data) => {
-    // alert(JSON.stringify(data));
-    console.log("not correct");
-  };
+  const onSubmit = (data) => {};
 
   return (
     <RegistrationLayout header="Forgot Password">
@@ -38,7 +40,6 @@ export default function ForgotPassword() {
         onSubmit={handleSubmit(onSubmit)}
       >
         <FormControl className="mb-5">
-          {/* <FormLabel htmlFor="email">Email Address</FormLabel> */}
           <Input
             {...register("email")}
             id="email"
@@ -52,13 +53,24 @@ export default function ForgotPassword() {
             textShadow="none"
             placeholder="Email Address"
           />
-          {errors.email && (
-            <p className="text-sm italic text-red-500">
-              {errors.email.message}
-            </p>
-          )}
+          <FormErrorMessage>
+            {errors.email && (
+              <p className="text-sm italic text-red-500">
+                {errors.email.message}
+              </p>
+            )}
+          </FormErrorMessage>
         </FormControl>
-        <AuthBtn caption="SUBMIT" />
+        <Button
+          type="submit"
+          bg="whatsapp.600"
+          color="#fff"
+          width="100%"
+          paddingY="1.5rem"
+          _hover={{ bg: "whatsapp.700" }}
+        >
+          SUBMIT
+        </Button>
       </Box>
     </RegistrationLayout>
   );
