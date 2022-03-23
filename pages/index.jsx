@@ -10,9 +10,9 @@ export default function Home() {
     <MainLayout>
       <Box as="header">
         <Box className="flex justify-between w-full py-6 px-5">
-          <Text as="a" href="/" className="text-4xl font-bold cursor-pointer">
-            mojoSave
-          </Text>
+          <NextLink href="/" passHref>
+            <Text className="text-4xl font-bold cursor-pointer">mojoSave</Text>
+          </NextLink>
 
           <Box as="nav">
             <div className="hidden md:grid grid-cols-2 gap-4 w-full">
