@@ -44,15 +44,18 @@ export const AuthProvider = ({ children }) => {
   const dispatch = useDispatch();
 
   const handleSetCurrentUser = async (currentUser) => {
-    console.log({ currentUser });
-    let userDoc = await getDocQuery("users", {
-      key: "email",
-      q: "==",
-      val: currentUser.email,
-    });
-    dispatch(
-      setUser({ uid: currentUser.uid, email: currentUser.email, ...userDoc })
-    );
+    if (currentUser && currentUser.email) {
+      console.log({ currentUser });
+      let userDoc = await getDocQuery("users", {
+        key: "email",
+        q: "==",
+        val: currentUser.email,
+      });
+      dispatch(
+        setUser({ uid: currentUser.uid, email: currentUser.email, ...userDoc })
+      );
+    }
+
   };
 
   useEffect(() => {

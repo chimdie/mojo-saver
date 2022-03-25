@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Header, SideBar } from "../components/dashboard";
+import { Header, SideBar, SideBarContent } from "../components/dashboard";
 import {
   Box,
   Drawer,
@@ -20,11 +20,9 @@ export default function Layout({ children }) {
   const handleOpen = () => seOpen(!open);
   // const close = () => seOpen(false);
   return (
-    <Box minH="100vh" bg="white">
-      <SideBar
-        onClose={() => onClose}
-        display={{ base: "none", md: "block" }}
-      />
+    <Box minH="100vh" bg="white" >
+
+      <SideBar />
       <Drawer
         isOpen={isOpen}
         placement="left"
@@ -32,9 +30,11 @@ export default function Layout({ children }) {
         onOverlayClick={onClose}
       >
         <DrawerOverlay />
-        <DrawerContent position="">
-          <DrawerBody />
-          <SideBar onClose={onClose} />
+        <DrawerContent>
+          <DrawerBody bg="whatsapp.600"
+            color="white">
+            <SideBarContent />
+          </DrawerBody>
           <DrawerFooter display="flex" justifyContent="center">
             <Button
               color="white"
@@ -52,9 +52,10 @@ export default function Layout({ children }) {
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
-      <Header onOpen={onOpen} />
-      <Box as="main" ml={{ base: 0, md: 60 }} p="4">
-        <Box as="main" bg="white">
+      <Box as="main" pl={{ base: 0, md: '250px' }}>
+        <Header onOpen={onOpen} />
+
+        <Box bg="white">
           {children}
         </Box>
       </Box>
