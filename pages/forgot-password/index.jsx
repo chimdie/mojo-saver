@@ -42,7 +42,6 @@ export default function ForgotPassword() {
         <FormControl className="mb-5">
           <Input
             {...register("email")}
-            id="email"
             type="email"
             paddingY="1.5rem"
             outline="none"
