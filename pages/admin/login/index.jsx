@@ -3,9 +3,8 @@ import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { Box, FormControl, Input } from "@chakra-ui/react";
+import { Box, FormControl, Input, Button } from "@chakra-ui/react";
 import { RegistrationLayout } from "../../../layouts";
-import AuthBtn from "../../../components/authBtn";
 import { login } from "../../../redux/account";
 
 const schema = yup.object().shape({
@@ -82,10 +81,19 @@ export default function Login() {
               {errors.password.message}
             </p>
           )}
-          <Box paddingY="15px">
-            <AuthBtn caption="LOGIN" />
-          </Box>
         </FormControl>
+        <Box paddingY="15px">
+          <Button
+            type="submit"
+            bg="whatsapp.600"
+            color="#fff"
+            width="100%"
+            paddingY="1.5rem"
+            _hover={{ bg: "whatsapp.700" }}
+          >
+            LOGIN
+          </Button>
+        </Box>
       </Box>
     </RegistrationLayout>
   );
