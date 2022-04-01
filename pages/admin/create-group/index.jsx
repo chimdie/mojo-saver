@@ -4,7 +4,6 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { DashboardLayout } from "../../../layouts";
-import { Card } from "../../../components/dashboard";
 import { Box, FormControl, FormLabel, Input, Button } from "@chakra-ui/react";
 import { createGroup } from "../../../redux/group";
 
@@ -48,7 +47,7 @@ export default function CreateGroup() {
             <Input
               {...register("monthlyDepositAmount")}
               type="number"
-              placeholder="monthlyDepositAmount"
+              placeholder="Monthly Deposit Amount"
             />
           </FormControl>
           <FormControl paddingY="1rem">

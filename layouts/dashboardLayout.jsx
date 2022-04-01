@@ -51,10 +51,10 @@ export default function Layout({ children }) {
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
-      <Box as="main" pl={{ base: 0, md: "250px" }}>
+      <Box as="main" pl={{ base: 0, md: "250px" }} minH="100vh">
         <Header onOpen={onOpen} />
 
-        <Box bg="white" p={{ base: "1rem", md: "3rem" }} minH="90vh">
+        <Box bg="white" p={{ base: "1rem", md: "3rem" }}>
           {children}
         </Box>
       </Box>
