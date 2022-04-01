@@ -18,10 +18,9 @@ export default function Layout({ children }) {
 
   const [open, seOpen] = useState(false);
   const handleOpen = () => seOpen(!open);
-  // const close = () => seOpen(false);
-  return (
-    <Box minH="100vh" bg="white" >
 
+  return (
+    <Box minH="100vh" bg="white">
       <SideBar />
       <Drawer
         isOpen={isOpen}
@@ -31,31 +30,31 @@ export default function Layout({ children }) {
       >
         <DrawerOverlay />
         <DrawerContent>
-          <DrawerBody bg="whatsapp.600"
-            color="white">
+          <DrawerBody bg="whatsapp.600" color="white">
             <SideBarContent />
           </DrawerBody>
-          <DrawerFooter display="flex" justifyContent="center">
+          <DrawerFooter
+            display="flex"
+            justifyContent="center"
+            bg="whatsapp.600"
+          >
             <Button
               color="white"
               variant="dash"
-              mr={3}
+              // mr={3}
               fontSize="xl"
-              // onClick={onOpen}
               onClick={handleOpen}
             >
               <RiLogoutCircleLine />
               Logout
             </Button>
-            {/* <ModalComp isOpen={isOpen} onOpen={onOpen} onClose={onClose} /> */}
-            {/* <PopOver isOpen={isOpen} onOpen={onOpen} onClose={onClose} /> */}
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
-      <Box as="main" pl={{ base: 0, md: '250px' }}>
+      <Box as="main" pl={{ base: 0, md: "250px" }}>
         <Header onOpen={onOpen} />
 
-        <Box bg="white">
+        <Box bg="white" p={{ base: "1rem", md: "3rem" }} minH="90vh">
           {children}
         </Box>
       </Box>

@@ -4,6 +4,7 @@ import NextNProgress from "nextjs-progressbar";
 import { store } from "../redux/store";
 import { Provider } from "react-redux";
 import { AuthProvider } from "../firebase/auth";
+
 function MyApp({ Component, pageProps }) {
   return (
     <Provider store={store}>
