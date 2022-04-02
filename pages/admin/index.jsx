@@ -17,7 +17,7 @@ import { DashboardLayout } from "../../layouts";
 export default function GroupList() {
   return (
     <DashboardLayout>
-      <Box overflow="auto">
+      <Box overflowX="auto">
         <Table>
           <Thead>
             <Tr>

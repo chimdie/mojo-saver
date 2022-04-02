@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -6,6 +6,7 @@ import * as yup from "yup";
 import { DashboardLayout } from "../../../layouts";
 import { Box, FormControl, FormLabel, Input, Button } from "@chakra-ui/react";
 import { createGroup } from "../../../redux/group";
+import { Bars, Circles } from "react-loading-icons";
 
 const schema = yup.object().shape({
   name: yup.string().required("Group Name is required"),
@@ -14,6 +15,7 @@ const schema = yup.object().shape({
 });
 
 export default function CreateGroup() {
+  const [isLoading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
   const {
@@ -26,6 +28,7 @@ export default function CreateGroup() {
 
   const onSubmit = (data) => {
     // console.log({ data });
+    setLoading(!isLoading);
     dispatch(
       createGroup({
         name: data.name,
@@ -33,6 +36,7 @@ export default function CreateGroup() {
         description: data.description,
       })
     );
+    setLoading(isLoading);
   };
   return (
     <DashboardLayout>
@@ -59,7 +63,10 @@ export default function CreateGroup() {
             />
           </FormControl>
           <Box>
-            <Button type="submit">Create Group</Button>
+            <Button type="submit" disabled={isLoading}>
+              {isLoading && <Circles stroke="#98ff98" />}
+              {isLoading ? "Creating Group" : "Create Group"}
+            </Button>
           </Box>
         </form>
       </Box>
