@@ -35,20 +35,10 @@ export function SideBarContent() {
   return (
     <Box>
       <AuthContext.Consumer>
-        {/* if(user.user.isSuperAdmin === true) */}
         {({ user }) => (
           <React.Fragment>
-            {/* {user?.isSuperAdmin.toString()} */}
-            {user.isSuperAdmin && (
-              <div>
-                <div className="flex justify-center w-2/4 md:w-3/4">
-                  <Text>Admin</Text>
-                </div>
-                {adminLink.map((link, i) => (
-                  <NavLink key={i} link={link} />
-                ))}
-              </div>
-            )}
+            {user.isSuperAdmin &&
+              adminLink.map((link, i) => <NavLink key={i} link={link} />)}
             {!user.isSuperAdmin &&
               LinkItems.map((link, i) => <NavLink key={i} link={link} />)}
           </React.Fragment>
