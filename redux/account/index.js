@@ -58,9 +58,6 @@ export const AccountSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    // increment: (state) => {
-    //   // state.value += 1;
-    // },
     setUser: (state, action) => {
       state.user = action.payload;
     },
@@ -99,6 +96,10 @@ export const AccountSlice = createSlice({
           // console.log({ action });
           state.user = { ...state.user, ...action.payload };
           router.push("/dashboard");
+          // TODO confirm once more!!!
+          {
+            !user === isSuperAdmin?.router.push("/dashboard/admin");
+          }
         } else {
           console.error(action.payload.message);
         }

@@ -65,7 +65,6 @@ export default function SignupPage() {
         <FormControl className="mb-5">
           <Input
             {...register("fullName")}
-            id="fullName"
             type="text"
             paddingY="1.5rem"
             outline="none"
@@ -87,7 +86,6 @@ export default function SignupPage() {
         <FormControl className="mb-5">
           <Input
             {...register("email")}
-            id="email"
             type="email"
             paddingY="1.5rem"
             outline="none"
@@ -109,7 +107,6 @@ export default function SignupPage() {
         <FormControl className="mb-5">
           <Input
             {...register("phoneNumber")}
-            id="phoneNumber"
             type="tel"
             paddingY="1.5rem"
             outline="none"
@@ -131,7 +128,6 @@ export default function SignupPage() {
         <FormControl className="mb-5">
           <Input
             {...register("password")}
-            id="password"
             type="password"
             paddingY="1.5rem"
             outline="none"
@@ -153,7 +149,6 @@ export default function SignupPage() {
         <FormControl className="mb-5">
           <Input
             {...register("confirmPassword")}
-            id="confirmPassword"
             type="password"
             paddingY="1.5rem"
             outline="none"

@@ -7,7 +7,7 @@ import {
   sendPasswordResetEmail,
   onAuthStateChanged,
 } from "firebase/auth";
-import { getDocQuery } from "../firebase/fireStore";
+import { getDocQuery } from "./fireStore";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../redux/account";
 
@@ -55,7 +55,6 @@ export const AuthProvider = ({ children }) => {
         setUser({ uid: currentUser.uid, email: currentUser.email, ...userDoc })
       );
     }
-
   };
 
   useEffect(() => {

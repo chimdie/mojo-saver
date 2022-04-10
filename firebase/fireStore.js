@@ -1,4 +1,12 @@
-import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  query,
+  where,
+  getDocs,
+  doc,
+  getDoc,
+} from "firebase/firestore";
 import { getFirestore } from "firebase/firestore";
 
 export const db = getFirestore();
@@ -24,4 +32,15 @@ export async function getDocQuery(collectionName, queryDefinition) {
     // doc.data() is never undefined for query doc snapshots
     return doc.data();
   })[0];
+}
+
+export async function getCollection(collectionName) {
+  let q = await collection(db, collectionName);
+
+  const querySnapshot = await getDocs(q);
+  let arr = [];
+  querySnapshot.forEach((doc) => {
+    arr.push({ ...doc.data(), id: doc.id });
+  });
+  return arr;
 }
