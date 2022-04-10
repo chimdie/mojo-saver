@@ -6,7 +6,7 @@ import * as yup from "yup";
 import { DashboardLayout } from "../../../layouts";
 import { Box, FormControl, FormLabel, Input, Button } from "@chakra-ui/react";
 import { createGroup } from "../../../redux/group";
-import { Bars, Circles } from "react-loading-icons";
+import { Circles } from "react-loading-icons";
 
 const schema = yup.object().shape({
   name: yup.string().required("Group Name is required"),

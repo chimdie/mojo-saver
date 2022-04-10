@@ -1,6 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import {} from "../../firebase/auth";
-import { addDocument, getDocQuery } from "../../firebase/fireStore";
+import {
+  addDocument,
+  getDocQuery,
+  getCollection,
+} from "../../firebase/fireStore";
 import router from "next/router";
 import { createStandaloneToast } from "@chakra-ui/toast";
 import { HTTP_STATUS } from "../../utils";
@@ -20,6 +24,12 @@ export const createGroup = createAsyncThunk(
     return;
   }
 );
+
+export const getGroupList = createAsyncThunk(`${NAMESPACE}/all`, async () => {
+  const groups = await getCollection("groups");
+  console.log({ groups });
+  return groups;
+});
 
 export const GroupSlice = createSlice({
   name: NAMESPACE,
@@ -43,7 +53,7 @@ export const GroupSlice = createSlice({
 
         toast({
           title: "sucessfully.",
-          description: "Login to your account.",
+          description: "group created sucessfully",
           status: "success",
           duration: 9000,
           isClosable: true,
@@ -59,6 +69,18 @@ export const GroupSlice = createSlice({
           duration: 9000,
           isClosable: true,
         });
+      })
+
+      .addCase(getGroupList.pending, (state, action) => {
+        state.loadingGroupStatus = HTTP_STATUS.LOADING;
+      })
+      .addCase(getGroupList.fulfilled, (state, action) => {
+        console.log(action);
+        state.groups = action.payload;
+        state.loadingGroupStatus = HTTP_STATUS.DONE;
+      })
+      .addCase(getGroupList.rejected, (state, action) => {
+        state.loadingGroupStatus = HTTP_STATUS.ERROR;
       });
   },
 });
