@@ -19,14 +19,14 @@ export default function Navbar() {
   return (
     <Box as="header" bg="white" className="w-full">
       <nav className="flex lg:flex-row items-center justify-between py-3 px-3 sm:px-4">
-        <Link href="/" passHref>
+        <Link href="/dashboard" passHref>
           <Text className="text-4xl font-bold cursor-pointer">mojoSave</Text>
         </Link>
         <div className="hidden lg:flex flex-row">
-          <LinkItem link="/" caption="Home" />
-          <LinkItem link="/" caption="" />
+          <LinkItem link="/dashboard" caption="Dashboard" />
+          <LinkItem link="/dashboard/groups" caption="Groups" />
         </div>
-        <div className="lg:hidden block md:ml-3 z-10" onClick={onOpen}>
+        <div className="lg:hidden block sm:ml-3" onClick={onOpen}>
           <Icon fontSize="40px" as={MdOutlineMenu} />
         </div>
       </nav>
@@ -37,10 +37,10 @@ export default function Navbar() {
           <DrawerHeader onClick={onClose} />
           <DrawerBody paddingY="15px">
             <Box paddingY={2} onClick={onClose}>
-              <LinkItem link="/" caption="Home" />
+              <LinkItem link="/dashboard" caption="Dashboard" />
             </Box>
             <Box paddingY={2} onClick={onClose}>
-              <LinkItem link="/" caption="" />
+              <LinkItem link="/dashboard/groups" caption="Groups" />
             </Box>
           </DrawerBody>
         </DrawerContent>

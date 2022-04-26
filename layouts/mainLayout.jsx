@@ -2,6 +2,7 @@ import React from "react";
 import Head from "next/head";
 import { Box } from "@chakra-ui/react";
 import { Footer } from "../components/homepage";
+import { Navbar } from "../components/utilities";
 
 export default function MainLayout({ children }) {
   return (
@@ -23,10 +24,12 @@ export default function MainLayout({ children }) {
         as="main"
         className="h-screen flex flex-col"
         fontFamily="" //TODO
-        margin="auto"
-        maxWidth="1165px" //TODO
+        // margin="auto"
+        // maxWidth="1165px" //TODO
+        margin="0 10vw"
         flex="1"
       >
+        {/* <Navbar /> */}
         {children}
       </Box>
       <Footer />
