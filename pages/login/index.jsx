@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -11,7 +11,7 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { RegistrationLayout } from "../../layouts";
-
+import { HTTP_STATUS } from "../../utils";
 import { login } from "../../redux/account";
 
 const schema = yup.object().shape({
@@ -21,6 +21,9 @@ const schema = yup.object().shape({
 
 export default function Login() {
   const dispatch = useDispatch();
+
+  const { loadingStatus } = useSelector((state) => state.account);
+
   const {
     register,
     handleSubmit,
@@ -101,6 +104,7 @@ export default function Login() {
               width="100%"
               paddingY="1.5rem"
               _hover={{ bg: "whatsapp.700" }}
+              isLoading={loadingStatus === HTTP_STATUS.LOADING}
             >
               LOGIN
             </Button>
