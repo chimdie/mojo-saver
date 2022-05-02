@@ -6,7 +6,9 @@ import { GroupCard } from "../../../components/dashboard";
 export default function Dashboard() {
   return (
     <DashboardLayout>
-      <Box className=""></Box>
+      <Box className="shadow-md rounded-md bg-slate-50 overflow-hidden max-w-md p-3">
+        <Box width="35%"></Box>
+      </Box>
       <GroupCard
         title="frank's million"
         description="for our first 1 million naira"
