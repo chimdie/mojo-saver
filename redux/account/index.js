@@ -95,10 +95,10 @@ export const AccountSlice = createSlice({
         if (action.payload) {
           // console.log({ action });
           state.user = { ...state.user, ...action.payload };
-          router.push("/dashboard");
-          // TODO confirm once more!!!
-          {
-            !user === isSuperAdmin?.router.push("/dashboard/admin");
+          if (state.user.isSuperAdmin) {
+            router.push("/admin");
+          } else {
+            router.push("/dashboard");
           }
         } else {
           console.error(action.payload.message);
