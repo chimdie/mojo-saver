@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import { useSelector } from "react-redux";
 import {
   Icon,
   Box,
@@ -16,6 +17,13 @@ import { MdOutlineMenu } from "react-icons/md";
 export default function Navbar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  const { user } = useSelector((state) => state.account);
+
+  React.useEffect(() => {
+    console.log({ user });
+    console.log(user?.isSuperAdmin);
+  }, []);
+
   return (
     <Box as="header" bg="white" className="w-full">
       <nav className="flex lg:flex-row items-center justify-between py-3 px-3 sm:px-4">
@@ -23,8 +31,17 @@ export default function Navbar() {
           <Text className="text-4xl font-bold cursor-pointer">mojoSave</Text>
         </Link>
         <div className="hidden lg:flex flex-row">
-          <LinkItem link="/dashboard" caption="Dashboard" />
-          <LinkItem link="/dashboard/groups" caption="Groups" />
+          {!user.isSuperAdmin ? (
+            <React.Fragment>
+              <LinkItem link="/dashboard" caption="Dashboard" />
+              <LinkItem link="/dashboard/groups" caption="Groups" />
+            </React.Fragment>
+          ) : (
+            <React.Fragment>
+              <LinkItem link="/admin" caption="Admin" />
+              <LinkItem link="/admin/create-group" caption="Create Group" />
+            </React.Fragment>
+          )}
         </div>
         <div className="lg:hidden block sm:ml-3" onClick={onOpen}>
           <Icon fontSize="40px" as={MdOutlineMenu} />
