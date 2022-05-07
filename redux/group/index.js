@@ -4,6 +4,7 @@ import {
   addDocument,
   getDocQuery,
   getCollection,
+  createSubCollection,
 } from "../../firebase/fireStore";
 import router from "next/router";
 import { createStandaloneToast } from "@chakra-ui/toast";
@@ -27,9 +28,21 @@ export const createGroup = createAsyncThunk(
 
 export const getGroupList = createAsyncThunk(`${NAMESPACE}/all`, async () => {
   const groups = await getCollection("groups");
-  console.log({ groups });
+  // console.log({ groups });
   return groups;
 });
+
+export const createSubCol = createAsyncThunk(
+  "users/groups",
+  async (groupDocId, thunkAPI) => {
+    // console.log({ thunkAPI: thunkAPI.getState() });
+
+    let userId = thunkAPI.getState().account.user.uid;
+    // console.log({ userId: userId, groupDocId: groupDocId });
+    let userCol = await createSubCollection(userId, groupDocId);
+    return userCol;
+  }
+);
 
 export const GroupSlice = createSlice({
   name: NAMESPACE,
