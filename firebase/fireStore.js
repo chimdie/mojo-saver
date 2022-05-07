@@ -5,7 +5,7 @@ import {
   where,
   getDocs,
   doc,
-  getDoc,
+  setDoc,
 } from "firebase/firestore";
 import { getFirestore } from "firebase/firestore";
 
@@ -18,6 +18,11 @@ export const db = getFirestore();
  */
 export async function addDocument(collectionName, data) {
   await addDoc(collection(db, collectionName), data);
+}
+
+export async function addDocManual(collectionName, ref, data) {
+  console.log(collectionName, ref, data);
+  await setDoc(doc(db, collectionName, ref), data);
 }
 
 export async function getDocQuery(collectionName, queryDefinition) {
@@ -43,4 +48,12 @@ export async function getCollection(collectionName) {
     arr.push({ ...doc.data(), id: doc.id });
   });
   return arr;
+}
+
+export async function createSubCollection(userDocId, groupDocId) {
+  console.log(userDocId, groupDocId);
+  const docRef = doc(db, "users", userDocId);
+  const colRef = collection(docRef, "groups");
+  const groupRef = doc("groups", groupDocId);
+  return addDoc(colRef, { id: groupRef });
 }
