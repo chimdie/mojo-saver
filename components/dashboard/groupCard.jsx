@@ -1,5 +1,4 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
 import {
   Box,
   Text,
@@ -15,14 +14,8 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { GoKebabVertical } from "react-icons/go";
-import { createSubCol } from "../../redux/group";
 
-export default function GroupCard({ title, description, amount, id }) {
-  const dispatch = useDispatch();
-
-  const handleGroupRegister = (groupDocId) => {
-    dispatch(createSubCol(groupDocId));
-  };
+export default function GroupCard({ title, description, amount, onClick }) {
   return (
     <Box className="shadow-md rounded-md bg-slate-50 overflow-hidden max-w-md">
       <Flex justifyContent="space-between">
@@ -60,7 +53,7 @@ export default function GroupCard({ title, description, amount, id }) {
         bg="whatsapp.600"
         borderRadius="0"
         _hover={{ bg: "whatsapp.500" }}
-        onClick={() => handleGroupRegister(id)}
+        onClick={onClick}
       >
         Register
       </Button>

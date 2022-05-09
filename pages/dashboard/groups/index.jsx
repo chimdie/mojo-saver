@@ -3,16 +3,21 @@ import { useDispatch, useSelector } from "react-redux";
 import { Box } from "@chakra-ui/react";
 import { DashboardLayout } from "../../../layouts";
 import { GroupCard } from "../../../components/dashboard";
-import { getGroupList } from "../../../redux/group";
+import { getGroupList, createSubCol } from "../../../redux/group";
 
-export default function Dashboard() {
+export default function Dashboard(id) {
   const dispatch = useDispatch();
 
   const { groups } = useSelector((state) => state.group);
 
   useEffect(() => {
     dispatch(getGroupList());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const handleGroupRegister = (groupDocId) => {
+    dispatch(createSubCol(groupDocId));
+  };
   return (
     <DashboardLayout>
       <Box className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -24,6 +29,7 @@ export default function Dashboard() {
                 amount={group.monthlyDepositAmount}
                 description={group.description}
                 id={group.id}
+                onClick={() => handleGroupRegister(group.id)}
               />
             </div>
           );
