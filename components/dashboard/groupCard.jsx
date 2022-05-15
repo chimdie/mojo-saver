@@ -22,10 +22,14 @@ export default function GroupCard({ title, description, amount, onClick }) {
         <Box className="p-3 flex flex-col justify-around w-full">
           <Text className="text-2xl font-semibold">{title}</Text>
           <Text className="text-2xl font-semibold">{amount}</Text>
-          <Box className="py-4 text-center w-full">
-            <Text color="#fff" bg="whatsapp.600" className="py-2">
+          <Box
+            className="py-4 text-center w-full"
+            bg="whatsapp.600"
+            _hover={{ cursor: "pointer" }}
+          >
+            <Link to="" textDecoration="none" color="#fff" className="py-2">
               Registered
-            </Text>
+            </Link>
           </Box>
         </Box>
         <Menu>
