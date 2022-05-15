@@ -1,43 +1,44 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { fireBaseSignUp, firebaseLogin } from "../../firebase/auth";
-import { addDocument, getDocQuery } from "../../firebase/fireStore";
+import {
+  addDocument,
+  getDocQuery,
+  addDocManual,
+} from "../../firebase/fireStore";
 import router from "next/router";
 import { createStandaloneToast } from "@chakra-ui/toast";
+
+const toast = createStandaloneToast();
 
 const initialState = {
   user: {},
   loadingStatus: "idle",
 };
 
-function runToast() {
+function runToast(title) {
   const toast = createStandaloneToast();
 
   toast({
     title: "Signed up sucessfully.",
     description: "Login to your account.",
     status: "success",
-    duration: 9000,
+    duration: 3000,
     isClosable: true,
   });
 }
 
 export const signUp = createAsyncThunk("users/signup", async (userData) => {
-  let data = await fireBaseSignUp(userData.email, userData.password)
-    .then(async () => {
-      let _data = {
-        email: userData.email,
-        fullName: userData.fullName,
-        phoneNumber: userData.phoneNumber,
-        isSuperAdmin: userData.isSuperAdmin,
-      };
-      await addDocument("users", _data);
-      return _data;
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-  console.log({ data });
-  return data;
+  let data = await fireBaseSignUp(userData.email, userData.password);
+
+  let details = {
+    email: userData.email,
+    fullName: userData.fullName,
+    phoneNumber: userData.phoneNumber,
+    isSuperAdmin: userData.isSuperAdmin,
+  };
+  // await addDocument("users", { ...details });
+  await addDocManual("users", data.user.uid, details);
+  return;
 });
 
 export const login = createAsyncThunk("users/login", async (userData) => {
@@ -66,19 +67,22 @@ export const AccountSlice = createSlice({
     // SIGNUP
     builder
       .addCase(signUp.pending, (state, action) => {
-        // console.log("pending");
         state.loadingStatus = "pending";
         state.user = action.payload;
       })
-      // Add reducers for additional action types here, and handle loading state as needed
       .addCase(signUp.fulfilled, (state, action) => {
-        // console.log("fulfilled");
         state.loadingStatus = "fulfilled";
-        state.user = action.payload;
-        runToast();
+        console.log(action);
+        // state.user = action.payload;
+        toast({
+          title: "Signed up sucessfully.",
+          description: "Login to your account.",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+        });
         router.push("/login");
       })
-      //when there is an error with the request
       .addCase(signUp.rejected, (state, action) => {
         state.loadingStatus = "rejected";
         state.user = action.payload;
@@ -91,15 +95,20 @@ export const AccountSlice = createSlice({
       })
       .addCase(login.fulfilled, (state, action) => {
         state.loadingStatus = "fulfilled";
-        console.log({ action });
         if (action.payload) {
-          // console.log({ action });
           state.user = { ...state.user, ...action.payload };
           if (state.user.isSuperAdmin) {
             router.push("/admin");
           } else {
             router.push("/dashboard");
           }
+          toast({
+            title: "Login sucessfull.",
+            description: "Welcome to Mojo",
+            status: "success",
+            duration: 3000,
+            isClosable: true,
+          });
         } else {
           console.error(action.payload.message);
         }
