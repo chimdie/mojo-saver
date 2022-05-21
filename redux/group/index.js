@@ -32,15 +32,16 @@ export const getGroupList = createAsyncThunk(`${NAMESPACE}/all`, async () => {
   return groups;
 });
 
-export const createSubCol = createAsyncThunk(
+export const addNewMemberToGroup = createAsyncThunk(
   "users/groups",
   async (groupDocId, thunkAPI) => {
     // console.log({ thunkAPI: thunkAPI.getState() });
 
     let userId = thunkAPI.getState().account.user.uid;
+    console.log({ user: userId });
     // console.log({ userId: userId, groupDocId: groupDocId });
-    let userCol = await createSubCollection(userId, groupDocId);
-    return userCol;
+    await createSubCollection(userId, groupDocId);
+    return;
   }
 );
 
@@ -88,11 +89,30 @@ export const GroupSlice = createSlice({
         state.loadingGroupStatus = HTTP_STATUS.LOADING;
       })
       .addCase(getGroupList.fulfilled, (state, action) => {
-        console.log(action);
+        // console.log(action);
         state.groups = action.payload;
-        state.loadingGroupStatus = HTTP_STATUS.DONE;
+        state.loadingGroupStatus = "HTTP_STATUS.DONE";
       })
       .addCase(getGroupList.rejected, (state, action) => {
+        state.loadingGroupStatus = HTTP_STATUS.ERROR;
+      });
+
+    builder
+      .addCase(addNewMemberToGroup.pending, (state, action) => {
+        state.loadingGroupStatus = HTTP_STATUS.LOADING;
+      })
+      .addCase(addNewMemberToGroup.fulfilled, (state, action) => {
+        // console.log(action);
+        state.loadingGroupStatus = "fulfilled";
+        toast({
+          title: "Registration successful",
+          description: "",
+          status: "success",
+          duration: 9000,
+          isClosable: true,
+        });
+      })
+      .addCase(addNewMemberToGroup.rejected, (state, action) => {
         state.loadingGroupStatus = HTTP_STATUS.ERROR;
       });
   },
