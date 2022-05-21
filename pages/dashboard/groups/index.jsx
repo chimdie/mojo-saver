@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Box } from "@chakra-ui/react";
 import { DashboardLayout } from "../../../layouts";
 import { GroupCard } from "../../../components/dashboard";
-import { getGroupList, createSubCol } from "../../../redux/group";
+import { getGroupList, addNewMemberToGroup } from "../../../redux/group";
 
 export default function Dashboard(id) {
   const dispatch = useDispatch();
@@ -16,7 +16,7 @@ export default function Dashboard(id) {
   }, []);
 
   const handleGroupRegister = (groupDocId) => {
-    dispatch(createSubCol(groupDocId));
+    dispatch(addNewMemberToGroup(groupDocId));
   };
   return (
     <DashboardLayout>
