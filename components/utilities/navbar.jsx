@@ -1,5 +1,5 @@
 import React from "react";
-import Link from "next/link";
+// import NextLink from "next/link";
 import { useSelector } from "react-redux";
 import {
   Icon,
@@ -11,6 +11,7 @@ import {
   DrawerContent,
   DrawerHeader,
   useDisclosure,
+  Link,
 } from "@chakra-ui/react";
 import { MdOutlineMenu } from "react-icons/md";
 
@@ -22,12 +23,12 @@ export default function Navbar() {
   React.useEffect(() => {
     console.log({ user });
     console.log(user?.isSuperAdmin);
-  }, []);
+  }, [user]);
 
   return (
     <Box as="header" bg="white" className="w-full">
       <nav className="flex lg:flex-row items-center justify-between py-3 px-3 sm:px-4">
-        <Link href="/dashboard" passHref>
+        <Link href={`${user?.isSuperAdmin === "/admin"}`}>
           <Text className="text-4xl font-bold cursor-pointer">mojoSave</Text>
         </Link>
         <div className="hidden lg:flex flex-row">
@@ -40,6 +41,7 @@ export default function Navbar() {
             <React.Fragment>
               <LinkItem link="/admin" caption="Admin" />
               <LinkItem link="/admin/create-group" caption="Create Group" />
+              <LinkItem link="/admin/users" caption="All Users" />
             </React.Fragment>
           )}
         </div>
@@ -53,12 +55,28 @@ export default function Navbar() {
         <DrawerContent>
           <DrawerHeader onClick={onClose} />
           <DrawerBody paddingY="15px">
-            <Box paddingY={2} onClick={onClose}>
-              <LinkItem link="/dashboard" caption="Dashboard" />
-            </Box>
-            <Box paddingY={2} onClick={onClose}>
-              <LinkItem link="/dashboard/groups" caption="Groups" />
-            </Box>
+            {!user.isSuperAdmin ? (
+              <>
+                <Box paddingY={2} onClick={onClose}>
+                  <LinkItem link="/dashboard" caption="Dashboard" />
+                </Box>
+                <Box paddingY={2} onClick={onClose}>
+                  <LinkItem link="/dashboard/groups" caption="Groups" />
+                </Box>
+              </>
+            ) : (
+              <>
+                <Box paddingY={2} onClick={onClose}>
+                  <LinkItem link="/admin" caption="Admin" />
+                </Box>
+                <Box paddingY={2} onClick={onClose}>
+                  <LinkItem link="/admin/create-group" caption="Create Group" />
+                </Box>
+                <Box paddingY={2} onClick={onClose}>
+                  <LinkItem link="/admin/users" caption="All Users" />
+                </Box>
+              </>
+            )}
           </DrawerBody>
         </DrawerContent>
       </Drawer>

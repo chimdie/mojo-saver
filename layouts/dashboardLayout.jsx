@@ -14,8 +14,8 @@ export default function Layout({ children }) {
       height="100vh"
     >
       <Navbar />
-      <Box as="main" bg="white" my="2rem" h="100vh">
-        <Box as="section" px={{ base: "1rem", md: "3rem" }}>
+      <Box as="main" bg="white" my="2rem" h="100%">
+        <Box as="section" p={{ base: "1rem", md: "3rem" }}>
           {children}
         </Box>
       </Box>
