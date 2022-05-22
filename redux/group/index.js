@@ -12,6 +12,7 @@ import { HTTP_STATUS } from "../../utils";
 
 const NAMESPACE = "group";
 const initialState = {
+  users: [],
   groups: [],
   loadingGroupStatus: HTTP_STATUS.IDLE,
 };
@@ -26,11 +27,14 @@ export const createGroup = createAsyncThunk(
   }
 );
 
-export const getGroupList = createAsyncThunk(`${NAMESPACE}/all`, async () => {
-  const groups = await getCollection("groups");
-  // console.log({ groups });
-  return groups;
-});
+export const getGroupList = createAsyncThunk(
+  `${NAMESPACE}/groups`,
+  async () => {
+    const groups = await getCollection("groups");
+    // console.log({ groups });
+    return groups;
+  }
+);
 
 export const addNewMemberToGroup = createAsyncThunk(
   "users/groups",
@@ -44,6 +48,12 @@ export const addNewMemberToGroup = createAsyncThunk(
     return;
   }
 );
+
+export const getUsersList = createAsyncThunk(`${NAMESPACE}/users`, async () => {
+  const users = await getCollection("users");
+  // console.log({ users });
+  return users;
+});
 
 export const GroupSlice = createSlice({
   name: NAMESPACE,
@@ -94,6 +104,18 @@ export const GroupSlice = createSlice({
         state.loadingGroupStatus = "HTTP_STATUS.DONE";
       })
       .addCase(getGroupList.rejected, (state, action) => {
+        state.loadingGroupStatus = HTTP_STATUS.ERROR;
+      })
+
+      .addCase(getUsersList.pending, (state, action) => {
+        state.loadingGroupStatus = HTTP_STATUS.LOADING;
+      })
+      .addCase(getUsersList.fulfilled, (state, action) => {
+        // console.log(action);
+        state.users = action.payload;
+        state.loadingGroupStatus = "HTTP_STATUS.DONE";
+      })
+      .addCase(getUsersList.rejected, (state, action) => {
         state.loadingGroupStatus = HTTP_STATUS.ERROR;
       });
 
