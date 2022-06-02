@@ -12,6 +12,7 @@ import { HTTP_STATUS } from "../../utils";
 
 const NAMESPACE = "group";
 const initialState = {
+  users: [],
   groups: [],
   loadingGroupStatus: HTTP_STATUS.IDLE,
 };
@@ -26,23 +27,33 @@ export const createGroup = createAsyncThunk(
   }
 );
 
-export const getGroupList = createAsyncThunk(`${NAMESPACE}/all`, async () => {
-  const groups = await getCollection("groups");
-  // console.log({ groups });
-  return groups;
-});
+export const getGroupList = createAsyncThunk(
+  `${NAMESPACE}/groups`,
+  async () => {
+    const groups = await getCollection("groups");
+    // console.log({ groups });
+    return groups;
+  }
+);
 
-export const createSubCol = createAsyncThunk(
+export const addNewMemberToGroup = createAsyncThunk(
   "users/groups",
   async (groupDocId, thunkAPI) => {
     // console.log({ thunkAPI: thunkAPI.getState() });
 
     let userId = thunkAPI.getState().account.user.uid;
+    console.log({ user: userId });
     // console.log({ userId: userId, groupDocId: groupDocId });
-    let userCol = await createSubCollection(userId, groupDocId);
-    return userCol;
+    await createSubCollection(userId, groupDocId);
+    return;
   }
 );
+
+export const getUsersList = createAsyncThunk(`${NAMESPACE}/users`, async () => {
+  const users = await getCollection("users");
+  // console.log({ users });
+  return users;
+});
 
 export const GroupSlice = createSlice({
   name: NAMESPACE,
@@ -88,11 +99,42 @@ export const GroupSlice = createSlice({
         state.loadingGroupStatus = HTTP_STATUS.LOADING;
       })
       .addCase(getGroupList.fulfilled, (state, action) => {
-        console.log(action);
+        // console.log(action);
         state.groups = action.payload;
-        state.loadingGroupStatus = HTTP_STATUS.DONE;
+        state.loadingGroupStatus = "HTTP_STATUS.DONE";
       })
       .addCase(getGroupList.rejected, (state, action) => {
+        state.loadingGroupStatus = HTTP_STATUS.ERROR;
+      })
+
+      .addCase(getUsersList.pending, (state, action) => {
+        state.loadingGroupStatus = HTTP_STATUS.LOADING;
+      })
+      .addCase(getUsersList.fulfilled, (state, action) => {
+        // console.log(action);
+        state.users = action.payload;
+        state.loadingGroupStatus = "HTTP_STATUS.DONE";
+      })
+      .addCase(getUsersList.rejected, (state, action) => {
+        state.loadingGroupStatus = HTTP_STATUS.ERROR;
+      });
+
+    builder
+      .addCase(addNewMemberToGroup.pending, (state, action) => {
+        state.loadingGroupStatus = HTTP_STATUS.LOADING;
+      })
+      .addCase(addNewMemberToGroup.fulfilled, (state, action) => {
+        // console.log(action);
+        state.loadingGroupStatus = "fulfilled";
+        toast({
+          title: "Registration successful",
+          description: "",
+          status: "success",
+          duration: 9000,
+          isClosable: true,
+        });
+      })
+      .addCase(addNewMemberToGroup.rejected, (state, action) => {
         state.loadingGroupStatus = HTTP_STATUS.ERROR;
       });
   },

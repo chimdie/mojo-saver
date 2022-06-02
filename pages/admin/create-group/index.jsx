@@ -21,6 +21,7 @@ export default function CreateGroup() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
@@ -37,6 +38,7 @@ export default function CreateGroup() {
       })
     );
     setLoading(isLoading);
+    reset();
   };
   return (
     <DashboardLayout>

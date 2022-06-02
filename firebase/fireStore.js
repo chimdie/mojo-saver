@@ -51,9 +51,9 @@ export async function getCollection(collectionName) {
 }
 
 export async function createSubCollection(userDocId, groupDocId) {
-  console.log(userDocId, groupDocId);
+  // console.log({ userDocId, groupDocId });
   const docRef = doc(db, "users", userDocId);
-  const colRef = collection(docRef, "groups");
-  const groupRef = doc("groups", groupDocId);
-  return addDoc(colRef, { id: groupRef });
+  return await addDoc(collection(db, "groups", groupDocId, "members"), {
+    name: docRef,
+  });
 }

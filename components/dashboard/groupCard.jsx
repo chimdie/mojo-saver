@@ -15,21 +15,24 @@ import {
 } from "@chakra-ui/react";
 import { GoKebabVertical } from "react-icons/go";
 
-export default function GroupCard({ title, description, amount, onClick }) {
+export default function GroupCard({
+  title,
+  description,
+  amount,
+  onClick,
+  status,
+}) {
   return (
     <Box className="shadow-md rounded-md bg-slate-50 overflow-hidden max-w-md">
       <Flex justifyContent="space-between">
         <Box className="p-3 flex flex-col justify-around w-full">
           <Text className="text-2xl font-semibold">{title}</Text>
           <Text className="text-2xl font-semibold">{amount}</Text>
-          <Box
-            className="py-4 text-center w-full"
-            bg="whatsapp.600"
-            _hover={{ cursor: "pointer" }}
-          >
-            <Link to="" textDecoration="none" color="#fff" className="py-2">
+          <Box className="py-4 text-center w-full" bg="">
+            <Text color="whatsapp.600" className="py-2">
+              {/* {status} */}
               Registered
-            </Link>
+            </Text>
           </Box>
         </Box>
         <Menu>
