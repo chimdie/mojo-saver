@@ -5,6 +5,8 @@ import {
   getDocQuery,
   getCollection,
   createSubCollection,
+  getSubCollection,
+  getOneCollection,
 } from "../../firebase/fireStore";
 import router from "next/router";
 import { createStandaloneToast } from "@chakra-ui/toast";
@@ -14,6 +16,8 @@ const NAMESPACE = "group";
 const initialState = {
   users: [],
   groups: [],
+  currentGroup: [],
+  groupUsers: [],
   loadingGroupStatus: HTTP_STATUS.IDLE,
 };
 
@@ -51,8 +55,22 @@ export const addNewMemberToGroup = createAsyncThunk(
 
 export const getUsersList = createAsyncThunk(`${NAMESPACE}/users`, async () => {
   const users = await getCollection("users");
-  // console.log({ users });
+  console.log({ users });
   return users;
+});
+
+export const getGroupMembers = createAsyncThunk(
+  `${NAMESPACE}/groupUsers`,
+  async () => {
+    const users = await getSubCollection("users");
+    console.log({ members });
+    return users;
+  }
+);
+
+export const getGroupById = createAsyncThunk(`${NAMESPACE}/one`, async () => {
+  const group = await getOneCollection("groups");
+  return group;
 });
 
 export const GroupSlice = createSlice({
@@ -95,6 +113,7 @@ export const GroupSlice = createSlice({
         });
       })
 
+      // Get Groups
       .addCase(getGroupList.pending, (state, action) => {
         state.loadingGroupStatus = HTTP_STATUS.LOADING;
       })
@@ -107,15 +126,38 @@ export const GroupSlice = createSlice({
         state.loadingGroupStatus = HTTP_STATUS.ERROR;
       })
 
+      // Get Users
       .addCase(getUsersList.pending, (state, action) => {
         state.loadingGroupStatus = HTTP_STATUS.LOADING;
       })
       .addCase(getUsersList.fulfilled, (state, action) => {
-        // console.log(action);
         state.users = action.payload;
         state.loadingGroupStatus = "HTTP_STATUS.DONE";
       })
       .addCase(getUsersList.rejected, (state, action) => {
+        state.loadingGroupStatus = HTTP_STATUS.ERROR;
+      });
+
+    builder
+      .addCase(getGroupMembers.pending, (state, action) => {
+        state.loadingGroupStatus = HTTP_STATUS.LOADING;
+      })
+      .addCase(getGroupMembers.fulfilled, (state, action) => {
+        state.groupUsers = action.payload;
+        state.loadingGroupStatus = "HTTP_STATUS.DONE";
+      })
+      .addCase(getGroupMembers.rejected, (state, action) => {
+        state.loadingGroupStatus = HTTP_STATUS.ERROR;
+      })
+
+      .addCase(getGroupById.pending, (state, action) => {
+        state.loadingGroupStatus = HTTP_STATUS.LOADING;
+      })
+      .addCase(getGroupById.fulfilled, (state, action) => {
+        state.currentGroup = action.payload[0];
+        state.loadingGroupStatus = "HTTP_STATUS.DONE";
+      })
+      .addCase(getGroupById.rejected, (state, action) => {
         state.loadingGroupStatus = HTTP_STATUS.ERROR;
       });
 
