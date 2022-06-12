@@ -14,16 +14,29 @@ import {
   Td,
 } from "@chakra-ui/react";
 import { DashboardLayout } from "../../layouts";
-import { getGroupList } from "../../redux/group";
+import { getGroupList, getGroupMembers, getGroupById } from "../../redux/group";
 
 export default function GroupList() {
   const dispatch = useDispatch();
-  const { groups } = useSelector((state) => state.group);
+  const { groups, groupUsers, currentGroup } = useSelector(
+    (state) => state.group
+  );
 
   useEffect(() => {
     dispatch(getGroupList());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    dispatch(getGroupMembers());
+    // console.log(groupUsers);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [groupUsers]);
+
+  const handleClick = () => {
+    dispatch(getGroupById(currentGroup));
+    // console.log(currentGroup);
+  };
   return (
     <DashboardLayout>
       <Box overflowX="auto">
@@ -48,6 +61,7 @@ export default function GroupList() {
           </Tbody>
         </Table>
       </Box>
+      <button onClick={handleClick}>click</button>
     </DashboardLayout>
   );
 }

@@ -6,6 +6,7 @@ import {
   getDocs,
   doc,
   setDoc,
+  getDoc,
 } from "firebase/firestore";
 import { getFirestore } from "firebase/firestore";
 
@@ -56,4 +57,28 @@ export async function createSubCollection(userDocId, groupDocId) {
   return await addDoc(collection(db, "groups", groupDocId, "members"), {
     name: docRef,
   });
+}
+
+export async function getSubCollection(groupDocId, subGroup) {
+  var query = await collection(db, groupDocId).where("field", "==", "1");
+
+  const subs = [];
+
+  query.get().then((querySnapshot) => {
+    querySnapshot.forEach((document) => {
+      document.ref
+        .collection(subGroup)
+        .get()
+        .then((querySnapshot) => {
+          subs.push(querySnapshot);
+        });
+    });
+  });
+  console.log(subs);
+  return subs;
+}
+
+export async function getOneCollection(collectionName, groupDocId) {
+  await getDoc(doc(db, collectionName, groupDocId));
+  console.log(collectionName, groupDocId);
 }
