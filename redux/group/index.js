@@ -25,8 +25,8 @@ const toast = createStandaloneToast();
 
 export const createGroup = createAsyncThunk(
   `${NAMESPACE}/new`,
-  async (payload) => {
-    await addDocument("groups", { ...payload });
+  async (data) => {
+    await addDocument("groups", { ...data });
     return;
   }
 );
@@ -35,7 +35,7 @@ export const getGroupList = createAsyncThunk(
   `${NAMESPACE}/groups`,
   async () => {
     const groups = await getCollection("groups");
-    // console.log({ groups });
+    console.log({ groups });
     return groups;
   }
 );
@@ -55,30 +55,24 @@ export const addNewMemberToGroup = createAsyncThunk(
 
 export const getUsersList = createAsyncThunk(`${NAMESPACE}/users`, async () => {
   const users = await getCollection("users");
-  console.log({ users });
   return users;
 });
 
 export const getGroupMembers = createAsyncThunk(
   `${NAMESPACE}/groupUsers`,
-  async () => {
-    const users = await getSubCollection("users");
-    console.log({ members });
+  async (groupId) => {
+    console.log({ groupId });
+    const users = await getSubCollection(groupId, "members");
     return users;
   }
 );
-
-export const getGroupById = createAsyncThunk(`${NAMESPACE}/one`, async () => {
-  const group = await getOneCollection("groups");
-  return group;
-});
 
 export const GroupSlice = createSlice({
   name: NAMESPACE,
   initialState,
   reducers: {
-    // increment: (state) => {
-    //   // state.value += 1;
+    // setGroupUsers: (state, { payload }) => {
+    //   state.groupUsers = payload;
     // },
   },
   extraReducers: (builder) => {
@@ -118,7 +112,6 @@ export const GroupSlice = createSlice({
         state.loadingGroupStatus = HTTP_STATUS.LOADING;
       })
       .addCase(getGroupList.fulfilled, (state, action) => {
-        // console.log(action);
         state.groups = action.payload;
         state.loadingGroupStatus = "HTTP_STATUS.DONE";
       })
@@ -142,22 +135,11 @@ export const GroupSlice = createSlice({
       .addCase(getGroupMembers.pending, (state, action) => {
         state.loadingGroupStatus = HTTP_STATUS.LOADING;
       })
-      .addCase(getGroupMembers.fulfilled, (state, action) => {
-        state.groupUsers = action.payload;
+      .addCase(getGroupMembers.fulfilled, (state, { payload }) => {
+        state.groupUsers = payload;
         state.loadingGroupStatus = "HTTP_STATUS.DONE";
       })
       .addCase(getGroupMembers.rejected, (state, action) => {
-        state.loadingGroupStatus = HTTP_STATUS.ERROR;
-      })
-
-      .addCase(getGroupById.pending, (state, action) => {
-        state.loadingGroupStatus = HTTP_STATUS.LOADING;
-      })
-      .addCase(getGroupById.fulfilled, (state, action) => {
-        state.currentGroup = action.payload[0];
-        state.loadingGroupStatus = "HTTP_STATUS.DONE";
-      })
-      .addCase(getGroupById.rejected, (state, action) => {
         state.loadingGroupStatus = HTTP_STATUS.ERROR;
       });
 
@@ -182,4 +164,5 @@ export const GroupSlice = createSlice({
   },
 });
 
+// export const { setGroupUsers } = GroupSlice.actions;
 export default GroupSlice.reducer;

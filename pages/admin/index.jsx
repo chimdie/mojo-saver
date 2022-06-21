@@ -13,37 +13,28 @@ import {
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { DashboardLayout } from "../../layouts";
-import { getGroupList, getGroupMembers, getGroupById } from "../../redux/group";
-// import { getGroupList } from "../../redux/group";
+import { getGroupList } from "../../redux/group";
 import { GoKebabVertical } from "react-icons/go";
 
 export default function GroupList() {
   const dispatch = useDispatch();
-  const { groups, groupUsers, currentGroup } = useSelector(
-    (state) => state.group
-  );
+  const { groups } = useSelector((state) => state.group);
 
   useEffect(() => {
     dispatch(getGroupList());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    dispatch(getGroupMembers());
-    // console.log(groupUsers);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [groupUsers]);
-
-  const handleClick = () => {
-    dispatch(getGroupById(currentGroup));
-    // console.log(currentGroup);
-  };
   return (
     <DashboardLayout>
       <Box className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {groups.map((group) => {
           return (
-            <NextLink href="" key={group.id} className="cursor-pointer ">
+            <NextLink
+              href={`admin/group/${group.id}`}
+              key={group.id}
+              className="cursor-pointer "
+            >
               <Link>
                 <Box className="shadow-md rounded-md bg-slate-50 overflow-hidden max-w-md h-36">
                   <Flex justifyContent="space-between">
@@ -76,7 +67,6 @@ export default function GroupList() {
           );
         })}
       </Box>
-      <button onClick={handleClick}>click</button>
     </DashboardLayout>
   );
 }
