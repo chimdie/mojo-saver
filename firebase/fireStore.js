@@ -60,22 +60,37 @@ export async function createSubCollection(userDocId, groupDocId) {
 }
 
 export async function getSubCollection(groupDocId, subGroup) {
-  var query = await collection(db, groupDocId).where("field", "==", "1");
+  // console.log({ groupDocId, subGroup });
+  // var query = await collection(db, groupDocId).where(subGroup, "==", true);
+  // console.log({ query });
+  // const subs = [];
+  // query.get().then((querySnapshot) => {
+  //   querySnapshot.forEach((document) => {
+  //     document.ref
+  //       .collection(subGroup)
+  //       .get()
+  //       .then((querySnapshot) => {
+  //         console.log({ querySnapshot });
+  //         subs.push(querySnapshot);
+  //       });
+  //   });
+  // });
+  // console.log({ subs: subs });
+  // return subs;
+  const subColRef = collection(db, "groups", groupDocId, subGroup);
+  // odd number of path segments to get a CollectionReference
 
-  const subs = [];
+  // equivalent to:
+  // .collection("collection_name/doc_name/subcollection_name") in v8
 
-  query.get().then((querySnapshot) => {
-    querySnapshot.forEach((document) => {
-      document.ref
-        .collection(subGroup)
-        .get()
-        .then((querySnapshot) => {
-          subs.push(querySnapshot);
-        });
-    });
+  // use getDocs() instead of getDoc() to fetch the collection
+  console.log({ subColRef });
+  const qSnap = getDocs(subColRef);
+  const snap = qSnap.docs.map((d) => {
+    console.log({ data: d.data() });
+    return { id: d.id, ...d.data() };
   });
-  console.log(subs);
-  return subs;
+  return snap;
 }
 
 export async function getOneCollection(collectionName, groupDocId) {
