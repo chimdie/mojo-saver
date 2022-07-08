@@ -6,6 +6,7 @@ import {
   getDocs,
   doc,
   setDoc,
+  getDoc,
 } from "firebase/firestore";
 import { getFirestore } from "firebase/firestore";
 
@@ -56,4 +57,43 @@ export async function createSubCollection(userDocId, groupDocId) {
   return await addDoc(collection(db, "groups", groupDocId, "members"), {
     name: docRef,
   });
+}
+
+export async function getSubCollection(groupDocId, subGroup) {
+  // console.log({ groupDocId, subGroup });
+  // var query = await collection(db, groupDocId).where(subGroup, "==", true);
+  // console.log({ query });
+  // const subs = [];
+  // query.get().then((querySnapshot) => {
+  //   querySnapshot.forEach((document) => {
+  //     document.ref
+  //       .collection(subGroup)
+  //       .get()
+  //       .then((querySnapshot) => {
+  //         console.log({ querySnapshot });
+  //         subs.push(querySnapshot);
+  //       });
+  //   });
+  // });
+  // console.log({ subs: subs });
+  // return subs;
+  const subColRef = collection(db, "groups", groupDocId, subGroup);
+  // odd number of path segments to get a CollectionReference
+
+  // equivalent to:
+  // .collection("collection_name/doc_name/subcollection_name") in v8
+
+  // use getDocs() instead of getDoc() to fetch the collection
+  console.log({ subColRef });
+  const qSnap = getDocs(subColRef);
+  const snap = qSnap.docs.map((d) => {
+    console.log({ data: d.data() });
+    return { id: d.id, ...d.data() };
+  });
+  return snap;
+}
+
+export async function getOneCollection(collectionName, groupDocId) {
+  await getDoc(doc(db, collectionName, groupDocId));
+  console.log(collectionName, groupDocId);
 }

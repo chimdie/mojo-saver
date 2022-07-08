@@ -24,12 +24,17 @@ export default function GroupList() {
     dispatch(getGroupList());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   return (
     <DashboardLayout>
       <Box className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {groups.map((group) => {
           return (
-            <NextLink href="" key={group.id} className="cursor-pointer ">
+            <NextLink
+              href={`admin/group/${group.id}`}
+              key={group.id}
+              className="cursor-pointer "
+            >
               <Link>
                 <Box className="shadow-md rounded-md bg-slate-50 overflow-hidden max-w-md h-36">
                   <Flex justifyContent="space-between">
