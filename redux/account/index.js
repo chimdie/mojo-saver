@@ -72,8 +72,6 @@ export const AccountSlice = createSlice({
       })
       .addCase(signUp.fulfilled, (state, action) => {
         state.loadingStatus = "fulfilled";
-        console.log(action);
-        // state.user = action.payload;
         toast({
           title: "Signed up sucessfully.",
           description: "Login to your account.",

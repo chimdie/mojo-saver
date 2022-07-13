@@ -12,6 +12,7 @@ export default function GroupUsers() {
 
   React.useEffect(() => {
     if (query.id) dispatch(getGroupMembers(query.id));
+    console.log({ query: query });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query]);
 

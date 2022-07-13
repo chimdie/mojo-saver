@@ -45,7 +45,7 @@ export const AuthProvider = ({ children }) => {
 
   const handleSetCurrentUser = async (currentUser) => {
     if (currentUser && currentUser.email) {
-      console.log({ currentUser });
+      // console.log({ currentUser });
       let userDoc = await getDocQuery("users", {
         key: "email",
         q: "==",
