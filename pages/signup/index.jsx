@@ -12,6 +12,7 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { RegistrationLayout } from "../../layouts";
+import { HTTP_STATUS } from "../../utils/constants";
 
 const schema = yup.object().shape({
   fullName: yup.string().required("Full Name is required"),
@@ -25,7 +26,7 @@ const schema = yup.object().shape({
 
 export default function SignupPage() {
   const dispatch = useDispatch();
-
+  const { singupLoadingStatus } = useSelector((state) => state.account);
   const {
     register,
     handleSubmit,
@@ -169,6 +170,7 @@ export default function SignupPage() {
         </FormControl>
         <Button
           type="submit"
+          isLoading={singupLoadingStatus === HTTP_STATUS.LOADING}
           bg="whatsapp.600"
           color="#fff"
           width="100%"

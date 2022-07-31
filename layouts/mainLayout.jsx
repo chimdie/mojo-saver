@@ -3,8 +3,18 @@ import Head from "next/head";
 import { Box } from "@chakra-ui/react";
 import { Footer } from "../components/homepage";
 import { Navbar } from "../components/utilities";
+import { AuthContext } from "../firebase/auth";
+import router from "next/router";
 
 export default function MainLayout({ children }) {
+  const { user } = React.useContext(AuthContext);
+  React.useEffect(() => {
+    if (user.uid) {
+      console.log("signed in!");
+      router.push("/dashboard");
+    }
+  }, [user]);
+
   return (
     <Box
       as="section"

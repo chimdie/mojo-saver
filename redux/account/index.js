@@ -7,12 +7,14 @@ import {
 } from "../../firebase/fireStore";
 import router from "next/router";
 import { createStandaloneToast } from "@chakra-ui/toast";
+import { HTTP_STATUS } from "../../utils/constants";
 
 const toast = createStandaloneToast();
 
 const initialState = {
   user: {},
-  loadingStatus: "idle",
+  singupLoadingStatus: HTTP_STATUS.IDLE,
+  loginLoadingStatus: HTTP_STATUS.IDLE,
 };
 
 function runToast(title) {
@@ -29,7 +31,6 @@ function runToast(title) {
 
 export const signUp = createAsyncThunk("users/signup", async (userData) => {
   let data = await fireBaseSignUp(userData.email, userData.password);
-
   let details = {
     email: userData.email,
     fullName: userData.fullName,
@@ -37,8 +38,8 @@ export const signUp = createAsyncThunk("users/signup", async (userData) => {
     isSuperAdmin: userData.isSuperAdmin,
   };
   // await addDocument("users", { ...details });
-  await addDocManual("users", data.user.uid, details);
-  return;
+  let u = await addDocManual("users", data.user.uid, details);
+  return { details };
 });
 
 export const login = createAsyncThunk("users/login", async (userData) => {
@@ -67,13 +68,12 @@ export const AccountSlice = createSlice({
     // SIGNUP
     builder
       .addCase(signUp.pending, (state, action) => {
-        state.loadingStatus = "pending";
-        state.user = action.payload;
+        state.singupLoadingStatus = HTTP_STATUS.LOADING;
       })
       .addCase(signUp.fulfilled, (state, action) => {
-        state.loadingStatus = "fulfilled";
+        state.singupLoadingStatus = HTTP_STATUS.DONE;
         console.log(action);
-        // state.user = action.payload;
+        state.user = action.payload;
         toast({
           title: "Signed up sucessfully.",
           description: "Login to your account.",
@@ -84,17 +84,17 @@ export const AccountSlice = createSlice({
         router.push("/login");
       })
       .addCase(signUp.rejected, (state, action) => {
-        state.loadingStatus = "rejected";
+        state.singupLoadingStatus = HTTP_STATUS.ERROR;
         state.user = action.payload;
       });
 
     // LOGIN
     builder
       .addCase(login.pending, (state, action) => {
-        state.loadingStatus = "pending";
+        state.loginLoadingStatus = HTTP_STATUS.LOADING;
       })
       .addCase(login.fulfilled, (state, action) => {
-        state.loadingStatus = "fulfilled";
+        state.loginLoadingStatus = HTTP_STATUS.DONE;
         if (action.payload) {
           state.user = { ...state.user, ...action.payload };
           if (state.user.isSuperAdmin) {
@@ -114,7 +114,7 @@ export const AccountSlice = createSlice({
         }
       })
       .addCase(login.rejected, (state, { error }) => {
-        state.loadingStatus = "rejected";
+        state.loginLoadingStatus = HTTP_STATUS.ERROR;
       });
   },
 });

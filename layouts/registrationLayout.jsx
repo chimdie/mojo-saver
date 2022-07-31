@@ -1,10 +1,12 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Box, Text, Button } from "@chakra-ui/react";
 import { SignupFooter } from "../components/signup";
 import { LoginFooter } from "../components/login";
+import { AuthContext } from "../firebase/auth";
+import router from "next/router";
 
 export default function RegistrationLayout({ header, subHeader, children }) {
   const [routeName, setRouteName] = useState("");
@@ -26,6 +28,15 @@ export default function RegistrationLayout({ header, subHeader, children }) {
   useEffect(() => {
     setRouteName(changeRouteName);
   }, []);
+
+  const { user } = React.useContext(AuthContext);
+  React.useEffect(() => {
+    if (user.uid) {
+      router.push("/dashboard");
+    }
+  }, [user, router]);
+
+
   return (
     <Box
       as="main"
