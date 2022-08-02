@@ -6,7 +6,7 @@ export default function Dashboard() {
   return (
     <AuthContext.Consumer>
       {(user) => {
-        console.log({ user });
+        console.log({ xuser: user });
         return (
           <DashboardLayout>
             <div className="">Welcome</div>

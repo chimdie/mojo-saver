@@ -22,7 +22,7 @@ const schema = yup.object().shape({
 export default function Login() {
   const dispatch = useDispatch();
 
-  const { loadingStatus } = useSelector((state) => state.account);
+  const { loginLoadingStatus } = useSelector((state) => state.account);
 
   const {
     register,
@@ -104,7 +104,7 @@ export default function Login() {
               width="100%"
               paddingY="1.5rem"
               _hover={{ bg: "whatsapp.700" }}
-              isLoading={loadingStatus === HTTP_STATUS.LOADING}
+              isLoading={loginLoadingStatus === HTTP_STATUS.LOADING}
             >
               LOGIN
             </Button>

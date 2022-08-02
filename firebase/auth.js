@@ -1,5 +1,7 @@
 import { useEffect, createContext } from "react";
 import { auth } from ".";
+import { getAuth } from "firebase/auth";
+
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -13,12 +15,13 @@ import { setUser } from "../redux/account";
 
 export const AuthContext = createContext();
 
-export function firebaseLogin(email, password) {
-  return signInWithEmailAndPassword(auth, email, password);
+export async function  firebaseLogin(email, password) {
+  return await signInWithEmailAndPassword(auth, email, password)
 }
 
 export function fireBaseSignUp(email, password) {
-  return createUserWithEmailAndPassword(auth, email, password);
+  console.log({ email, password });
+  return createUserWithEmailAndPassword(auth, email, password)
 }
 
 export function logout() {
