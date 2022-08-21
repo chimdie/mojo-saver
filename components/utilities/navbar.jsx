@@ -1,5 +1,5 @@
 import React from "react";
-// import NextLink from "next/link";
+import NextLink from "next/link";
 import { useSelector } from "react-redux";
 import {
   Icon,
@@ -22,7 +22,7 @@ export default function Navbar() {
 
   React.useEffect(() => {
     console.log({ user });
-    console.log(user?.isSuperAdmin);
+    // console.log(user?.isSuperAdmin);
   }, [user]);
 
   return (
@@ -67,13 +67,13 @@ export default function Navbar() {
             ) : (
               <>
                 <Box paddingY={2} onClick={onClose}>
-                  <LinkItem link="/admin" caption="Admin" />
+                  <LinkItem link="admin" caption="Admin" />
                 </Box>
                 <Box paddingY={2} onClick={onClose}>
-                  <LinkItem link="/admin/create-group" caption="Create Group" />
+                  <LinkItem link="admin/create-group" caption="Create Group" />
                 </Box>
                 <Box paddingY={2} onClick={onClose}>
-                  <LinkItem link="/admin/users" caption="All Users" />
+                  <LinkItem link="admin/users" caption="All Users" />
                 </Box>
               </>
             )}
@@ -86,10 +86,10 @@ export default function Navbar() {
 
 function LinkItem({ link, caption }) {
   return (
-    <Link href={link}>
-      <a className="text-lg font-medium cursor-pointer py-2 px-6 hover:text-gray-600">
+    <NextLink href={link} passHref>
+      <Link className="text-lg font-medium cursor-pointer py-2 px-6 hover:text-gray-600">
         {caption}
-      </a>
-    </Link>
+      </Link>
+    </NextLink>
   );
 }

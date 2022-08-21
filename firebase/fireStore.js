@@ -7,8 +7,9 @@ import {
   doc,
   setDoc,
   getDoc,
+  deleteDoc,
+  getFirestore,
 } from "firebase/firestore";
-import { getFirestore } from "firebase/firestore";
 
 export const db = getFirestore();
 
@@ -52,7 +53,6 @@ export async function getCollection(collectionName) {
 }
 
 export async function createSubCollection(userDocId, groupDocId) {
-  // console.log({ userDocId, groupDocId });
   const docRef = doc(db, "users", userDocId);
   return await addDoc(collection(db, "groups", groupDocId, "members"), {
     name: docRef,
@@ -84,7 +84,7 @@ export async function getSubCollection(groupDocId, subGroup) {
   // .collection("collection_name/doc_name/subcollection_name") in v8
 
   // use getDocs() instead of getDoc() to fetch the collection
-  console.log({ subColRef });
+  // console.log({ subColRef });
   const qSnap = getDocs(subColRef);
   const snap = qSnap.docs.map((d) => {
     console.log({ data: d.data() });
@@ -96,4 +96,10 @@ export async function getSubCollection(groupDocId, subGroup) {
 export async function getOneCollection(collectionName, groupDocId) {
   await getDoc(doc(db, collectionName, groupDocId));
   console.log(collectionName, groupDocId);
+}
+
+export async function deleteCollection(groupDocId) {
+  const del = await deleteDoc(doc(db, "groups", groupDocId));
+  console.log(groupDocId);
+  return del;
 }

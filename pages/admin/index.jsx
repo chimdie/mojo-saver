@@ -15,6 +15,7 @@ import NextLink from "next/link";
 import { DashboardLayout } from "../../layouts";
 import { getGroupList } from "../../redux/group";
 import { GoKebabVertical } from "react-icons/go";
+import { deleteCollection } from "../../firebase/fireStore";
 
 export default function GroupList() {
   const dispatch = useDispatch();
@@ -23,6 +24,7 @@ export default function GroupList() {
   useEffect(() => {
     dispatch(getGroupList());
     // eslint-disable-next-line react-hooks/exhaustive-deps
+    console.log(groups);
   }, []);
 
   return (
@@ -30,40 +32,43 @@ export default function GroupList() {
       <Box className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {groups.map((group) => {
           return (
-            <NextLink
-              href={`admin/group/${group.id}`}
+            // <NextLink
+            //   href={`admin/group/${group.id}`}
+            //   key={group.id}
+            //   className="cursor-pointer "
+            // >
+            //   <Link>
+            <Box
               key={group.id}
-              className="cursor-pointer "
+              className="shadow-md rounded-md bg-slate-50 overflow-hidden max-w-md h-36"
             >
-              <Link>
-                <Box className="shadow-md rounded-md bg-slate-50 overflow-hidden max-w-md h-36">
-                  <Flex justifyContent="space-between">
-                    <Box className="p-3 flex flex-col justify-around w-full">
-                      <Text className="text-2xl font-semibold">
-                        {group.name}
-                      </Text>
-                      <Text className="text-2xl font-semibold">
-                        {group.monthlyDepositAmount}
-                      </Text>
-                    </Box>
-                    <Menu>
-                      <MenuButton
-                        as={Button}
-                        rightIcon={<GoKebabVertical />}
-                        className="bg-white"
-                        bg="transparent"
-                        _hover={{ bg: "transparent" }}
-                        fontSize="18px"
-                      />
-                      <MenuList>
-                        <MenuItem>Delete Group</MenuItem>
-                        <MenuItem>Deactivate Group</MenuItem>
-                      </MenuList>
-                    </Menu>
-                  </Flex>
+              <Flex justifyContent="space-between">
+                <Box className="p-3 flex flex-col justify-around w-full">
+                  <Text className="text-2xl font-semibold">{group.name}</Text>
+                  <Text className="text-2xl font-semibold">
+                    {group.monthlyDepositAmount}
+                  </Text>
                 </Box>
-              </Link>
-            </NextLink>
+                <Menu>
+                  <MenuButton
+                    as={Button}
+                    rightIcon={<GoKebabVertical />}
+                    className="bg-white"
+                    bg="transparent"
+                    _hover={{ bg: "transparent" }}
+                    fontSize="18px"
+                  />
+                  <MenuList>
+                    {/* <MenuItem onClick={deleteCollection(group.id)}> */}
+                    Delete Group
+                    {/* </MenuItem> */}
+                    <MenuItem>Deactivate Group</MenuItem>
+                  </MenuList>
+                </Menu>
+              </Flex>
+            </Box>
+            //   </Link>
+            // </NextLink>
           );
         })}
       </Box>

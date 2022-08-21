@@ -35,7 +35,6 @@ export const getGroupList = createAsyncThunk(
   `${NAMESPACE}/groups`,
   async () => {
     const groups = await getCollection("groups");
-    console.log({ groups });
     return groups;
   }
 );
@@ -43,11 +42,7 @@ export const getGroupList = createAsyncThunk(
 export const addNewMemberToGroup = createAsyncThunk(
   "users/groups",
   async (groupDocId, thunkAPI) => {
-    // console.log({ thunkAPI: thunkAPI.getState() });
-
     let userId = thunkAPI.getState().account.user.uid;
-    console.log({ user: userId });
-    // console.log({ userId: userId, groupDocId: groupDocId });
     await createSubCollection(userId, groupDocId);
     return;
   }
@@ -61,7 +56,7 @@ export const getUsersList = createAsyncThunk(`${NAMESPACE}/users`, async () => {
 export const getGroupMembers = createAsyncThunk(
   `${NAMESPACE}/groupUsers`,
   async (groupId) => {
-    console.log({ groupId });
+    // console.log({ groupId });
     const users = await getSubCollection(groupId, "members");
     return users;
   }
@@ -79,12 +74,10 @@ export const GroupSlice = createSlice({
     // CREATE
     builder
       .addCase(createGroup.pending, (state, action) => {
-        // console.log("pending");
         state.loadingGroupStatus = HTTP_STATUS.LOADING;
       })
       // Add reducers for additional action types here, and handle loading state as needed
       .addCase(createGroup.fulfilled, (state, action) => {
-        // console.log("fulfilled");
         state.loadingGroupStatus = HTTP_STATUS.DONE;
 
         toast({
@@ -148,7 +141,6 @@ export const GroupSlice = createSlice({
         state.loadingGroupStatus = HTTP_STATUS.LOADING;
       })
       .addCase(addNewMemberToGroup.fulfilled, (state, action) => {
-        // console.log(action);
         state.loadingGroupStatus = "fulfilled";
         toast({
           title: "Registration successful",
