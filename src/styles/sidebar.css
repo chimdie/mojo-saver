@@ -1,0 +1,10 @@
+.sidebar {
+    position: relative;
+    width: 300px;
+    height: 100vh;
+    transition: .3s;
+}
+
+.sidebar_disabled {
+    width: 100px;
+}
