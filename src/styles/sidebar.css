@@ -8,3 +8,9 @@
 .sidebar_disabled {
     width: 100px;
 }
+
+.closed{
+    display: none;
+    overflow: hidden;
+    visibility: hidden;
+}
