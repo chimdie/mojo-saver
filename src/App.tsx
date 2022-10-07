@@ -1,12 +1,11 @@
 import * as React from "react";
-import { BrowserRouter as Router } from "react-router-dom";
-import { Box } from "@chakra-ui/react";
-import { DashboardLayout } from "./layouts";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
 
 export const App = () => (
-  <Router>
-    <Box display="flex" fontSize="xl">
-      <DashboardLayout />
-    </Box>
-  </Router>
+  <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<Home />} />
+    </Routes>
+  </BrowserRouter>
 );
