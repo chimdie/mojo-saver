@@ -1,16 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root{
     --main: #9a867a;
     --dark: #1d2231;
     --grey: #8390a2;
+    --pri__blue: #375d86;
 }
 
 *{
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-}
-
-.shadow {
-  box-shadow: 20px 0px 13px rgba(0, 0, 0, 0.035), 8.15px 0px 6.51852px rgba(0, 0, 0, 0.0274815), 1.85px 0px 3.14814px rgba(0, 0, 0, 0.0168519);
+    letter-spacing: 0.05em;
 }
 
