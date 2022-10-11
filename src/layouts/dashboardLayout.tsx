@@ -4,7 +4,11 @@ import { BottomNaviagtion, SideBar } from "../components/Nav";
 const smVariant = { navigation: "mobileNav", navigationButton: true };
 const mdVariant = { navigation: "sidebar", navigationButton: false };
 
-export default function DashboardLayout({ children }: any): JSX.Element {
+export default function DashboardLayout({
+  children
+}: {
+  children: React.ReactNode;
+}): JSX.Element {
   const variants = useBreakpointValue({ base: smVariant, md: mdVariant });
 
   return (

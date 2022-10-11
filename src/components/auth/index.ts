@@ -1,3 +1,3 @@
-import AuthCard from "./authCard";
+import SlideCardProps from "./slideCard";
 
-export default AuthCard;
+export default SlideCardProps;
