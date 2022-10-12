@@ -19,7 +19,7 @@ const BottomNaviagtion = (): JSX.Element => {
       padding="2rem"
       left="0"
       bottom="0"
-      boxShadow="rgba(0, 0, 0, 0.01) 0px 2px 1px 0px inset"
+      boxShadow="rgb(158 158 158 / 20%) 0px -2px 12px 0px"
     >
       {links.map((link) => {
         return (
@@ -33,14 +33,15 @@ const BottomNaviagtion = (): JSX.Element => {
             <Box display="grid" placeItems="center">
               <Icon
                 as={link.icon}
-                w={8}
-                h={8}
+                w={9}
+                h={9}
                 padding=".4rem"
                 color="inherit"
                 _activeLink={{ color: "inherit" }}
-                borderRadius="50%"
-                boxShadow="rgba(99, 99, 99, 0.2) 0px 2px 8px 0px"
               />
+            </Box>
+            <Box fontSize="9px" fontWeight="bold">
+              {link.title}
             </Box>
           </Link>
         );
