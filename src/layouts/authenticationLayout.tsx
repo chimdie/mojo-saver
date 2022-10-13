@@ -3,7 +3,7 @@ import { Box } from "@chakra-ui/react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { joinImg, scheduleImg, remImg } from "../assets/";
+import { joinImg, scheduleImg, remImg } from "../assets";
 import SlideCardProps from "../components/auth";
 
 const sliderSettings = {
@@ -23,7 +23,7 @@ export default function AuthLayout({
   children: React.ReactNode;
 }) {
   return (
-    <Box as="main" className="md:grid grid-cols-2 w-full h-screen">
+    <Box as="main" className="md:grid grid-cols-2 w-full h-full md:h-screen">
       <Box as="section" className="py-8">
         <Box as="section">
           <Slider {...sliderSettings}>
@@ -46,7 +46,13 @@ export default function AuthLayout({
           </Slider>
         </Box>
       </Box>
-      <Box as="section" display="grid" placeItems="center" bg="#0085FF">
+      <Box
+        as="section"
+        bg="#0085FF"
+        display="grid"
+        placeItems="center"
+        height="100%"
+      >
         <Box className="py-8">
           <Box as="section" bg="#FFF" className="px-8 py-8 rounded-xl">
             <Box as="section" className="text-center flex flex-col	items-center">
