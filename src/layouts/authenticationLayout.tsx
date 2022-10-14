@@ -3,7 +3,7 @@ import { Box } from "@chakra-ui/react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { joinImg, scheduleImg, remImg } from "../assets";
+import { joinImg, scheduleImg, remImg } from "../assets/auth";
 import SlideCardProps from "../components/auth";
 
 const sliderSettings = {

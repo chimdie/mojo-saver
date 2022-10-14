@@ -29,6 +29,8 @@ export default function DashboardLayout({
               alignItems="center"
               justifyContent="center"
               flexDirection="column"
+              padding={8}
+              mb="4rem"
             >
               {children}
             </Box>
@@ -48,13 +50,13 @@ export default function DashboardLayout({
             minHeight="100vh"
           >
             <Box as="section">
-              <Box as="main" px={{ base: 4, md: 10, xl: 8 }} py="1rem">
+              <Box as="main" p="14">
                 {children}
               </Box>
             </Box>
             <Box as="footer" textAlign="center" py={5} justifySelf="self-ed">
               <Text fontSize="12px">
-                Copyright © <span>{new Date().getFullYear()}</span>.
+                Copyright Solo Thrift © <span>{new Date().getFullYear()}</span>.
               </Text>
             </Box>
           </Box>

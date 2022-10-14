@@ -14,12 +14,14 @@ const BottomNaviagtion = (): JSX.Element => {
       justifyContent="space-between"
       flexShrink="0"
       color="#fFF"
+      bg="#fFF"
       width="100%"
       height="60px"
       padding="2rem"
       left="0"
       bottom="0"
       boxShadow="rgb(158 158 158 / 20%) 0px -2px 12px 0px"
+      zIndex="1000"
     >
       {links.map((link) => {
         return (
