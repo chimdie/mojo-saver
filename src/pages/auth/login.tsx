@@ -65,7 +65,7 @@ export default function Login() {
           )}
         </div>
 
-        <button className="inline-block bg-sky-500 text-white rounded shadow py-2 px-5 text-sm">
+        <button className="inline-block bg-sky-500 text-white rounded shadow py-2 px-5 text-sm w-full">
           Submit
         </button>
       </form>
