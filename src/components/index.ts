@@ -1,3 +1,3 @@
-import GroupCard from "./groupCard";
+import GroupCard from "./cards/groupCard";
 
 export { GroupCard };

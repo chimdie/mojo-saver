@@ -32,7 +32,13 @@ export default function Groups() {
   };
   return (
     <DashboardLayout>
-      <Box className="flex gap-6 md:gap-10 flex-wrap">
+      <Box
+        as="section"
+        className="flex gap-6 md:gap-10 flex-wrap"
+        display={{ md: "grid" }}
+        gridTemplateColumns="repeat(auto-fit, minmax(250px, 1fr))"
+        // gap={{ base: "1.5rem", md: "em" }}
+      >
         {fakeGroups.map((group) => {
           return (
             <>
