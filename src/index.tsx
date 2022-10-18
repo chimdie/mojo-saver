@@ -1,7 +1,9 @@
 import { ColorModeScript, ChakraProvider, theme } from "@chakra-ui/react";
 import * as React from "react";
 import * as ReactDOM from "react-dom/client";
+import { Provider } from "react-redux";
 import { App } from "./App";
+import store from "redux/store";
 import reportWebVitals from "./reportWebVitals";
 import * as serviceWorker from "./serviceWorker";
 import "./index.css";
@@ -12,10 +14,12 @@ const root = ReactDOM.createRoot(container);
 
 root.render(
   <React.StrictMode>
-    <ChakraProvider theme={theme}>
-      <ColorModeScript />
-      <App />
-    </ChakraProvider>
+    <Provider store={store}>
+      <ChakraProvider theme={theme}>
+        <ColorModeScript />
+        <App />
+      </ChakraProvider>
+    </Provider>
   </React.StrictMode>
 );
 
