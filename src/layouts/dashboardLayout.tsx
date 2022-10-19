@@ -1,5 +1,10 @@
+import { useEffect } from "react";
 import { Box, useBreakpointValue, Text } from "@chakra-ui/react";
 import { BottomNaviagtion, SideBar } from "../components/Nav";
+import { getLogedInUser } from "pages/auth/slices/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useLocation } from "react-router-dom";
+// import { userData } from "utils";
 
 const smVariant = { navigation: "mobileNav", navigationButton: true };
 const mdVariant = { navigation: "sidebar", navigationButton: false };
@@ -9,7 +14,32 @@ export default function DashboardLayout({
 }: {
   children: React.ReactNode;
 }): JSX.Element {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const { user } = useSelector((state: any) => state.account);
+
+  // const userId = userData() && userData().userId ? userData().userId : user?.id;
+
   const variants = useBreakpointValue({ base: smVariant, md: mdVariant });
+
+  useEffect(() => {
+    if (!user) {
+      // @ts-ignore
+      dispatch(getLogedInUser());
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!user) {
+      navigate("/login", { replace: true });
+    }
+  }, [user, location]);
+
+  // user is signed out or still being checked.
+  // don't render anything
+  if (!user) navigate("/login", { replace: true });
 
   return (
     <Box as="main" height="100%" width="100%">

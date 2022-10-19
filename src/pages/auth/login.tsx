@@ -1,19 +1,27 @@
-// import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { useDispatch, useSelector } from "react-redux";
 import { AuthLayout } from "../../layouts";
+import { login } from "./slices/authSlice";
+import { useNavigate } from "react-router-dom";
+import { HTTP_STATUS } from "utils";
 
 const schema = yup.object().shape({
-  email: yup.string().email().required(),
+  emailAddress: yup.string().email().required(),
   password: yup.string().required().min(6)
 });
 
 export default function Login() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const { loadingStatus } = useSelector((state: any) => state.account);
+
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors }
   } = useForm({
     mode: "onBlur",
@@ -21,27 +29,32 @@ export default function Login() {
   });
 
   function onSubmit(data: string | any) {
-    // eslint-disable-next-line no-console
-    console.log(data);
-    reset();
+    // @ts-ignore
+    dispatch(login(data));
   }
+
+  useEffect(() => {
+    if (loadingStatus === HTTP_STATUS.DONE) {
+      navigate("/", { replace: true });
+    }
+  }, [loadingStatus]);
 
   return (
     <AuthLayout>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-8">
           <input
-            type="text"
-            id="email"
+            type="email"
+            id="emailAddress"
             placeholder="email"
             className={`block w-full bg-transparent outline-none border-b-2 py-2 px-4  focus:rounded focus:bg-sky-50 ${
-              errors.email
+              errors.emailAddress
                 ? "text-red-300 border-red-400"
                 : "text-sky-200 border-sky-400"
             }`}
-            {...register("email")}
+            {...register("emailAddress")}
           />
-          {errors.email && (
+          {errors.emailAddress && (
             <p className="text-red-500 text-sm mt-2">
               A valid email is required.
             </p>
