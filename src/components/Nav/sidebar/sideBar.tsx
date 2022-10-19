@@ -1,9 +1,11 @@
 import React from "react";
 import { NavLink as ReactLink } from "react-router-dom";
-import { Box, Link, Icon, Text } from "@chakra-ui/react";
+import { Box, Link, Icon, Text, Button } from "@chakra-ui/react";
+import { AiOutlineLogout } from "react-icons/ai";
 import { links } from "../links";
+import { OnclickProp } from "components/types";
 
-export default function MainSidebar(): JSX.Element {
+export default function MainSidebar({ onClick }: OnclickProp): JSX.Element {
   return (
     <Box
       as="aside"
@@ -11,6 +13,7 @@ export default function MainSidebar(): JSX.Element {
       display="flex"
       flexDir="column"
       alignItems="flex-start"
+      justifyContent="space-between"
       gap="24px"
       width="390px"
       height="100vh"
@@ -52,6 +55,23 @@ export default function MainSidebar(): JSX.Element {
             </Link>
           );
         })}
+      </Box>
+      <Box className="flex w-full">
+        <Box as="section" className="p-8 my-8 w-full">
+          <Button
+            leftIcon={<AiOutlineLogout />}
+            colorScheme="blue"
+            variant="outline"
+            width="100%"
+            py="1.5rem"
+            borderRadius="12px"
+            onClick={onClick}
+            fontSize="20px"
+            textAlign="left"
+          >
+            Logout
+          </Button>
+        </Box>
       </Box>
     </Box>
   );

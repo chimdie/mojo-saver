@@ -12,7 +12,7 @@ const NAME_SPACE = "auth";
 
 const initialState = {
   user: {},
-  rememberMe: false,
+  isAdmin: false,
   loadingStatus: HTTP_STATUS.IDLE
 };
 
@@ -57,6 +57,7 @@ const authSlice = createSlice({
       .addCase(signupNewUser.fulfilled, (state: any, { payload }) => {
         state.loadingStatus = HTTP_STATUS.DONE;
         if (payload.success) {
+          state.isAdmin = payload.isAdmin; // TODO IF USER IS ADMIN, LOGIN TO ADMIN Dashboard ELSE user dashboard
           // toast.success("New Admin Account has been created");
           window.location.href = `${window.location.protocol}//${window.location.host}/login`;
         } else {
