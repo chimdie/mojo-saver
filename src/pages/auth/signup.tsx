@@ -7,21 +7,20 @@ import { useNavigate } from "react-router-dom";
 import { AuthLayout } from "../../layouts";
 import { signupNewUser } from "./slices/authSlice";
 import { HTTP_STATUS } from "utils";
+import { Box, Checkbox } from "@chakra-ui/react";
 
 const schema = yup.object().shape({
   emailAddress: yup.string().email().required(),
   fullName: yup.string().required(),
   password: yup.string().required().min(6),
-  confirmPassword: yup
-    .string()
-    .oneOf([yup.ref("password"), null], "Passwords must match")
+  confirmPassword: yup.string().oneOf([yup.ref("password"), null])
 });
 
 export default function Signup() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { loadingStatus } = useSelector((state: any) => state.account);
+  const { loadingStatus, isAdmin } = useSelector((state: any) => state.account);
 
   const {
     register,
@@ -38,7 +37,7 @@ export default function Signup() {
   }
 
   useEffect(() => {
-    if (loadingStatus === HTTP_STATUS.DONE) {
+    if (loadingStatus === HTTP_STATUS.DONE && !isAdmin) {
       navigate("/login", { replace: true });
     }
   }, [loadingStatus]);
@@ -50,16 +49,16 @@ export default function Signup() {
           <input
             type="text"
             id="fullName"
-            placeholder="FullName"
+            placeholder="Full Name"
             className={`block w-full bg-transparent outline-none border-b-2 py-2 px-4  focus:rounded focus:bg-sky-50 text-black ${
               errors.fullName
                 ? "text-red-300 border-red-400"
-                : "text-sky-200 border-sky-400"
+                : "text-black border-sky-400"
             }`}
             {...register("fullName")}
           />
           {errors.fullName && (
-            <p className="text-red-500 text-sm mt-2">FullName is required.</p>
+            <p className="text-red-500 text-sm mt-2">Full Name is required.</p>
           )}
         </div>
         <div className="mb-8">
@@ -70,7 +69,7 @@ export default function Signup() {
             className={`block w-full bg-transparent outline-none border-b-2 py-2 px-4  focus:rounded focus:bg-sky-50 ${
               errors.emailAddress
                 ? "text-red-300 border-red-400"
-                : "text-sky-200 border-sky-400"
+                : "text-black border-sky-400"
             }`}
             {...register("emailAddress")}
           />
@@ -108,11 +107,15 @@ export default function Signup() {
             {...register("confirmPassword")}
           />
           {errors.confirmPassword && (
-            <p className="text-red-500 text-sm mt-2">
-              Your password must match.
-            </p>
+            <p className="text-red-500 text-sm mt-2">Passwords must match.</p>
           )}
         </div>
+
+        <Box className="mb-8 flex items-center">
+          <Checkbox {...register("isAdmin")} name="isAdmin">
+            Register as an Admin?
+          </Checkbox>
+        </Box>
 
         <button className="inline-block bg-sky-500 text-white rounded shadow py-2 px-5 text-sm w-full">
           Submit

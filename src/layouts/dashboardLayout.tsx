@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Box, useBreakpointValue, Text } from "@chakra-ui/react";
 import { BottomNaviagtion, SideBar } from "../components/Nav";
-import { getLogedInUser } from "pages/auth/slices/authSlice";
+import { getLogedInUser, logout } from "pages/auth/slices/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 // import { userData } from "utils";
@@ -41,6 +41,13 @@ export default function DashboardLayout({
   // don't render anything
   if (!user) navigate("/login", { replace: true });
 
+  function handleLogout() {
+    // @ts-ignore
+    dispatch(logout());
+    window.location.href = `${window.location.protocol}//${window.location.host}/login`;
+    navigate("/login", { replace: true });
+  }
+
   return (
     <Box as="main" height="100%" width="100%">
       {variants?.navigation === "mobileNav" ? (
@@ -69,7 +76,7 @@ export default function DashboardLayout({
         </>
       ) : (
         <Box as="section">
-          <SideBar />
+          <SideBar onClick={handleLogout} />
           <Box
             as="section"
             pl={390}
