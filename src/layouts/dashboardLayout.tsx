@@ -1,5 +1,11 @@
+import { useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Box, useBreakpointValue, Text } from "@chakra-ui/react";
 import { BottomNaviagtion, SideBar } from "../components/Nav";
+import { getLogedInUser, logout } from "pages/auth/slices/authSlice";
+import { useAppSelector, useAppDispatch } from "redux/hook";
+import { userData } from "utils";
+import { userLinks, adminLinks } from "components/Nav/links";
 
 const smVariant = { navigation: "mobileNav", navigationButton: true };
 const mdVariant = { navigation: "sidebar", navigationButton: false };
@@ -9,7 +15,38 @@ export default function DashboardLayout({
 }: {
   children: React.ReactNode;
 }): JSX.Element {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const { user } = useAppSelector((state: any) => state.account);
+
+  const currentUser = userData() && userData().user ? userData().user : user;
+
   const variants = useBreakpointValue({ base: smVariant, md: mdVariant });
+
+  useEffect(() => {
+    if (!currentUser) {
+      dispatch(getLogedInUser());
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!currentUser) {
+      navigate("/login", { replace: true });
+    }
+  }, [user, location]);
+
+  if (!currentUser) {
+    navigate("/login", { replace: true });
+    // return null;
+  }
+
+  function handleLogout() {
+    dispatch(logout());
+    window.location.href = `${window.location.protocol}//${window.location.host}/login`;
+    navigate("/login", { replace: true });
+  }
 
   return (
     <Box as="main" height="100%" width="100%">
@@ -35,11 +72,16 @@ export default function DashboardLayout({
               {children}
             </Box>
           </Box>
-          <BottomNaviagtion />
+          <BottomNaviagtion
+            currentUser={currentUser?.isAdmin === true ? adminLinks : userLinks}
+          />
         </>
       ) : (
         <Box as="section">
-          <SideBar />
+          <SideBar
+            onClick={handleLogout}
+            currentUser={currentUser?.isAdmin === true ? adminLinks : userLinks}
+          />
           <Box
             as="section"
             pl={390}

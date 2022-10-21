@@ -1,31 +1,55 @@
 import {
-  FaBitcoin,
   FaHome,
   // FaUsers,
   FaUser,
-  FaUserFriends
-  // ,FaUserCog,FaUserPlus
+  FaUserFriends,
+  // FaUserCog,
+  FaUserPlus
 } from "react-icons/fa";
+// import { IoCreateOutline } from "react-icons/io5";
 
-export const links = [
+export const userLinks = [
   {
     title: "Dashboard",
     url: "/",
     icon: FaHome
   },
   {
-    title: "About",
-    url: "/about",
-    icon: FaBitcoin
+    title: "My Groups",
+    url: "/groups",
+    icon: FaUserFriends
   },
   {
-    title: "Trend",
-    url: "/trend",
+    title: "Join Groups",
+    url: "/join",
+    icon: FaUserPlus
+  },
+  {
+    title: "Profile",
+    url: "/profile",
     icon: FaUser
+  }
+];
+
+export const adminLinks = [
+  {
+    title: "Dashboard",
+    url: "/",
+    icon: FaHome
   },
   {
     title: "Groups",
     url: "/groups",
     icon: FaUserFriends
+  },
+  {
+    title: "New Group",
+    url: "/new-group",
+    icon: FaUserPlus
+  },
+  {
+    title: "Profile",
+    url: "/profile",
+    icon: FaUser
   }
 ];

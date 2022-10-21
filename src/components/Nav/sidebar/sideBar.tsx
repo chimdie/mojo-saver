@@ -1,9 +1,16 @@
 import React from "react";
-import { NavLink as ReactLink } from "react-router-dom";
-import { Box, Link, Icon, Text } from "@chakra-ui/react";
-import { links } from "../links";
+import { NavLink as ReactLink, To } from "react-router-dom";
+import { Box, Link, Icon, Text, Button } from "@chakra-ui/react";
+import { AiOutlineLogout } from "react-icons/ai";
+// import { OnclickProp } from "components/types";
 
-export default function MainSidebar(): JSX.Element {
+export default function MainSidebar({
+  onClick,
+  currentUser
+}: {
+  onClick: any;
+  currentUser: any;
+}): JSX.Element {
   return (
     <Box
       as="aside"
@@ -11,6 +18,7 @@ export default function MainSidebar(): JSX.Element {
       display="flex"
       flexDir="column"
       alignItems="flex-start"
+      justifyContent="space-between"
       gap="24px"
       width="390px"
       height="100vh"
@@ -28,30 +36,56 @@ export default function MainSidebar(): JSX.Element {
         w="100%"
         padding="24px"
       >
-        {links.map((link, i) => {
-          return (
-            <Link
-              as={ReactLink}
-              key={link.url + i}
-              to={link.url}
-              width="330px"
-              p="1rem .75rem"
-              my=".75rem"
-              display="flex"
-              alignItems="center"
-              gap="1rem"
-              borderRadius="12px"
-              transition="background 0.2s"
-              color="#375d86"
-              fontWeight="bold"
-              _hover={{ color: "#0085FF", background: "#f1f1f1" }}
-              _activeLink={{ color: "#0085FF", background: "#f1f1f1" }}
-            >
-              <Icon as={link.icon} w={6} h={6} />
-              <Text>{link.title}</Text>
-            </Link>
-          );
-        })}
+        {currentUser.map(
+          (
+            link: {
+              url: To;
+              icon: any;
+              title: string;
+            },
+            i: any
+          ) => {
+            return (
+              <Link
+                as={ReactLink}
+                key={link.url + i}
+                to={link.url}
+                width="330px"
+                p="1rem .75rem"
+                my=".75rem"
+                display="flex"
+                alignItems="center"
+                gap="1rem"
+                borderRadius="12px"
+                transition="background 0.2s"
+                color="#022040"
+                fontWeight="bold"
+                _hover={{ color: "#0085FF", background: "#f1f1f1" }}
+                _activeLink={{ color: "#0085FF", background: "#f1f1f1" }}
+              >
+                <Icon as={link.icon} w={6} h={6} />
+                <Text>{link.title}</Text>
+              </Link>
+            );
+          }
+        )}
+      </Box>
+      <Box className="flex w-full">
+        <Box as="section" className="p-8 my-8 w-full">
+          <Button
+            leftIcon={<AiOutlineLogout />}
+            colorScheme="blue"
+            variant="outline"
+            width="100%"
+            py="1.5rem"
+            borderRadius="12px"
+            onClick={onClick}
+            fontSize="20px"
+            textAlign="left"
+          >
+            Logout
+          </Button>
+        </Box>
       </Box>
     </Box>
   );
