@@ -2,10 +2,10 @@ import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { AuthLayout } from "../../layouts";
 import { login } from "./slices/authSlice";
-import { useNavigate } from "react-router-dom";
+import { useAppSelector, useAppDispatch } from "redux/hook";
 import { HTTP_STATUS } from "utils";
 
 const schema = yup.object().shape({
@@ -14,10 +14,10 @@ const schema = yup.object().shape({
 });
 
 export default function Login() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const { loadingStatus } = useSelector((state: any) => state.account);
+  const { loadingStatus } = useAppSelector((state: any) => state.account);
 
   const {
     register,
