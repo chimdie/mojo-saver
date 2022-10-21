@@ -1,10 +1,11 @@
 import { useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Box, useBreakpointValue, Text } from "@chakra-ui/react";
 import { BottomNaviagtion, SideBar } from "../components/Nav";
 import { getLogedInUser, logout } from "pages/auth/slices/authSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useLocation } from "react-router-dom";
-// import { userData } from "utils";
+import { useAppSelector, useAppDispatch } from "redux/hook";
+import { userData } from "utils";
+import { userLinks, adminLinks } from "components/Nav/links";
 
 const smVariant = { navigation: "mobileNav", navigationButton: true };
 const mdVariant = { navigation: "sidebar", navigationButton: false };
@@ -14,35 +15,34 @@ export default function DashboardLayout({
 }: {
   children: React.ReactNode;
 }): JSX.Element {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { user } = useSelector((state: any) => state.account);
+  const { user } = useAppSelector((state: any) => state.account);
 
-  // const userId = userData() && userData().userId ? userData().userId : user?.id;
+  const currentUser = userData() && userData().user ? userData().user : user;
 
   const variants = useBreakpointValue({ base: smVariant, md: mdVariant });
 
   useEffect(() => {
-    if (!user) {
-      // @ts-ignore
+    if (!currentUser) {
       dispatch(getLogedInUser());
     }
   }, []);
 
   useEffect(() => {
-    if (!user) {
+    if (!currentUser) {
       navigate("/login", { replace: true });
     }
   }, [user, location]);
 
-  // user is signed out or still being checked.
-  // don't render anything
-  if (!user) navigate("/login", { replace: true });
+  if (!currentUser) {
+    navigate("/login", { replace: true });
+    // return null;
+  }
 
   function handleLogout() {
-    // @ts-ignore
     dispatch(logout());
     window.location.href = `${window.location.protocol}//${window.location.host}/login`;
     navigate("/login", { replace: true });
@@ -72,11 +72,16 @@ export default function DashboardLayout({
               {children}
             </Box>
           </Box>
-          <BottomNaviagtion />
+          <BottomNaviagtion
+            currentUser={currentUser?.isAdmin === true ? adminLinks : userLinks}
+          />
         </>
       ) : (
         <Box as="section">
-          <SideBar onClick={handleLogout} />
+          <SideBar
+            onClick={handleLogout}
+            currentUser={currentUser?.isAdmin === true ? adminLinks : userLinks}
+          />
           <Box
             as="section"
             pl={390}

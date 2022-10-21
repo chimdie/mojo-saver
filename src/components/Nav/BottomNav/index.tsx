@@ -1,9 +1,9 @@
 import React from "react";
 import { NavLink as ReactLink } from "react-router-dom";
 import { Box, Link, Icon } from "@chakra-ui/react";
-import { links } from "../links";
+// import { userLinks } from "../links";
 
-const BottomNaviagtion = (): JSX.Element => {
+const BottomNaviagtion = ({ currentUser }: any): JSX.Element => {
   return (
     <Box
       as="section"
@@ -23,7 +23,7 @@ const BottomNaviagtion = (): JSX.Element => {
       boxShadow="rgb(158 158 158 / 20%) 0px -2px 12px 0px"
       zIndex="1000"
     >
-      {links.map((link) => {
+      {currentUser.map((link: any) => {
         return (
           <Link
             as={ReactLink}

@@ -31,11 +31,8 @@ export const login = createAsyncThunk(`${NAME_SPACE}/login`, async (_data) => {
 
 export const getLogedInUser = createAsyncThunk(
   `${NAME_SPACE}/USER`,
-  async (arg, thunkApi) => {
-    const state = thunkApi.getState();
-    let userId = userData().userId
-      ? userData().userId // @ts-ignore
-      : state.account?.user?.id;
+  async () => {
+    const userId = userData().user._id;
     const { data } = await Api.get(`/users/${userId}`);
     return data;
   }
@@ -56,8 +53,7 @@ const authSlice = createSlice({
       })
       .addCase(signupNewUser.fulfilled, (state: any, { payload }) => {
         state.loadingStatus = HTTP_STATUS.DONE;
-        if (payload.success) {
-          state.isAdmin = payload.isAdmin; // TODO IF USER IS ADMIN, LOGIN TO ADMIN Dashboard ELSE user dashboard
+        if (payload) {
           // toast.success("New Admin Account has been created");
           window.location.href = `${window.location.protocol}//${window.location.host}/login`;
         } else {
@@ -75,14 +71,14 @@ const authSlice = createSlice({
       })
       .addCase(login.fulfilled, (state: any, { payload }) => {
         state.loadingStatus = HTTP_STATUS.DONE;
-        if (payload.success) {
-          state.user = payload.user;
-          state.user = { identity: payload.identity };
-          saveWithExpiry(
-            { email: payload.email, fullName: payload.fullName },
-            0,
-            "sessionStorage"
-          );
+        console.log({ payload });
+        if (payload && payload.user) {
+          console.log(payload);
+          state.user = payload;
+          state.isAdmin = payload.isAdmin; // TODO IF USER IS ADMIN, LOGIN TO ADMIN Dashboard ELSE user dashboard
+
+          // state.user = { identity: payload.identity };
+          saveWithExpiry(state.user, 0);
           // toast.info(payload.result || "OTP has been sent to your email");
           if (payload.user) {
             window.location.href = `${window.location.protocol}//${window.location.host}/`;
@@ -115,3 +111,23 @@ const authSlice = createSlice({
 });
 
 export default authSlice.reducer;
+
+//  if (payload.success) {
+//    Api.defaults.headers.common["Authorization"] = payload.result.token;
+
+//    if (payload.isAdmin) {
+//      state.user = {
+//        ...payload.result
+//      };
+//      saveWithExpiry({ ...payload.result }, 3);
+//      window.location.href = `${window.location.protocol}//${window.location.host}/profile`;
+//    } else {
+//      state.user = {
+//        ...payload.result,
+//        isAdmin: payload.isAdmin
+//      };
+//      saveWithExpiry({ ...payload.result }, 0, "sessionStorage");
+//    }
+//  } else {
+//    console.error(payload.message);
+//  }
