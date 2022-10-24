@@ -1,4 +1,3 @@
-import GroupCard from "./cards/groupCard";
-import UserGroupCard from "./userGrpCard";
+import { GroupCard, UserGroupCard } from "./cards";
 
 export { GroupCard, UserGroupCard };
