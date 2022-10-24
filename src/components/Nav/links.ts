@@ -34,22 +34,22 @@ export const userLinks = [
 export const adminLinks = [
   {
     title: "Dashboard",
-    url: "/",
+    url: "/admin",
     icon: FaHome
   },
   {
     title: "Groups",
-    url: "/groups",
+    url: "/admin/groups",
     icon: FaUserFriends
   },
   {
     title: "New Group",
-    url: "/new-group",
+    url: "/admin/new-group",
     icon: FaUserPlus
   },
   {
     title: "Profile",
-    url: "/profile",
+    url: "/admin/profile",
     icon: FaUser
   }
 ];

@@ -20,7 +20,7 @@ export default function MainSidebar({
       alignItems="flex-start"
       justifyContent="space-between"
       gap="24px"
-      width="390px"
+      width="300px"
       height="100vh"
       top="0"
       left="0"
@@ -50,7 +50,7 @@ export default function MainSidebar({
                 as={ReactLink}
                 key={link.url + i}
                 to={link.url}
-                width="330px"
+                width="270px"
                 p="1rem .75rem"
                 my=".75rem"
                 display="flex"
@@ -60,8 +60,8 @@ export default function MainSidebar({
                 transition="background 0.2s"
                 color="#022040"
                 fontWeight="bold"
-                _hover={{ color: "#0085FF", background: "#f1f1f1" }}
-                _activeLink={{ color: "#0085FF", background: "#f1f1f1" }}
+                _hover={{ color: "#0085FF" }}
+                _activeLink={{ color: "#0085FF" }}
               >
                 <Icon as={link.icon} w={6} h={6} />
                 <Text>{link.title}</Text>
