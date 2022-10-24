@@ -58,6 +58,7 @@ export default function CreateGroup({
   const onSubmit = (data: any) => {
     dispatch(createNewGroup({ ...data, owner: currentUserId }));
     reset();
+    onClose();
   };
 
   return (
@@ -116,17 +117,17 @@ export default function CreateGroup({
                 </FormErrorMessage>
               </FormControl>
             </ModalBody>
+            <ModalFooter>
+              <Button
+                width="100%"
+                type="submit"
+                colorScheme="blue"
+                variant="solid"
+              >
+                Create
+              </Button>
+            </ModalFooter>
           </form>
-          <ModalFooter>
-            <Button
-              width="100%"
-              type="submit"
-              colorScheme="blue"
-              variant="solid"
-            >
-              Create
-            </Button>
-          </ModalFooter>
         </ModalContent>
       </Modal>
     </Box>

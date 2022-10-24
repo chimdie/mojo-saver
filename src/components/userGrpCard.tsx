@@ -18,12 +18,14 @@ import { landscapeImg, leavesImg, dancersImg, dancerImg } from "assets/card";
 type CardProps = {
   title: string;
   description: string;
+  handleJoinGroup?: () => void;
   onClick: MouseEventHandler<HTMLDivElement> & MouseEventHandler<HTMLElement>;
 };
 
 const UserGroupCard = ({
   title,
   description,
+  handleJoinGroup,
   onClick
 }: CardProps): JSX.Element => {
   const cancelRef = useRef<HTMLButtonElement>(null);
@@ -35,16 +37,16 @@ const UserGroupCard = ({
   return (
     <Box
       as="section"
-      className="flex flex-col overflow-hidden w-full max-w-sm bg-white rounded-xl shadow-lg"
+      className="flex flex-col overflow-hidden w-full max-w-xs bg-white rounded-xl shadow-lg hover:bg-slate-50 hover:ease-in-out hover:cursor-pointer"
     >
       <Image src={randomImg} alt={title} />
       <Box as="section" className="p-4 flex flex-col justify-between h-full">
-        <Heading size={{ base: "md" }} className="py-2">
+        <Heading size={{ base: "sm" }} className="py-1">
           {title}
         </Heading>
-        <Text className="py-2">{description}</Text>
+        <Text className="py-1 text-xs">{description}</Text>
       </Box>
-      <>
+      <Box onClick={onClick}>
         <Button onClick={onOpen} w="100%" py={3} borderRadius="0">
           Join Group
         </Button>
@@ -67,14 +69,14 @@ const UserGroupCard = ({
                 <Button ref={cancelRef} onClick={onClose}>
                   Cancel
                 </Button>
-                <Button onClick={onClick} colorScheme="blue">
+                <Button onClick={handleJoinGroup} colorScheme="blue">
                   Join Group
                 </Button>
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialogOverlay>
         </AlertDialog>
-      </>
+      </Box>
     </Box>
   );
 };
