@@ -1,7 +1,7 @@
 import React from "react";
 import { Avatar, Box, Heading } from "@chakra-ui/react";
-import { DashboardLayout } from "../../layouts";
 import { AiFillAndroid } from "react-icons/ai";
+import { DashboardLayout } from "layouts";
 
 export default function Home(): JSX.Element {
   return (

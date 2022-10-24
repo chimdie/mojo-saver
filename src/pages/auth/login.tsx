@@ -13,6 +13,10 @@ const schema = yup.object().shape({
   password: yup.string().required().min(6)
 });
 
+// interface Props {
+//   login: (data: string) => void;
+// }
+
 export default function Login() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -28,8 +32,8 @@ export default function Login() {
     resolver: yupResolver(schema)
   });
 
-  function onSubmit(data: string | any) {
-    // @ts-ignore
+  function onSubmit(data: any) {
+    //@ts-ignore
     dispatch(login(data));
   }
 

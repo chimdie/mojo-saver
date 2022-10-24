@@ -1,3 +1,3 @@
 import AdminGroups from "./groups";
 
-export { AdminGroups };
+export default AdminGroups;
