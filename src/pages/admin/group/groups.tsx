@@ -81,7 +81,7 @@ export default function AdminGroups() {
           isOpen={isGroupOpen}
           placement="right"
           onClose={onGroupClose}
-          size={{ base: "xs", md: "md" }}
+          size={{ base: "sm", md: "md" }}
         >
           <DrawerOverlay />
           <DrawerContent>
@@ -94,7 +94,7 @@ export default function AdminGroups() {
                 ) : (
                   currentGroupMembers?.map((member: UserCard) => {
                     return (
-                      <Box className="flex justify-between bg-gray-50 border-gray-200 border p-4 rounded-sm shadow">
+                      <Box className="flex justify-between bg-white border-gray-200 border p-4 rounded-md shadow">
                         <Box className="py-1">
                           <Text className="font-semibold pb-1 capitalize">
                             {member?.fullName}

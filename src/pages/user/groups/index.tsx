@@ -21,8 +21,11 @@ export default function Groups(): JSX.Element {
     `/users/${currentUserId}`
   );
 
-  const handleJoinGroup = (id: string) => {
+  const handleOpenGroup = (id: string) => {
     dispatch(getSelectedGroup(id));
+  };
+
+  const handleJoinGroup = () => {
     dispatch(joinAGroup({ groupId: currentGroup?._id, userId: currentUserId }));
   };
 
@@ -30,13 +33,13 @@ export default function Groups(): JSX.Element {
   if (trendingGrpError || userGrpError)
     return (
       <DashboardLayout>
-        <Box>An error occurred</Box>;
+        <Box>An error occurred</Box>
       </DashboardLayout>
     );
   if (!trendingGroups || !myGroups)
     return (
       <DashboardLayout>
-        <Box>Loading...</Box>;
+        <Box>Loading...</Box>
       </DashboardLayout>
     );
 
@@ -59,7 +62,8 @@ export default function Groups(): JSX.Element {
                       key={group?._id}
                       title={group.name}
                       description={group.description}
-                      onClick={() => handleJoinGroup(group?._id)}
+                      onClick={() => handleOpenGroup(group?._id)}
+                      handleJoinGroup={() => handleJoinGroup()}
                     />
                   );
                 })
@@ -67,20 +71,21 @@ export default function Groups(): JSX.Element {
             </Box>
           </TabPanel>
           <TabPanel>
-            <Box className="flex gap-6 md:gap-10 flex-wrap"></Box>
-            {myGroups?.length === 0 ? (
-              <Box>You're yet to join any group</Box>
-            ) : (
-              myGroups?.groups?.map((group: any) => {
-                return (
-                  <GroupCard
-                    key={group?._id}
-                    title={group.name}
-                    description={group.description}
-                  />
-                );
-              })
-            )}
+            <Box className="flex gap-6 md:gap-10 flex-wrap">
+              {myGroups?.length === 0 ? (
+                <Box>You're yet to join any group</Box>
+              ) : (
+                myGroups?.groups?.map((group: any) => {
+                  return (
+                    <GroupCard
+                      key={group?._id}
+                      title={group?.name}
+                      description={group?.description}
+                    />
+                  );
+                })
+              )}
+            </Box>
           </TabPanel>
         </TabPanels>
       </Tabs>
