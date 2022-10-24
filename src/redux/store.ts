@@ -3,9 +3,11 @@ import { combineReducers } from "redux";
 import thunk from "redux-thunk";
 
 import authSlice, { logout } from "pages/auth/slices/authSlice";
+import groupSlice from "pages/admin/slices/groupSlice";
 
 const reducers = combineReducers({
-  account: authSlice
+  account: authSlice,
+  group: groupSlice
 });
 
 const rootReducer = (state: any, action: any) => {
