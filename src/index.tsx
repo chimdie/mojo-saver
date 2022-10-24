@@ -7,6 +7,12 @@ import store from "redux/store";
 import reportWebVitals from "./reportWebVitals";
 import * as serviceWorker from "./serviceWorker";
 import "./index.css";
+import { SWRConfig } from "swr";
+import axios from "axios";
+
+axios.defaults.baseURL = process.env.REACT_APP_BASEURL
+  ? process.env.REACT_APP_BASEURL
+  : "http://localhost:1337/api/v1";
 
 const container = document.getElementById("root");
 if (!container) throw new Error("Failed to find the root element");
@@ -17,7 +23,19 @@ root.render(
     <Provider store={store}>
       <ChakraProvider theme={theme}>
         <ColorModeScript />
-        <App />
+        <SWRConfig
+          value={{
+            fetcher: (url: string) => axios.get(url).then((res) => res.data),
+            onError: (error) => {
+              if (error.status !== 403 && error.status !== 404) {
+                // We can send the error to Sentry,
+                // or show a notification UI.
+              }
+            }
+          }}
+        >
+          <App />
+        </SWRConfig>
       </ChakraProvider>
     </Provider>
   </React.StrictMode>
