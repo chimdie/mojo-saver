@@ -4,10 +4,12 @@ import HashLoader from "react-spinners/HashLoader";
 // procted route
 import { ProtectedRoute } from "routes";
 // auth route
-import { Login, Signup } from "./pages/auth";
-// private routes
-import Home from "./pages/Home";
-import Groups from "./pages/groups";
+import { Login, Signup } from "pages/auth";
+// users routes
+import Home from "pages/user/Home";
+import Groups from "pages/user/groups";
+// admin routes
+import AdminGroups from "pages/admin/group";
 
 export const App = () => {
   return (
@@ -19,8 +21,13 @@ export const App = () => {
         <Route element={<ProtectedRoute />}>
           <Route path="/" element={<Home />} />
           <Route path="/groups" element={<Groups />} />
+          // Admin
+          <Route path="/admin" element={<Home />} />
+          {/* <Route path="/admin/new-group" element={<CreateGroup />} /> */}
+          <Route path="/admin/groups" element={<AdminGroups />} />
         </Route>
       </Routes>
+      {/* <AppRoutes /> */}
     </BrowserRouter>
   );
 };

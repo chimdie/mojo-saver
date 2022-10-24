@@ -84,7 +84,7 @@ export default function DashboardLayout({
           />
           <Box
             as="section"
-            pl={390}
+            pl={300}
             display="flex"
             flexDirection="column"
             justifyContent="space-between"

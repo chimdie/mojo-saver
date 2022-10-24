@@ -20,7 +20,7 @@ const sliderSettings = {
 export default function AuthLayout({
   children
 }: {
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }) {
   return (
     <Box as="main" className="md:grid grid-cols-2 w-full h-full md:h-screen">
