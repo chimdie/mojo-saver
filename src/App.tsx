@@ -7,9 +7,12 @@ import { ProtectedRoute } from "routes";
 import { Login, Signup } from "pages/auth";
 // users routes
 import Home from "pages/user/Home";
+import Profile from "pages/user/profile";
 import Groups from "pages/user/groups";
 // admin routes
 import AdminGroups from "pages/admin/group";
+import AdminProfile from "pages/admin/profile";
+import AdminHome from "pages/admin/Home";
 
 export const App = () => {
   return (
@@ -21,13 +24,13 @@ export const App = () => {
         <Route element={<ProtectedRoute />}>
           <Route path="/" element={<Home />} />
           <Route path="/groups" element={<Groups />} />
-          // Admin
-          <Route path="/admin" element={<Home />} />
-          {/* <Route path="/admin/new-group" element={<CreateGroup />} /> */}
-          <Route path="/admin/groups" element={<AdminGroups />} />
+          <Route path="/profile" element={<Profile />} />
+
+          <Route path="/admin" element={<AdminHome />} />
+          <Route path="/admin.groups" element={<AdminGroups />} />
+          <Route path="/admin.profile" element={<AdminProfile />} />
         </Route>
       </Routes>
-      {/* <AppRoutes /> */}
     </BrowserRouter>
   );
 };

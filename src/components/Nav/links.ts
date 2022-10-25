@@ -1,12 +1,4 @@
-import {
-  FaHome,
-  // FaUsers,
-  FaUser,
-  FaUserFriends,
-  // FaUserCog,
-  FaUserPlus
-} from "react-icons/fa";
-// import { IoCreateOutline } from "react-icons/io5";
+import { FaHome, FaUser, FaUserFriends } from "react-icons/fa";
 
 export const userLinks = [
   {
@@ -18,11 +10,6 @@ export const userLinks = [
     title: "My Groups",
     url: "/groups",
     icon: FaUserFriends
-  },
-  {
-    title: "Join Groups",
-    url: "/join",
-    icon: FaUserPlus
   },
   {
     title: "Profile",
@@ -39,17 +26,12 @@ export const adminLinks = [
   },
   {
     title: "Groups",
-    url: "/admin/groups",
+    url: "/admin.groups",
     icon: FaUserFriends
   },
   {
-    title: "New Group",
-    url: "/admin/new-group",
-    icon: FaUserPlus
-  },
-  {
     title: "Profile",
-    url: "/admin/profile",
+    url: "/admin.profile",
     icon: FaUser
   }
 ];
