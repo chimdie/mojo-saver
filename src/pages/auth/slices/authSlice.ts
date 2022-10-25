@@ -76,11 +76,14 @@ const authSlice = createSlice({
           console.log(payload);
           state.user = payload;
           state.isAdmin = payload.isAdmin; // TODO IF USER IS ADMIN, LOGIN TO ADMIN Dashboard ELSE user dashboard
+          console.log(payload.isAdmin);
 
           // state.user = { identity: payload.identity };
           saveWithExpiry(state.user, 0);
           // toast.info(payload.result || "OTP has been sent to your email");
-          if (payload.user) {
+          if (payload.user?.isAdmin) {
+            window.location.href = `${window.location.protocol}//${window.location.host}/admin`;
+          } else {
             window.location.href = `${window.location.protocol}//${window.location.host}/`;
           }
         } else {

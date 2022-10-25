@@ -21,10 +21,9 @@ export const App = () => {
         <Route element={<ProtectedRoute />}>
           <Route path="/" element={<Home />} />
           <Route path="/groups" element={<Groups />} />
-          // Admin
+
           <Route path="/admin" element={<Home />} />
-          {/* <Route path="/admin/new-group" element={<CreateGroup />} /> */}
-          <Route path="/admin/groups" element={<AdminGroups />} />
+          <Route path="/admin.groups" element={<AdminGroups />} />
         </Route>
       </Routes>
       {/* <AppRoutes /> */}
