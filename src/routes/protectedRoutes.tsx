@@ -15,10 +15,10 @@ const ProtectedRoute = ({ children }: { children?: React.ReactNode }) => {
     if (!userId) {
       dispatch(getLogedInUser());
     }
-  }, [userId, user]);
+  }, [user]);
 
   if (!userId) {
-    return <Navigate to="/login" replace={true} />;
+    return <Navigate to="/" replace={true} />;
   }
   return <React.Fragment>{children ? children : <Outlet />}</React.Fragment>;
 };

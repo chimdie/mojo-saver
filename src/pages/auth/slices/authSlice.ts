@@ -24,13 +24,16 @@ export const signupNewUser = createAsyncThunk(
   }
 );
 
-export const login = createAsyncThunk(`${NAME_SPACE}/login`, async (_data) => {
-  const { data } = await Api.post("/users/login", _data);
-  return data;
-});
+export const login = createAsyncThunk(
+  `${NAME_SPACE}/login`,
+  async (_data: (data: object) => void) => {
+    const { data } = await Api.post("/users/login", _data);
+    return data;
+  }
+);
 
 export const getLogedInUser = createAsyncThunk(
-  `${NAME_SPACE}/USER`,
+  `${NAME_SPACE}/user`,
   async () => {
     const userId = userData().user._id;
     const { data } = await Api.get(`/users/${userId}`);
@@ -55,7 +58,6 @@ const authSlice = createSlice({
         state.loadingStatus = HTTP_STATUS.DONE;
         if (payload) {
           // toast.success("New Admin Account has been created");
-          window.location.href = `${window.location.protocol}//${window.location.host}/login`;
         } else {
           // toast.error(payload.message);
           console.log(payload.message);
@@ -75,16 +77,14 @@ const authSlice = createSlice({
         if (payload && payload.user) {
           console.log(payload);
           state.user = payload;
-          state.isAdmin = payload.isAdmin; // TODO IF USER IS ADMIN, LOGIN TO ADMIN Dashboard ELSE user dashboard
-
-          // state.user = { identity: payload.identity };
           saveWithExpiry(state.user, 0);
-          // toast.info(payload.result || "OTP has been sent to your email");
-          if (payload.user) {
-            window.location.href = `${window.location.protocol}//${window.location.host}/`;
+          if (payload.user?.isAdmin) {
+            window.location.href = `${window.location.protocol}//${window.location.host}/admin`;
+          } else {
+            window.location.href = `${window.location.protocol}//${window.location.host}/dashboard`;
           }
         } else {
-          // toast.error(payload.message);
+          console.error(payload.message);
         }
       })
       .addCase(login.rejected, (state: any) => {
@@ -96,38 +96,18 @@ const authSlice = createSlice({
       .addCase(getLogedInUser.pending, (state, action) => {})
       .addCase(getLogedInUser.fulfilled, (state, { payload }) => {
         if (payload.success) {
-          state.user = { ...state.user, ...payload.result };
+          state.user = payload;
         } else {
-          // toast.error(payload.message);
+          console.error(payload.message);
         }
       })
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       .addCase(getLogedInUser.rejected, (_state, { error }) => {
-        // if (error) {
-        //   toast.error(error.message);
-        // }
+        if (error) {
+          console.error(error.message);
+        }
       });
   }
 });
 
 export default authSlice.reducer;
-
-//  if (payload.success) {
-//    Api.defaults.headers.common["Authorization"] = payload.result.token;
-
-//    if (payload.isAdmin) {
-//      state.user = {
-//        ...payload.result
-//      };
-//      saveWithExpiry({ ...payload.result }, 3);
-//      window.location.href = `${window.location.protocol}//${window.location.host}/profile`;
-//    } else {
-//      state.user = {
-//        ...payload.result,
-//        isAdmin: payload.isAdmin
-//      };
-//      saveWithExpiry({ ...payload.result }, 0, "sessionStorage");
-//    }
-//  } else {
-//    console.error(payload.message);
-//  }

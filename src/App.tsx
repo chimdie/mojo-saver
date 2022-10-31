@@ -3,31 +3,33 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HashLoader from "react-spinners/HashLoader";
 // procted route
 import { ProtectedRoute } from "routes";
-// auth route
-import { Login, Signup } from "pages/auth";
 // users routes
 import Home from "pages/user/Home";
+import Profile from "pages/user/profile";
 import Groups from "pages/user/groups";
 // admin routes
 import AdminGroups from "pages/admin/group";
+import AdminProfile from "pages/admin/profile";
+import AdminHome from "pages/admin/Home";
+
+import HomePage from "pages";
 
 export const App = () => {
   return (
     <BrowserRouter>
       <React.Suspense fallback={<HashLoader />} />
       <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
+        <Route path="/" element={<HomePage />} />
         <Route element={<ProtectedRoute />}>
-          <Route path="/" element={<Home />} />
+          <Route path="/dashboard" element={<Home />} />
           <Route path="/groups" element={<Groups />} />
-          // Admin
-          <Route path="/admin" element={<Home />} />
-          {/* <Route path="/admin/new-group" element={<CreateGroup />} /> */}
-          <Route path="/admin/groups" element={<AdminGroups />} />
+          <Route path="/profile" element={<Profile />} />
+
+          <Route path="/admin" element={<AdminHome />} />
+          <Route path="/admin.groups" element={<AdminGroups />} />
+          <Route path="/admin.profile" element={<AdminProfile />} />
         </Route>
       </Routes>
-      {/* <AppRoutes /> */}
     </BrowserRouter>
   );
 };

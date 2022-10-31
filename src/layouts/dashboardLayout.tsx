@@ -5,10 +5,11 @@ import { BottomNaviagtion, SideBar } from "../components/Nav";
 import { getLogedInUser, logout } from "pages/auth/slices/authSlice";
 import { useAppSelector, useAppDispatch } from "redux/hook";
 import { userData } from "utils";
+import { ProtectedRoute } from "routes";
 import { userLinks, adminLinks } from "components/Nav/links";
 
-const smVariant = { navigation: "mobileNav", navigationButton: true };
-const mdVariant = { navigation: "sidebar", navigationButton: false };
+export const smVariant = { navigation: "mobileNav", navigationButton: true };
+export const mdVariant = { navigation: "sidebar", navigationButton: false };
 
 export default function DashboardLayout({
   children
@@ -33,77 +34,85 @@ export default function DashboardLayout({
 
   useEffect(() => {
     if (!currentUser) {
-      navigate("/login", { replace: true });
+      navigate("/", { replace: true });
     }
   }, [user, location]);
 
   if (!currentUser) {
-    navigate("/login", { replace: true });
-    // return null;
+    navigate("/", { replace: true });
+    return <></>;
   }
 
   function handleLogout() {
     dispatch(logout());
-    window.location.href = `${window.location.protocol}//${window.location.host}/login`;
-    navigate("/login", { replace: true });
+    window.location.href = `${window.location.protocol}//${window.location.host}/`;
+    navigate("/", { replace: true });
   }
 
   return (
-    <Box as="main" height="100%" width="100%">
-      {variants?.navigation === "mobileNav" ? (
-        <>
-          <Box
-            as="section"
-            display="flex"
-            flexDirection="column"
-            height="100%"
-            width="100%"
-          >
+    <>
+      <ProtectedRoute />
+      <Box as="main" height="100%" width="100%">
+        {variants?.navigation === "mobileNav" ? (
+          <>
             <Box
-              as="main"
-              flex="1"
+              as="section"
               display="flex"
-              alignItems="center"
-              justifyContent="center"
               flexDirection="column"
-              padding={8}
-              mb="4rem"
+              height="100%"
+              width="100%"
             >
-              {children}
-            </Box>
-          </Box>
-          <BottomNaviagtion
-            currentUser={currentUser?.isAdmin === true ? adminLinks : userLinks}
-          />
-        </>
-      ) : (
-        <Box as="section">
-          <SideBar
-            onClick={handleLogout}
-            currentUser={currentUser?.isAdmin === true ? adminLinks : userLinks}
-          />
-          <Box
-            as="section"
-            pl={300}
-            display="flex"
-            flexDirection="column"
-            justifyContent="space-between"
-            height="100%"
-            minHeight="100vh"
-          >
-            <Box as="section">
-              <Box as="main" p="14">
+              <Box
+                as="main"
+                flex="1"
+                display="flex"
+                // alignItems="center"
+                // justifyContent="center"
+                flexDirection="column"
+                padding={8}
+                mb="4rem"
+              >
                 {children}
               </Box>
             </Box>
-            <Box as="footer" textAlign="center" py={5} justifySelf="self-ed">
-              <Text fontSize="12px">
-                Copyright Solo Thrift © <span>{new Date().getFullYear()}</span>.
-              </Text>
+            <BottomNaviagtion
+              currentUser={
+                currentUser?.isAdmin === true ? adminLinks : userLinks
+              }
+            />
+          </>
+        ) : (
+          <Box as="section">
+            <SideBar
+              onClick={handleLogout}
+              currentUser={
+                currentUser?.isAdmin === true ? adminLinks : userLinks
+              }
+            />
+            <Box
+              as="section"
+              pl={300}
+              display="flex"
+              flexDirection="column"
+              justifyContent="space-between"
+              height="100%"
+              minHeight="100vh"
+            >
+              <Box as="section">
+                <Box as="main" p="14">
+                  {children}
+                </Box>
+              </Box>
+              <Box as="footer" textAlign="center" py={5} justifySelf="self-ed">
+                <Text fontSize="12px">
+                  Copyright Solo Thrift ©{" "}
+                  <span>{new Date().getFullYear()}</span>.
+                </Text>
+              </Box>
             </Box>
           </Box>
-        </Box>
-      )}
-    </Box>
+        )}
+      </Box>
+    </>
   );
 }

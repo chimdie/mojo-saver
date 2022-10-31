@@ -1,6 +1,6 @@
 import React from "react";
 import { DashboardLayout } from "layouts";
-import { Avatar, AvatarBadge, Box, Heading, Text } from "@chakra-ui/react";
+import { Avatar, AvatarBadge, Box, Heading } from "@chakra-ui/react";
 import { AiFillAndroid } from "react-icons/ai";
 import { BsWallet } from "react-icons/bs";
 import { AiOutlineFundProjectionScreen } from "react-icons/ai";
@@ -8,7 +8,7 @@ import { useAppSelector } from "redux/hook";
 import { userData } from "utils";
 import useSWR from "swr";
 
-export default function Home(): JSX.Element {
+export default function AdminHome(): JSX.Element {
   const { user } = useAppSelector((state: any) => state.account);
 
   const currentUserId =
@@ -19,19 +19,15 @@ export default function Home(): JSX.Element {
     <DashboardLayout>
       <header className="flex justify-between items-center w-full">
         <div className="py-1">
-          <Heading size={{ base: "md", md: "lg" }} pb=".2rem">
+          <Heading size={{ base: "sm", md: "md" }} pb=".2rem">
             {data?.fullName},
           </Heading>
-          <Text fontSize="16px" fontWeight="300">
-            Drink enough water today.
-          </Text>
+          <div className="text-sm">Remember, drink enough water.</div>
         </div>
         <div className="">
           <Avatar name={data?.fullName} size={{ base: "sm", md: "md" }}>
-            {data?.status === "ACTIVE" ? (
+            {data?.status === "ACTIVE" && (
               <AvatarBadge boxSize="1.25rem" bg="green.500" />
-            ) : (
-              <AvatarBadge boxSize="1.25rem" bg="tomato" />
             )}
           </Avatar>
         </div>
@@ -45,7 +41,7 @@ export default function Home(): JSX.Element {
       >
         <DataCard
           title="total Cash"
-          // bg="#0085FF"
+          bg="#0085FF"
           data={23434 || 0}
           icon={<BsWallet />}
         />

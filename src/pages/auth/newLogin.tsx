@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { useNavigate } from "react-router-dom";
 import {
   Box,
   Button,
@@ -15,9 +16,9 @@ import {
   ModalBody,
   ModalCloseButton
 } from "@chakra-ui/react";
-import { useAppDispatch, useAppSelector } from "redux/hook";
-import { HTTP_STATUS } from "utils";
 import { login } from "./slices/authSlice";
+import { useAppSelector, useAppDispatch } from "redux/hook";
+import { HTTP_STATUS } from "utils";
 
 const schema = yup.object().shape({
   emailAddress: yup.string().email().required(),
@@ -29,18 +30,15 @@ type FormValueT = {
   password: string;
 };
 
-interface ModalHookPropsI {
+interface ModalHookProps {
   isOpen: boolean;
   onOpen: () => void;
   onClose: () => void;
 }
 
-export default function LoginUser({
-  isOpen,
-  onOpen,
-  onClose
-}: ModalHookPropsI) {
+export default function LoginUser({ isOpen, onOpen, onClose }: ModalHookProps) {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const { loadingStatus } = useAppSelector((state: any) => state.account);
 
@@ -53,13 +51,19 @@ export default function LoginUser({
     resolver: yupResolver(schema)
   });
 
-  const onSubmit = (data: any) => {
+  function onSubmit(data: any) {
+    //@ts-ignore
     dispatch(login(data));
-  };
+  }
+  useEffect(() => {
+    if (loadingStatus === HTTP_STATUS.DONE) {
+      navigate("/", { replace: true });
+    }
+  }, [loadingStatus]);
 
   return (
     <Box>
-      <Button className="mx-2" bg="none" onClick={onOpen}>
+      <Button className="mx-2" onClick={onOpen}>
         Log in
       </Button>
       <Modal isOpen={isOpen} onClose={onClose} size={{ base: "xs", md: "md" }}>
@@ -74,7 +78,7 @@ export default function LoginUser({
                   type="emailAddress"
                   id="emailAddress"
                   bg="white"
-                  placeholder="Email Address"
+                  placeholder="email Address"
                   {...register("emailAddress")}
                 />
                 {errors.emailAddress && (
@@ -88,7 +92,7 @@ export default function LoginUser({
                   type="password"
                   id="password"
                   bg="white"
-                  placeholder="Password"
+                  placeholder="password"
                   {...register("password")}
                 />
                 {errors.password && (
@@ -104,7 +108,6 @@ export default function LoginUser({
                 type="submit"
                 colorScheme="blue"
                 variant="solid"
-                isLoading={loadingStatus === HTTP_STATUS.LOADING}
               >
                 Login
               </Button>

@@ -1,18 +1,15 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { initialStateI, JoinGroupI } from "Interface";
 import { Api, HTTP_STATUS } from "utils";
 
 const NAME_SPACE = "group";
 
 const initialState = {
   currentGroup: {},
+  currentUser: {},
   currentGroupMembers: [],
   loadingStatus: HTTP_STATUS.IDLE
 };
-
-interface JoinGroupI {
-  groupId: string;
-  userId: string;
-}
 
 export const createNewGroup = createAsyncThunk(
   `${NAME_SPACE}/createGroup`,
@@ -44,6 +41,18 @@ export const getSelectedGroupMembers = createAsyncThunk(
   `${NAME_SPACE}/allGroupMembers`,
   async (groupId: string) => {
     const { data } = await Api.get(`/groups/${groupId}/members`);
+    return data;
+  }
+);
+
+export const deleteUser = createAsyncThunk(
+  `${NAME_SPACE}/delUser`,
+  async (params: JoinGroupI) => {
+    const { data } = await Api.delete(`/groups/${params.groupId}/members`, {
+      data: {
+        member: params.userId
+      }
+    });
     return data;
   }
 );
@@ -89,7 +98,7 @@ const groupSlice = createSlice({
       .addCase(joinAGroup.pending, (state: any) => {
         state.loadingStatus = HTTP_STATUS.LOADING;
       })
-      .addCase(joinAGroup.fulfilled, (state: any, { payload }) => {
+      .addCase(joinAGroup.fulfilled, (state: initialStateI, { payload }) => {
         state.loadingStatus = HTTP_STATUS.DONE;
         if (payload) {
           console.log("New Group join Group");
@@ -97,24 +106,39 @@ const groupSlice = createSlice({
           console.log(payload);
         }
       })
-      .addCase(joinAGroup.rejected, (state: any) => {
+      .addCase(joinAGroup.rejected, (state: initialStateI) => {
         state.loadingStatus = HTTP_STATUS.ERROR;
       })
 
       .addCase(getSelectedGroupMembers.pending, (state: any) => {
         state.loadingStatus = HTTP_STATUS.LOADING;
       })
-      .addCase(getSelectedGroupMembers.fulfilled, (state: any, { payload }) => {
-        state.loadingStatus = HTTP_STATUS.DONE;
-        if (payload) {
-          state.currentGroupMembers = payload.members;
-          console.log(payload);
-        } else {
-          console.log(payload);
+      .addCase(
+        getSelectedGroupMembers.fulfilled,
+        (state: initialStateI, { payload }) => {
+          state.loadingStatus = HTTP_STATUS.DONE;
+          if (payload) {
+            state.currentGroupMembers = payload.members;
+            console.log(payload);
+          } else {
+            console.log(payload);
+          }
         }
-      })
-      .addCase(getSelectedGroupMembers.rejected, (state: any) => {
+      )
+      .addCase(getSelectedGroupMembers.rejected, (state: initialStateI) => {
         state.loadingStatus = HTTP_STATUS.ERROR;
+      })
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      .addCase(deleteUser.pending, (_state: initialStateI) => {})
+      .addCase(deleteUser.fulfilled, (state, { payload }) => {
+        state.currentUser = payload;
+      })
+
+      .addCase(deleteUser.rejected, (state: initialStateI, { error }) => {
+        if (error) {
+          console.error(error.message);
+        }
       });
   }
 });

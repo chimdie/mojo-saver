@@ -72,7 +72,7 @@ export default function Groups(): JSX.Element {
           </TabPanel>
           <TabPanel>
             <Box className="flex gap-6 md:gap-10 flex-wrap">
-              {myGroups?.length === 0 ? (
+              {myGroups?.groups?.length === 0 ? (
                 <Box>You're yet to join any group</Box>
               ) : (
                 myGroups?.groups?.map((group: any) => {
