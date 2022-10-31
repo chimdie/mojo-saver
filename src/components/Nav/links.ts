@@ -3,7 +3,7 @@ import { FaHome, FaUser, FaUserFriends } from "react-icons/fa";
 export const userLinks = [
   {
     title: "Dashboard",
-    url: "/",
+    url: "/dashboard",
     icon: FaHome
   },
   {

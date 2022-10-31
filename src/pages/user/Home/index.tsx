@@ -1,18 +1,39 @@
 import React from "react";
 import { DashboardLayout } from "layouts";
-import { Avatar, Box, Heading } from "@chakra-ui/react";
+import { Avatar, AvatarBadge, Box, Heading, Text } from "@chakra-ui/react";
 import { AiFillAndroid } from "react-icons/ai";
+import { BsWallet } from "react-icons/bs";
+import { AiOutlineFundProjectionScreen } from "react-icons/ai";
+import { useAppSelector } from "redux/hook";
+import { userData } from "utils";
+import useSWR from "swr";
 
 export default function Home(): JSX.Element {
+  const { user } = useAppSelector((state: any) => state.account);
+
+  const currentUserId =
+    userData() && userData()?.user?._id ? userData()?.user?._id : user?._id;
+
+  const { data } = useSWR(`/users/${currentUserId}`);
   return (
     <DashboardLayout>
       <header className="flex justify-between items-center w-full">
-        <div className="py-2">
-          <Heading size={{ base: "sm", md: "lg" }}>Hassan,</Heading>
-          <div className="text-xs md:text-xl">Welcome to the Dashboard</div>
+        <div className="py-1">
+          <Heading size={{ base: "md", md: "lg" }} pb=".2rem">
+            {data?.fullName},
+          </Heading>
+          <Text fontSize="16px" fontWeight="300">
+            Drink enough water today.
+          </Text>
         </div>
         <div className="">
-          <Avatar size={{ base: "sm", md: "md" }} />
+          <Avatar name={data?.fullName} size={{ base: "sm", md: "md" }}>
+            {data?.status === "ACTIVE" ? (
+              <AvatarBadge boxSize="1.25rem" bg="green.500" />
+            ) : (
+              <AvatarBadge boxSize="1.25rem" bg="tomato" />
+            )}
+          </Avatar>
         </div>
       </header>
       <Box
@@ -24,21 +45,20 @@ export default function Home(): JSX.Element {
       >
         <DataCard
           title="total Cash"
-          bg="#0085FF"
-          color="#FFFF"
-          data={23434}
-          icon={<AiFillAndroid />}
+          // bg="#0085FF"
+          data={23434 || 0}
+          icon={<BsWallet />}
+        />
+        <DataCard
+          title="groups"
+          // bg="pink.500"
+          data={data?.groups.length || 0}
+          icon={<AiOutlineFundProjectionScreen />}
         />
         <DataCard
           title="total Cash"
-          bg="#faeaed"
-          data={23434}
-          icon={<AiFillAndroid />}
-        />
-        <DataCard
-          title="total Cash"
-          // bg={"#eee"}
-          data={23434}
+          // bg="whatsapp.600"
+          data={23434 || 0}
           icon={<AiFillAndroid />}
         />
       </Box>
@@ -54,29 +74,30 @@ type DataCardProps = {
   color?: string;
 };
 
-const DataCard = ({
-  bg,
-  icon,
-  title,
-  data,
-  color
-}: DataCardProps): JSX.Element => {
+const DataCard = ({ bg, icon, title, data }: DataCardProps): JSX.Element => {
   return (
     <Box
       className="rounded-md w-full max-w-sm"
       bg={bg ? bg : "#fff"}
-      color={color ? color : "#375d86"}
+      color="#000"
       boxShadow="3px 6px 10px 0 rgb(0 102 245 / 7%)"
       border="1px solid rgba(0,102,245,.14)"
     >
-      <div className="p-8 w-full">
-        <div className="flex items-center py-3 md:py-6 justify-between">
-          <div className="px-2 text-4xl">{icon}</div>
-          <Heading className="uppercase" size={{ base: "sm", md: "md" }}>
+      <div className="p-3 w-full flex justify-between items-center">
+        <div className="px-2 text-4xl">{icon}</div>
+        <div className="flex flex-col items-center p-3 justify-between">
+          <Heading
+            className="uppercase"
+            fontWeight="400"
+            fontSize="14px"
+            as="h6"
+            size="xs"
+            pb={1}
+          >
             {title}
           </Heading>
+          <div className="text-xl font-bold">{data}</div>
         </div>
-        <div className="text-xl font-semibold">{data}</div>
       </div>
     </Box>
   );

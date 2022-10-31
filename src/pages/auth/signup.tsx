@@ -47,12 +47,14 @@ interface ModalHookPropsI {
   isOpen: boolean;
   onOpen: () => void;
   onClose: () => void;
+  title: string;
 }
 
 export default function LoginUser({
   isOpen,
   onOpen,
-  onClose
+  onClose,
+  title
 }: ModalHookPropsI) {
   const dispatch = useAppDispatch();
   const toast = useToast();
@@ -90,12 +92,13 @@ export default function LoginUser({
   return (
     <Box>
       <Button
-        className="mx-2 text-white "
+        className="mx-2 text-white"
         bg="#0085FF"
         _hover={{ bg: "#0474de" }}
+        p={`${title === "Get started" ? "1.5rem 3rem" : ""}`}
         onClick={onOpen}
       >
-        Sign up
+        {title}
       </Button>
       <Modal isOpen={isOpen} onClose={onClose} size={{ base: "xs", md: "md" }}>
         <ModalOverlay />
