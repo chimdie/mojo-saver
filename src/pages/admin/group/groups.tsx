@@ -10,7 +10,12 @@ import {
   Button,
   Avatar,
   Text,
-  useDisclosure
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  useDisclosure,
+  AvatarBadge
 } from "@chakra-ui/react";
 import useSWR from "swr";
 import { GroupCard } from "components";
@@ -20,24 +25,33 @@ import { userData } from "utils";
 import { CreateGroup } from "../components";
 import {
   getSelectedGroup,
-  getSelectedGroupMembers
+  getSelectedGroupMembers,
+  deleteUser
 } from "../slices/groupSlice";
 
 interface UserCard {
+  _id: string;
+  status: string;
   fullName: string;
   emailAddress: string;
 }
 
 export default function AdminGroups() {
+  const [currentUser, setCurrentUser] = React.useState<string>("");
+
   const dispatch = useAppDispatch();
 
   const { user } = useAppSelector((state: any) => state.account);
-  const { currentGroupMembers } = useAppSelector((state: any) => state.group);
+  const { currentGroupMembers, currentGroup } = useAppSelector(
+    (state: any) => state.group
+  );
 
   const currentUserId =
     userData() && userData()?.user?._id ? userData()?.user?._id : user?._id;
 
-  const { data: groupsCreated } = useSWR(`/users/${currentUserId}/groups`);
+  const { data: myGroups, error: myGrpsError } = useSWR(
+    `/users/${currentUserId}/groups`
+  );
 
   const {
     isOpen: isCreateGroupOpen,
@@ -56,6 +70,28 @@ export default function AdminGroups() {
     onGroupOpen();
   };
 
+  const handleGetSelectedUser = (userId: string) => {
+    setCurrentUser(userId);
+  };
+
+  const handlDeleteSelectedUser = () => {
+    dispatch(deleteUser({ groupId: currentGroup?._id, userId: currentUser }));
+    handleGroupFn;
+  };
+
+  if (myGrpsError)
+    return (
+      <DashboardLayout>
+        <Box>An error occurred</Box>
+      </DashboardLayout>
+    );
+  if (!myGroups)
+    return (
+      <DashboardLayout>
+        <Box>Loading...</Box>
+      </DashboardLayout>
+    );
+
   return (
     <DashboardLayout>
       <Box className="flex justify- w-full pb-7">
@@ -67,7 +103,7 @@ export default function AdminGroups() {
         />
       </Box>
       <Box className="flex gap-6 flex-wrap">
-        {groupsCreated?.map((group: any) => {
+        {myGroups?.map((group: any) => {
           return (
             <GroupCard
               key={group?._id}
@@ -94,7 +130,10 @@ export default function AdminGroups() {
                 ) : (
                   currentGroupMembers?.map((member: UserCard) => {
                     return (
-                      <Box className="flex justify-between bg-white border-gray-200 border p-4 rounded-md shadow">
+                      <Box
+                        className="flex justify-between bg-white border-gray-200 border p-4 rounded-md shadow hover:bg-slate-50"
+                        onClick={() => handleGetSelectedUser(member?._id)}
+                      >
                         <Box className="py-1">
                           <Text className="font-semibold pb-1 capitalize">
                             {member?.fullName}
@@ -103,7 +142,25 @@ export default function AdminGroups() {
                             {member?.emailAddress}
                           </Text>
                         </Box>
-                        <Avatar name={member?.fullName} />
+                        <Menu>
+                          <MenuButton
+                            onClick={() => handleGetSelectedUser(member?._id)}
+                          >
+                            <Avatar
+                              name={member?.fullName}
+                              size={{ base: "sm", md: "md" }}
+                            >
+                              {member?.status === "ACTIVE" && (
+                                <AvatarBadge boxSize="1rem" bg="green.500" />
+                              )}
+                            </Avatar>
+                          </MenuButton>
+                          <MenuList>
+                            <MenuItem onClick={() => handlDeleteSelectedUser()}>
+                              Delete
+                            </MenuItem>
+                          </MenuList>
+                        </Menu>
                       </Box>
                     );
                   })
