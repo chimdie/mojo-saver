@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { initialStateI, JoinGroupI } from "Interface";
+import { GroupinitialStateI, JoinGroupI } from "Interface";
 import { Api, HTTP_STATUS } from "utils";
 
 const NAME_SPACE = "group";
@@ -98,15 +98,18 @@ const groupSlice = createSlice({
       .addCase(joinAGroup.pending, (state: any) => {
         state.loadingStatus = HTTP_STATUS.LOADING;
       })
-      .addCase(joinAGroup.fulfilled, (state: initialStateI, { payload }) => {
-        state.loadingStatus = HTTP_STATUS.DONE;
-        if (payload) {
-          console.log("New Group join Group");
-        } else {
-          console.log(payload);
+      .addCase(
+        joinAGroup.fulfilled,
+        (state: GroupinitialStateI, { payload }) => {
+          state.loadingStatus = HTTP_STATUS.DONE;
+          if (payload) {
+            console.log("New Group join Group");
+          } else {
+            console.log(payload);
+          }
         }
-      })
-      .addCase(joinAGroup.rejected, (state: initialStateI) => {
+      )
+      .addCase(joinAGroup.rejected, (state: GroupinitialStateI) => {
         state.loadingStatus = HTTP_STATUS.ERROR;
       })
 
@@ -115,7 +118,7 @@ const groupSlice = createSlice({
       })
       .addCase(
         getSelectedGroupMembers.fulfilled,
-        (state: initialStateI, { payload }) => {
+        (state: GroupinitialStateI, { payload }) => {
           state.loadingStatus = HTTP_STATUS.DONE;
           if (payload) {
             state.currentGroupMembers = payload.members;
@@ -125,17 +128,20 @@ const groupSlice = createSlice({
           }
         }
       )
-      .addCase(getSelectedGroupMembers.rejected, (state: initialStateI) => {
-        state.loadingStatus = HTTP_STATUS.ERROR;
-      })
+      .addCase(
+        getSelectedGroupMembers.rejected,
+        (state: GroupinitialStateI) => {
+          state.loadingStatus = HTTP_STATUS.ERROR;
+        }
+      )
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      .addCase(deleteUser.pending, (_state: initialStateI) => {})
+      .addCase(deleteUser.pending, (_state: GroupinitialStateI) => {})
       .addCase(deleteUser.fulfilled, (state, { payload }) => {
         state.currentUser = payload;
       })
 
-      .addCase(deleteUser.rejected, (state: initialStateI, { error }) => {
+      .addCase(deleteUser.rejected, (state: GroupinitialStateI, { error }) => {
         if (error) {
           console.error(error.message);
         }

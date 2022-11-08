@@ -15,7 +15,6 @@ import {
   ModalBody,
   ModalCloseButton,
   Checkbox,
-  useToast,
   Popover,
   PopoverTrigger,
   PopoverArrow,
@@ -30,34 +29,39 @@ import { signupNewUser } from "./slices/authSlice";
 
 const schema = yup.object().shape({
   emailAddress: yup.string().email().required(),
-  fullName: yup.string().required(),
+  bvn: yup.string().required(),
+  firstName: yup.string().required(),
+  lastName: yup.string().required(),
+  phoneNumber: yup.string().required(),
   password: yup.string().required().min(6),
   confirmPassword: yup.string().oneOf([yup.ref("password"), null])
 });
 
 type FormValueT = {
   emailAddress: string;
-  fullName: string;
+  firstName: string;
+  lastName: string;
   password: string;
   confirmPassword: string;
   isAdmin: boolean;
+  bvn: boolean;
+  phoneNumber: string;
 };
 
-interface ModalHookPropsI {
+type ModalHookT = {
+  title: string;
   isOpen: boolean;
   onOpen: () => void;
   onClose: () => void;
-  title: string;
-}
+};
 
 export default function LoginUser({
   isOpen,
   onOpen,
   onClose,
   title
-}: ModalHookPropsI) {
+}: ModalHookT) {
   const dispatch = useAppDispatch();
-  const toast = useToast();
 
   const { loadingStatus } = useAppSelector((state: any) => state.account);
 
@@ -77,13 +81,6 @@ export default function LoginUser({
 
   useEffect(() => {
     if (loadingStatus === HTTP_STATUS.DONE) {
-      toast({
-        title: "Account created.",
-        description: "Welcome to Mojo. Please Login to continue.",
-        status: "success",
-        duration: 5000,
-        isClosable: true
-      });
       reset();
       onClose();
     }
@@ -111,34 +108,66 @@ export default function LoginUser({
           <ModalCloseButton />
           <form onSubmit={handleSubmit(onSubmit)}>
             <ModalBody>
-              <FormControl className="py-4">
-                <Input
-                  type="fullName"
-                  id="fullName"
-                  bg="white"
-                  placeholder="Full Name"
-                  {...register("fullName")}
-                />
-                {errors.fullName && (
-                  <p className="text-red-500 text-sm p-2">
-                    Your name is required.
-                  </p>
-                )}
-              </FormControl>
-              <FormControl className="py-4">
-                <Input
-                  type="emailAddress"
-                  id="emailAddress"
-                  bg="white"
-                  placeholder="Email Address"
-                  {...register("emailAddress")}
-                />
-                {errors.emailAddress && (
-                  <p className="text-red-500 text-sm p-2">
-                    A valid email is required.
-                  </p>
-                )}
-              </FormControl>
+              <Box className="grid grid-cols-2 gap-3 py-4">
+                <FormControl>
+                  <Input
+                    type="firstName"
+                    id="firstName"
+                    bg="white"
+                    placeholder="First Name"
+                    {...register("firstName")}
+                  />
+                  {errors.firstName && (
+                    <p className="text-red-500 text-sm p-2">
+                      Your name is required.
+                    </p>
+                  )}
+                </FormControl>
+                <FormControl>
+                  <Input
+                    type="lastName"
+                    id="lastName"
+                    bg="white"
+                    placeholder="Last Name"
+                    {...register("lastName")}
+                  />
+                  {errors.lastName && (
+                    <p className="text-red-500 text-sm p-2">
+                      Your name is required.
+                    </p>
+                  )}
+                </FormControl>
+              </Box>
+              <Box className="grid grid-cols-2 gap-3 py-4">
+                <FormControl>
+                  <Input
+                    type="emailAddress"
+                    id="emailAddress"
+                    bg="white"
+                    placeholder="Email Address"
+                    {...register("emailAddress")}
+                  />
+                  {errors.emailAddress && (
+                    <p className="text-red-500 text-sm p-2">
+                      A valid email is required.
+                    </p>
+                  )}
+                </FormControl>
+                <FormControl>
+                  <Input
+                    type="phoneNumber"
+                    id="phoneNumber"
+                    bg="white"
+                    placeholder="Phone Number"
+                    {...register("phoneNumber")}
+                  />
+                  {errors.phoneNumber && (
+                    <p className="text-red-500 text-sm p-2">
+                      A valid email is required.
+                    </p>
+                  )}
+                </FormControl>
+              </Box>
               <FormControl className="py-4">
                 <Input
                   type="password"
@@ -156,7 +185,7 @@ export default function LoginUser({
 
               <FormControl className="py-4">
                 <Input
-                  type="confirmPassword"
+                  type="password"
                   id="confirmPassword"
                   bg="white"
                   placeholder="Confirm Password"
@@ -165,6 +194,21 @@ export default function LoginUser({
                 {errors.confirmPassword && (
                   <p className="text-red-500 text-sm p-2">
                     Passwords must match.
+                  </p>
+                )}
+              </FormControl>
+
+              <FormControl className="py-4">
+                <Input
+                  type="text"
+                  id="bvn"
+                  bg="white"
+                  placeholder="BVN"
+                  {...register("bvn")}
+                />
+                {errors.bvn && (
+                  <p className="text-red-500 text-sm p-2">
+                    Provide a valid BVN.
                   </p>
                 )}
               </FormControl>

@@ -1,5 +1,5 @@
 export type OnclickProp = {
-  onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
 };
 
 export interface currentGroupMembersI {
@@ -13,7 +13,7 @@ export interface currentGroupMembersI {
   updatedAt: string;
 }
 
-export interface initialStateI {
+export interface GroupinitialStateI {
   currentGroup: object;
   currentUser: object;
   currentGroupMembers: currentGroupMembersI[];
@@ -23,4 +23,10 @@ export interface initialStateI {
 export interface JoinGroupI {
   groupId: string;
   userId: string;
+}
+
+export interface AuthinitialStateI {
+  user: object;
+  isAdmin: boolean;
+  loadingStatus: string;
 }
