@@ -1,11 +1,12 @@
-/* eslint-disable no-console */
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { AuthinitialStateI } from "Interface";
 import {
   Api,
   deleteStorage,
   HTTP_STATUS,
   userData,
-  saveWithExpiry
+  saveWithExpiry,
+  callToast
 } from "utils";
 
 const NAME_SPACE = "auth";
@@ -18,7 +19,7 @@ const initialState = {
 
 export const signupNewUser = createAsyncThunk(
   `${NAME_SPACE}/newUser`,
-  async (params: any) => {
+  async (params: object) => {
     const { data } = await Api.post("/users/signup", { ...params });
     return data;
   }
@@ -51,31 +52,35 @@ const authSlice = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(signupNewUser.pending, (state: any) => {
+      .addCase(signupNewUser.pending, (state: AuthinitialStateI) => {
         state.loadingStatus = HTTP_STATUS.LOADING;
       })
-      .addCase(signupNewUser.fulfilled, (state: any, { payload }) => {
-        state.loadingStatus = HTTP_STATUS.DONE;
-        if (payload) {
-          // toast.success("New Admin Account has been created");
-        } else {
-          // toast.error(payload.message);
-          console.log(payload.message);
+      .addCase(
+        signupNewUser.fulfilled,
+        (state: AuthinitialStateI, { payload }) => {
+          state.loadingStatus = HTTP_STATUS.DONE;
+          if (payload) {
+            callToast(
+              "Account created.",
+              "success",
+              "Welcome to Mojo. Please Login to continue."
+            );
+          } else {
+            callToast("Error", "error", payload.message);
+          }
         }
-      })
-      .addCase(signupNewUser.rejected, (state: any) => {
+      )
+      .addCase(signupNewUser.rejected, (state: AuthinitialStateI) => {
         state.loadingStatus = HTTP_STATUS.ERROR;
       });
 
     builder
-      .addCase(login.pending, (state: any) => {
+      .addCase(login.pending, (state: AuthinitialStateI) => {
         state.loadingStatus = HTTP_STATUS.LOADING;
       })
-      .addCase(login.fulfilled, (state: any, { payload }) => {
+      .addCase(login.fulfilled, (state: AuthinitialStateI, { payload }) => {
         state.loadingStatus = HTTP_STATUS.DONE;
-        console.log({ payload });
         if (payload && payload.user) {
-          console.log(payload);
           state.user = payload;
           saveWithExpiry(state.user, 0);
           if (payload.user?.isAdmin) {
@@ -84,10 +89,10 @@ const authSlice = createSlice({
             window.location.href = `${window.location.protocol}//${window.location.host}/dashboard`;
           }
         } else {
-          console.error(payload.message);
+          callToast("Error", "error", payload.message);
         }
       })
-      .addCase(login.rejected, (state: any) => {
+      .addCase(login.rejected, (state: AuthinitialStateI) => {
         state.loadingStatus = HTTP_STATUS.ERROR;
       });
 
@@ -98,15 +103,17 @@ const authSlice = createSlice({
         if (payload.success) {
           state.user = payload;
         } else {
-          console.error(payload.message);
+          callToast("Error", "error", payload.message);
         }
       })
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      .addCase(getLogedInUser.rejected, (_state, { error }) => {
-        if (error) {
-          console.error(error.message);
+      .addCase(
+        getLogedInUser.rejected,
+        (state: AuthinitialStateI, { error }) => {
+          if (error) {
+            callToast("Error", "error", "Something went wrong");
+          }
         }
-      });
+      );
   }
 });
 
