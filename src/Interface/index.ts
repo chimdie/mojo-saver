@@ -30,3 +30,10 @@ export interface AuthinitialStateI {
   isAdmin: boolean;
   loadingStatus: string;
 }
+
+export interface UserCardI {
+  _id: string;
+  status: string;
+  fullName: string;
+  emailAddress: string;
+}
