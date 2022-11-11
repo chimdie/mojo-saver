@@ -1,10 +1,6 @@
-/* eslint-disable new-cap */
-/* eslint-disable no-undef */
 import Axios from "axios";
 import { userData } from "./constants";
-// import TOAST from "./toast";
-
-// // const toast = new TOAST();
+import { callToast } from ".";
 
 const _token = userData()?.token || "";
 
@@ -27,25 +23,24 @@ AxiosInstance.interceptors.response.use(
       !error.response &&
       error.code === "ERR_NETWORK"
     ) {
-      // toast.error("no internet connection");
+      callToast("Error", "error", "no internet connection");
       return Promise.reject(new Error("no internet connection"));
     } else {
       if (error.response) {
         const { status } = error.response;
         if (status === 500) {
           const errMessage = "Internal server error";
-          // toast.error(errMessage);
+          callToast("Error", "error", errMessage);
           return Promise.reject(new Error(errMessage));
         } else if (status === 401) {
-          // const errMessage = "Incorrect email and password combination.";
-          // toast.error();
-          // return Promise.reject(new Error(errMessage));
+          const errMessage = "Incorrect email and password combination.";
+          callToast("Incorrect Details", "error", errMessage);
+          return Promise.reject(new Error(errMessage));
         }
         const customError = error.response.data
           ? error.response.data.message
           : "Error: Something went wrong";
-
-        // toast.error(customError);
+        callToast("Error", "error", customError);
         return Promise.reject(new Error(customError));
       }
     }
