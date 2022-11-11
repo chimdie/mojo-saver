@@ -1,43 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
-  Drawer,
-  DrawerBody,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerOverlay,
-  DrawerContent,
-  Button,
-  Avatar,
-  Text,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
   useDisclosure,
-  AvatarBadge
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel
 } from "@chakra-ui/react";
 import useSWR from "swr";
-import { GroupCard } from "components";
+import { GroupCard, UserGroupCard } from "components";
 import { DashboardLayout } from "layouts";
 import { useAppSelector, useAppDispatch } from "redux/hook";
 import { userData } from "utils";
-import { CreateGroup } from "../components";
+import { CreateGroup, GroupMemDrawer } from "../components";
 import {
   getSelectedGroup,
   getSelectedGroupMembers,
-  deleteUser
+  deleteUser,
+  joinAGroup
 } from "../slices/groupSlice";
 
-interface UserCard {
-  _id: string;
-  status: string;
-  fullName: string;
-  emailAddress: string;
-}
-
 export default function AdminGroups() {
-  const [currentUser, setCurrentUser] = React.useState<string>("");
+  const [currentUser, setCurrentUser] = useState<string>("");
 
   const dispatch = useAppDispatch();
 
@@ -52,6 +37,7 @@ export default function AdminGroups() {
   const { data: myGroups, error: myGrpsError } = useSWR(
     `/users/${currentUserId}/groups`
   );
+  const { data: trendingGroups, error: trendingGrpError } = useSWR("/groups/");
 
   const {
     isOpen: isCreateGroupOpen,
@@ -79,13 +65,21 @@ export default function AdminGroups() {
     handleGroupFn;
   };
 
-  if (myGrpsError)
+  const handleOpenGroup = (id: string) => {
+    dispatch(getSelectedGroup(id));
+  };
+
+  const handleJoinGroup = () => {
+    dispatch(joinAGroup({ groupId: currentGroup?._id, userId: currentUserId }));
+  };
+
+  if (myGrpsError || trendingGrpError)
     return (
       <DashboardLayout>
         <Box>An error occurred</Box>
       </DashboardLayout>
     );
-  if (!myGroups)
+  if (!myGroups || !trendingGroups)
     return (
       <DashboardLayout>
         <Box>Loading...</Box>
@@ -102,84 +96,61 @@ export default function AdminGroups() {
           currentUserId={currentUserId}
         />
       </Box>
-      <Box className="flex gap-6 flex-wrap">
-        {myGroups?.map((group: any) => {
-          return (
-            <GroupCard
-              key={group?._id}
-              title={group.name}
-              description={group.description}
-              onClick={() => handleGroupFn(group?._id)}
-            />
-          );
-        })}
-        <Drawer
-          isOpen={isGroupOpen}
-          placement="right"
-          onClose={onGroupClose}
-          size={{ base: "sm", md: "md" }}
-        >
-          <DrawerOverlay />
-          <DrawerContent>
-            <DrawerHeader>Group Members</DrawerHeader>
-
-            <DrawerBody>
-              <Box className="flex flex-col gap-4 flex-wrap">
-                {currentGroupMembers?.length === 0 ? (
-                  <Box>No Members yet</Box>
+      <>
+        <Tabs variant="soft-rounded" colorScheme="blue">
+          <TabList pb="1rem">
+            <Tab>My Groups</Tab>
+            <Tab>Trending</Tab>
+          </TabList>
+          <TabPanels>
+            <TabPanel>
+              <Box className="flex gap-6 flex-wrap">
+                {myGroups?.length === 0 ? (
+                  <Box>No Groups available</Box>
                 ) : (
-                  currentGroupMembers?.map((member: UserCard) => {
+                  myGroups?.map((group: any) => {
                     return (
-                      <Box
-                        className="flex justify-between bg-white border-gray-200 border p-4 rounded-md shadow hover:bg-slate-50"
-                        onClick={() => handleGetSelectedUser(member?._id)}
-                      >
-                        <Box className="py-1">
-                          <Text className="font-semibold pb-1 capitalize">
-                            {member?.fullName}
-                          </Text>
-                          <Text className="text-sm">
-                            {member?.emailAddress}
-                          </Text>
-                        </Box>
-                        <Menu>
-                          <MenuButton
-                            onClick={() => handleGetSelectedUser(member?._id)}
-                          >
-                            <Avatar
-                              name={member?.fullName}
-                              size={{ base: "sm", md: "md" }}
-                            >
-                              {member?.status === "ACTIVE" && (
-                                <AvatarBadge boxSize="1rem" bg="green.500" />
-                              )}
-                            </Avatar>
-                          </MenuButton>
-                          <MenuList>
-                            <MenuItem onClick={() => handlDeleteSelectedUser()}>
-                              Delete
-                            </MenuItem>
-                          </MenuList>
-                        </Menu>
-                      </Box>
+                      <GroupCard
+                        key={group?._id}
+                        title={group.name}
+                        description={group.description}
+                        onClick={() => handleGroupFn(group?._id)}
+                      />
                     );
                   })
                 )}
               </Box>
-            </DrawerBody>
+            </TabPanel>
+            <TabPanel>
+              <Box className="flex gap-6 md:gap-10 flex-wrap">
+                {trendingGroups?.length === 0 ? (
+                  <Box>No Groups available</Box>
+                ) : (
+                  trendingGroups?.map((group: any) => {
+                    return (
+                      <UserGroupCard
+                        key={group?._id}
+                        title={group.name}
+                        description={group.description}
+                        onClick={() => handleOpenGroup(group?._id)}
+                        handleJoinGroup={() => handleJoinGroup()}
+                      />
+                    );
+                  })
+                )}
+              </Box>
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
 
-            <DrawerFooter
-              display="flex"
-              justifyContent="space-between"
-              className="flex justify-between w-full"
-            >
-              <Button variant="outline" mr={3} onClick={onGroupClose}>
-                Close
-              </Button>
-            </DrawerFooter>
-          </DrawerContent>
-        </Drawer>
-      </Box>
+        <GroupMemDrawer
+          isGroupOpen={isGroupOpen}
+          onGroupClose={onGroupClose}
+          currentGroupMembers={currentGroupMembers}
+          handleGetSelectedUser={handleGetSelectedUser}
+          handlDeleteSelectedUser={handlDeleteSelectedUser}
+        />
+      </>
     </DashboardLayout>
   );
 }
