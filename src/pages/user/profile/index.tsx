@@ -9,9 +9,9 @@ import {
 } from "@chakra-ui/react";
 import useSWR from "swr";
 import { DashboardLayout } from "layouts";
+import { smVariant, mdVariant } from "layouts/dashboardLayout";
 import { useAppSelector } from "redux/hook";
 import { userData } from "utils";
-import { smVariant, mdVariant } from "layouts/dashboardLayout";
 
 export default function Profile() {
   const { user } = useAppSelector((state: any) => state.account);
@@ -21,6 +21,7 @@ export default function Profile() {
     userData() && userData()?.user?._id ? userData()?.user?._id : user?._id;
 
   const { data } = useSWR(`/users/${currentUserId}`);
+  console.log(data);
 
   return (
     <DashboardLayout>
@@ -40,9 +41,13 @@ export default function Profile() {
               <></>
             ) : (
               <>
-                <Heading size={{ base: "md", md: "lg" }} pb=".2rem">
-                  {data?.fullName}
-                </Heading>
+                <Box>
+                  <Heading size={{ base: "md", md: "lg" }} pb=".2rem">
+                    {data?.fullName}
+                  </Heading>
+                  <Text>{data?.emailAddress}</Text>
+                </Box>
+                <Box></Box>
               </>
             )}
           </Box>

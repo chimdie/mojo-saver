@@ -19,7 +19,7 @@ const GroupCard = ({ title, description, onClick }: CardProps): JSX.Element => {
     >
       <Image src={randomImg} alt={title} />
       <Box as="section" className="p-4 flex flex-col justify-between h-full">
-        <Heading size={{ base: "sm" }} className="py-1">
+        <Heading size="sm" className="py-1">
           {title}
         </Heading>
         <Text className="py-1 text-xs">{description}</Text>

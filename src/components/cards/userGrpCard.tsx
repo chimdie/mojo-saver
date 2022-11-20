@@ -13,11 +13,13 @@ import {
   AlertDialogOverlay,
   useDisclosure
 } from "@chakra-ui/react";
+import { FaUserFriends } from "react-icons/fa";
 import { landscapeImg, leavesImg, dancersImg, dancerImg } from "assets/card";
 
 type CardProps = {
   title: string;
   description: string;
+  groupTotal?: number;
   handleJoinGroup?: () => void;
   onClick: MouseEventHandler<HTMLDivElement> & MouseEventHandler<HTMLElement>;
 };
@@ -25,6 +27,7 @@ type CardProps = {
 const UserGroupCard = ({
   title,
   description,
+  groupTotal,
   handleJoinGroup,
   onClick
 }: CardProps): JSX.Element => {
@@ -40,11 +43,19 @@ const UserGroupCard = ({
       className="flex flex-col overflow-hidden w-full max-w-xs bg-white rounded-xl shadow-lg hover:bg-slate-50 hover:ease-in-out hover:cursor-pointer"
     >
       <Image src={randomImg} alt={title} />
-      <Box as="section" className="p-4 flex flex-col justify-between h-full">
-        <Heading size={{ base: "sm" }} className="py-1">
-          {title}
-        </Heading>
-        <Text className="py-1 text-xs">{description}</Text>
+      <Box as="section" className="p-4 flex justify-between h-full">
+        <Box as="section">
+          <Heading size="sm" className="py-1">
+            {title}
+          </Heading>
+          <Text className="py-1 text-xs">{description}</Text>
+        </Box>
+        <Box as="section" className="items-end">
+          <Heading size="xs" className="py-1 flex items-center">
+            <Text className="pr-1 text-[10px]">{groupTotal}</Text>
+            <FaUserFriends fontSize="14px" />
+          </Heading>
+        </Box>
       </Box>
       <Box onClick={onClick}>
         <Button onClick={onOpen} w="100%" py={3} borderRadius="0">
@@ -54,7 +65,7 @@ const UserGroupCard = ({
           isOpen={isOpen}
           leastDestructiveRef={cancelRef}
           onClose={onClose}
-          size={{ base: "xs", md: "md" }}
+          size="xs"
         >
           <AlertDialogOverlay>
             <AlertDialogContent>
