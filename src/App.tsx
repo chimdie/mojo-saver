@@ -1,6 +1,5 @@
 import * as React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import HashLoader from "react-spinners/HashLoader";
 // procted route
 import { ProtectedRoute } from "routes";
 // users routes
@@ -13,11 +12,12 @@ import AdminProfile from "pages/admin/profile";
 import AdminHome from "pages/admin/Home";
 
 import HomePage from "pages";
+import { SuspenseFallback } from "components/pageLoader";
 
 export const App = () => {
   return (
     <BrowserRouter>
-      <React.Suspense fallback={<HashLoader />} />
+      <React.Suspense fallback={<SuspenseFallback />} />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route element={<ProtectedRoute />}>
