@@ -5,7 +5,7 @@ import { callToast } from ".";
 const _token = userData()?.token || "";
 
 const AxiosInstance = Axios.create({
-  baseURL: process.env.REACT_APP_BASEURL,
+  baseURL: import.meta.env.VITE_APP_BASEURL,
   headers: {
     "Content-Type": "application/json",
     ...(_token && { Authorization: `Bearer ${_token}` })
