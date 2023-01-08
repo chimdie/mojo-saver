@@ -16,3 +16,7 @@
     letter-spacing: 0.05em;
 }
 
+.slick-slide > div {
+  height:100%;
+  width:100%
+}
