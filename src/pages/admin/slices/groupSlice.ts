@@ -14,7 +14,11 @@ const initialState = {
 export const createNewGroup = createAsyncThunk(
   `${NAME_SPACE}/createGroup`,
   async (params: any) => {
-    const { data } = await Api.post("/groups", params);
+    const { data } = await Api.post("/groups", {
+      ...params,
+      bankName: "9 Payment Service Bank",
+      bankAccountNumber: "6073355537"
+    });
     return { ...data, owner: params.owner };
   }
 );

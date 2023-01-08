@@ -56,7 +56,7 @@ export default function Home(): JSX.Element {
           icon={<AiOutlineFundProjectionScreen />}
         />
         <DataCard
-          title="total Cash"
+          title="investments"
           // bg="whatsapp.600"
           data={23434 || 0}
           icon={<AiFillAndroid />}

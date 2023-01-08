@@ -1,36 +1,25 @@
-import React, { MouseEventHandler, useRef } from "react";
-import {
-  Box,
-  Button,
-  Heading,
-  Image,
-  Text,
-  AlertDialog,
-  AlertDialogBody,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogContent,
-  AlertDialogOverlay,
-  useDisclosure
-} from "@chakra-ui/react";
+import React, { MouseEventHandler } from "react";
+import { Box, Button, Heading, Image, Text } from "@chakra-ui/react";
 import { landscapeImg, leavesImg, dancersImg, dancerImg } from "assets/card";
+import { utilFn } from "utils";
 
 type CardProps = {
+  onOpen: () => void;
   title: string;
   description: string;
-  handleJoinGroup?: () => void;
+  amount: number;
+  // handleJoinGroup?: () => void;
   onClick: MouseEventHandler<HTMLDivElement> & MouseEventHandler<HTMLElement>;
 };
 
 const UserGroupCard = ({
   title,
   description,
-  handleJoinGroup,
-  onClick
+  // handleJoinGroup,
+  onClick,
+  onOpen,
+  amount
 }: CardProps): JSX.Element => {
-  const cancelRef = useRef<HTMLButtonElement>(null);
-  const { isOpen, onOpen, onClose } = useDisclosure();
-
   const imgs = [landscapeImg, leavesImg, dancersImg, dancerImg];
   const randomImg = imgs[Math.floor(Math.random() * imgs.length)];
 
@@ -45,37 +34,14 @@ const UserGroupCard = ({
           {title}
         </Heading>
         <Text className="py-1 text-xs">{description}</Text>
+        <Text className="py-1 text-md">
+          {utilFn.currencyAmount(amount, "NGN", "₦")}
+        </Text>
       </Box>
       <Box onClick={onClick}>
         <Button onClick={onOpen} w="100%" py={3} borderRadius="0">
           Join Group
         </Button>
-        <AlertDialog
-          isOpen={isOpen}
-          leastDestructiveRef={cancelRef}
-          onClose={onClose}
-          size={{ base: "xs", md: "md" }}
-        >
-          <AlertDialogOverlay>
-            <AlertDialogContent>
-              <AlertDialogHeader fontSize="lg" fontWeight="bold">
-                Join a Group
-              </AlertDialogHeader>
-              <AlertDialogBody>
-                You're about to join this group? You can't undo this action at
-                the moment.
-              </AlertDialogBody>
-              <AlertDialogFooter display="flex" justifyContent="space-between">
-                <Button ref={cancelRef} onClick={onClose}>
-                  Cancel
-                </Button>
-                <Button onClick={handleJoinGroup} colorScheme="blue">
-                  Join Group
-                </Button>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialogOverlay>
-        </AlertDialog>
       </Box>
     </Box>
   );
