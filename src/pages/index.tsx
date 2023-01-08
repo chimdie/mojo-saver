@@ -2,16 +2,15 @@ import React from "react";
 import { NavLink as ReactRouterLink } from "react-router-dom";
 import {
   Box,
+  Button,
   Heading,
   Image,
   Link,
   Text,
-  useBreakpointValue,
-  useDisclosure
+  useBreakpointValue
 } from "@chakra-ui/react";
 import { HiOutlineUserGroup } from "react-icons/hi";
 import { GiWorld } from "react-icons/gi";
-import { LoginUser, SignupNewUser } from "./auth";
 import { mdVariant, smVariant } from "layouts/dashboardLayout";
 import { teamRemovebg } from "assets/auth";
 import { FaIdCardAlt } from "react-icons/fa";
@@ -19,20 +18,8 @@ import { FaIdCardAlt } from "react-icons/fa";
 export default function EntryPage() {
   const variants = useBreakpointValue({ base: smVariant, md: mdVariant });
 
-  const {
-    isOpen: isLoginOpen,
-    onOpen: onLoginOpen,
-    onClose: onLoginClose
-  } = useDisclosure();
-  const {
-    isOpen: isSignUpOpen,
-    onOpen: onSignUpOpen,
-    onClose: onSignUpClose
-  } = useDisclosure();
-
   return (
     <Box h={{ base: "100%", md: "100vh" }}>
-      {/* bg="#f9fbfe" */}
       <Box pb={4}>
         {/* Header */}
         <Box as="header" p={{ md: "24px 32px" }}>
@@ -60,17 +47,29 @@ export default function EntryPage() {
               )}
             </Box>
             <Box as="nav" className="flex item-center">
-              <LoginUser
-                isOpen={isLoginOpen}
-                onOpen={onLoginOpen}
-                onClose={onLoginClose}
-              />
-              <SignupNewUser
-                isOpen={isSignUpOpen}
-                onOpen={onSignUpOpen}
-                onClose={onSignUpClose}
-                title="Sign up"
-              />
+              <Link
+                as={ReactRouterLink}
+                to="/login"
+                _hover={{ textDecoration: "none" }}
+              >
+                <Button className="mx-2" bg="none">
+                  Log in
+                </Button>
+              </Link>
+
+              <Link
+                as={ReactRouterLink}
+                to="/signup"
+                _hover={{ textDecoration: "none" }}
+              >
+                <Button
+                  className="mx-2 text-white"
+                  bg="#0085FF"
+                  _hover={{ bg: "#0474de" }}
+                >
+                  Sign up
+                </Button>
+              </Link>
             </Box>
           </Box>
         </Box>
@@ -81,7 +80,6 @@ export default function EntryPage() {
               Save with friends.
               <br />
               Embark on a journey to save.
-              {/* <br /> for days like ASUU strike. */}
             </Heading>
             <Box className="flex justify-center text-center py-5">
               <Box className="flex items-center md:px-8">
@@ -98,12 +96,20 @@ export default function EntryPage() {
               </Box>
             </Box>
 
-            <SignupNewUser
-              isOpen={isSignUpOpen}
-              onOpen={onSignUpOpen}
-              onClose={onSignUpClose}
-              title="Get started"
-            />
+            <Link
+              as={ReactRouterLink}
+              to="/signup"
+              _hover={{ textDecoration: "none" }}
+            >
+              <Button
+                className="mx-2 text-white"
+                bg="#0085FF"
+                _hover={{ bg: "#0474de" }}
+                p="1.5rem 3rem"
+              >
+                Get Started
+              </Button>
+            </Link>
           </Box>
         </Box>
         {/* main sections */}
