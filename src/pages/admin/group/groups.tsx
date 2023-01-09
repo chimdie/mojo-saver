@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   Box,
   useDisclosure,
@@ -6,10 +6,17 @@ import {
   TabList,
   TabPanels,
   Tab,
-  TabPanel
+  TabPanel,
+  Button,
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogContent,
+  AlertDialogOverlay
 } from "@chakra-ui/react";
 import useSWR from "swr";
-import { GroupCard, UserGroupCard } from "components";
+import { PayStackApp, GroupCard, UserGroupCard } from "components";
 import { DashboardLayout } from "layouts";
 import { useAppSelector, useAppDispatch } from "redux/hook";
 import { userData } from "utils";
@@ -26,6 +33,8 @@ export default function AdminGroups() {
 
   const dispatch = useAppDispatch();
 
+  const cancelRef = useRef<HTMLButtonElement>(null);
+
   const { user } = useAppSelector((state: any) => state.account);
   const { currentGroupMembers, currentGroup } = useAppSelector(
     (state: any) => state.group
@@ -33,11 +42,13 @@ export default function AdminGroups() {
 
   const currentUserId =
     userData() && userData()?.user?._id ? userData()?.user?._id : user?._id;
+  const _currentUser = userData()?.user;
 
   const { data: myGroups, error: myGrpsError } = useSWR(
     `/users/${currentUserId}/groups`
   );
-  const { data: trendingGroups, error: trendingGrpError } = useSWR("/groups/");
+  const { data: trendingGroups, error: trendingGrpError } = useSWR("/groups");
+  // const { data: groupWallet } = useSWR(`/wallet/groups/${currentGroup?._id}`);
 
   const {
     isOpen: isCreateGroupOpen,
@@ -49,6 +60,7 @@ export default function AdminGroups() {
     onOpen: onGroupOpen,
     onClose: onGroupClose
   } = useDisclosure();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const handleGroupFn = (groupId: string) => {
     dispatch(getSelectedGroup(groupId));
@@ -72,7 +84,7 @@ export default function AdminGroups() {
   const handleJoinGroup = () => {
     dispatch(joinAGroup({ groupId: currentGroup?._id, userId: currentUserId }));
   };
-
+  // console.log(groupWallet);
   if (myGrpsError || trendingGrpError)
     return (
       <DashboardLayout>
@@ -134,7 +146,9 @@ export default function AdminGroups() {
                         groupTotal={group?.members?.length}
                         description={group.description}
                         onClick={() => handleOpenGroup(group?._id)}
-                        handleJoinGroup={() => handleJoinGroup()}
+                        // handleJoinGroup={() => handleJoinGroup()}
+                        amount={group?.monthlyDepositAmount}
+                        onOpen={onOpen}
                       />
                     );
                   })
@@ -143,6 +157,37 @@ export default function AdminGroups() {
             </TabPanel>
           </TabPanels>
         </Tabs>
+
+        <AlertDialog
+          isOpen={isOpen}
+          leastDestructiveRef={cancelRef}
+          onClose={onClose}
+          size={{ base: "xs", md: "md" }}
+        >
+          <AlertDialogOverlay>
+            <AlertDialogContent>
+              <AlertDialogHeader fontSize="lg" fontWeight="bold">
+                Join a Group
+              </AlertDialogHeader>
+              <AlertDialogBody>
+                You're about to join this group? You can't undo this action at
+                the moment.
+              </AlertDialogBody>
+              <AlertDialogFooter display="flex" justifyContent="space-between">
+                <Button ref={cancelRef} onClick={onClose}>
+                  Cancel
+                </Button>
+                <Button colorScheme="blue" onClick={onClose}>
+                  <PayStackApp
+                    callBackFn={handleJoinGroup}
+                    emailAddress={_currentUser?.emailAddress}
+                    amount={currentGroup?.monthlyDepositAmount}
+                  />
+                </Button>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialogOverlay>
+        </AlertDialog>
 
         <GroupMemDrawer
           isGroupOpen={isGroupOpen}

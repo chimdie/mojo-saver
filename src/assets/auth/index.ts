@@ -1,6 +1,7 @@
-import joinImg from "./join.png";
-import remImg from "./rem.png";
-import scheduleImg from "./schedule.png";
+import currencies from "./currencies.jpeg";
+import grow from "./grow.jpeg";
+import atm from "./atm.jpeg";
+import money_at_hand from "./money_at_hand.jpeg";
 import teamRemovebg from "./team-removebg.png";
 
-export { joinImg, remImg, scheduleImg, teamRemovebg };
+export { currencies, grow, atm, money_at_hand, teamRemovebg };
