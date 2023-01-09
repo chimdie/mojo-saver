@@ -1,28 +1,21 @@
 import React, { MouseEventHandler } from "react";
 import { Box, Button, Heading, Image, Text } from "@chakra-ui/react";
 import { landscapeImg, leavesImg, dancersImg, dancerImg } from "assets/card";
-// import { utilFn } from "utils";
 
 type CardProps = {
-  onOpen: () => void;
   title: string;
+  monthlyDepositAmount: string;
   description: string;
-  amount: number;
-  // handleJoinGroup?: () => void;
-  onClick: MouseEventHandler<HTMLDivElement> & MouseEventHandler<HTMLElement>;
+  onClick?: MouseEventHandler<HTMLDivElement> & MouseEventHandler<HTMLElement>;
 };
 
-const UserGroupCard = ({
+const MyGroupCard = ({
   title,
   description,
-  // handleJoinGroup,
-  onClick,
-  onOpen,
-  amount
+  monthlyDepositAmount
 }: CardProps): JSX.Element => {
   const imgs = [landscapeImg, leavesImg, dancersImg, dancerImg];
   const randomImg = imgs[Math.floor(Math.random() * imgs.length)];
-
   return (
     <Box
       as="section"
@@ -30,19 +23,25 @@ const UserGroupCard = ({
     >
       <Image src={randomImg} alt={title} />
       <Box as="section" className="p-4 flex flex-col justify-between h-full">
-        <Heading size={{ base: "sm" }} className="py-1">
+        <Heading
+          size={{ base: "sm" }}
+          className="py-1"
+          textTransform="capitalize"
+        >
           {title}
         </Heading>
-        <Text className="py-1 text-xs">{description}</Text>
-        <Text className="py-1 text-md">₦{amount}</Text>
+        <Text className="py-2">₦{monthlyDepositAmount}</Text>
       </Box>
-      <Box onClick={onClick}>
-        <Button onClick={onOpen} w="100%" py={3} borderRadius="0">
-          Join Group
-        </Button>
-      </Box>
+      <Button
+        borderRadius="none"
+        bg="transparent"
+        _hover={{ bg: "none" }}
+        className="py-4 rounded-none flex justify-end bg-none text-xs"
+      >
+        {description}
+      </Button>
     </Box>
   );
 };
 
-export default UserGroupCard;
+export default MyGroupCard;

@@ -8,14 +8,13 @@ import { App } from "./App";
 import store from "redux/store";
 import "./index.css";
 
-axios.defaults.baseURL = process.env.REACT_APP_BASEURL
-  ? process.env.REACT_APP_BASEURL
+axios.defaults.baseURL = import.meta.env.VITE_APP_BASEURL
+  ? import.meta.env.VITE_APP_BASEURL
   : "http://localhost:1337/api/v1";
 
 const container = document.getElementById("root");
 if (!container) throw new Error("Failed to find the root element");
 const root = ReactDOM.createRoot(container);
-
 root.render(
   <React.StrictMode>
     <Provider store={store}>

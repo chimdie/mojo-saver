@@ -26,10 +26,17 @@ const schema = yup.object().shape({
   monthlyDepositAmount: yup.number().required()
 });
 
-type FormValueT = {
+type FormValueProps = {
   name: string;
   description: string;
   monthlyDepositAmount: number;
+};
+
+type CreateGroupProps = {
+  isOpen: boolean;
+  onOpen: () => void;
+  onClose: () => void;
+  currentUserId: string;
 };
 
 export default function CreateGroup({
@@ -37,12 +44,7 @@ export default function CreateGroup({
   onOpen,
   onClose,
   currentUserId
-}: {
-  isOpen: boolean;
-  onOpen: () => void;
-  onClose: () => void;
-  currentUserId: string;
-}) {
+}: CreateGroupProps) {
   const dispatch = useAppDispatch();
 
   const {
@@ -50,7 +52,7 @@ export default function CreateGroup({
     handleSubmit,
     reset,
     formState: { errors }
-  } = useForm<FormValueT>({
+  } = useForm<FormValueProps>({
     mode: "onBlur",
     resolver: yupResolver(schema)
   });

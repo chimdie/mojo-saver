@@ -26,12 +26,12 @@ export const adminLinks = [
   },
   {
     title: "Groups",
-    url: "/admin.groups",
+    url: "/admin/groups",
     icon: FaUserFriends
   },
   {
     title: "Profile",
-    url: "/admin.profile",
+    url: "/admin/profile",
     icon: FaUser
   }
 ];

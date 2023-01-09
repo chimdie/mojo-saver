@@ -37,16 +37,16 @@ export default function LoginPage(): JSX.Element {
   return (
     <AuthLayout header="LOGIN">
       <Box as="form" onSubmit={handleSubmit(onSubmit)} width={{ base: "100%" }}>
-        <FormControl isInvalid={errors.email ? true : false} mb="1.5rem">
+        <FormControl isInvalid={errors.emailAddress ? true : false} mb="1.5rem">
           <Input
-            {...register("email")}
-            id="email"
+            {...register("emailAddress")}
+            id="emailAddress"
             type="email"
             placeholder="Email Address"
             bg="#F8FAFC"
           />
-          {errors.email && (
-            <FormErrorMessage fontSize=".7rem">{`${errors.email.message}`}</FormErrorMessage>
+          {errors.emailAddress && (
+            <FormErrorMessage fontSize=".7rem">{`${errors.emailAddress.message}`}</FormErrorMessage>
           )}
         </FormControl>
 

@@ -107,6 +107,7 @@ export default function SignupPage(): JSX.Element {
               )}
             </FormControl>
           </Box>
+          {/* password */}
           <FormControl
             className="py-4"
             isInvalid={errors.password ? true : false}
@@ -138,7 +139,39 @@ export default function SignupPage(): JSX.Element {
               <FormErrorMessage fontSize=".7rem">{`${errors.confirmPassword.message}`}</FormErrorMessage>
             )}
           </FormControl>
-
+          {/* bank detaials */}
+          <Box className="grid grid-cols-2 gap-3 py-4">
+            <FormControl
+              className="py-4"
+              isInvalid={errors.bankAccountNumber ? true : false}
+            >
+              <Input
+                type="text"
+                id="bankAccountNumber"
+                bg="white"
+                placeholder="Bank Account"
+                {...register("bankAccountNumber")}
+              />
+              {errors.bankAccountNumber && (
+                <FormErrorMessage fontSize=".7rem">{`${errors.bankAccountNumber.message}`}</FormErrorMessage>
+              )}
+            </FormControl>
+            <FormControl
+              className="py-4"
+              isInvalid={errors.bankName ? true : false}
+            >
+              <Input
+                type="text"
+                id="bankName"
+                bg="white"
+                placeholder="Bank Name"
+                {...register("bankName")}
+              />
+              {errors.bankName && (
+                <FormErrorMessage fontSize=".7rem">{`${errors.bankName.message}`}</FormErrorMessage>
+              )}
+            </FormControl>
+          </Box>
           <FormControl className="py-4" isInvalid={errors.bvn ? true : false}>
             <Input
               type="text"

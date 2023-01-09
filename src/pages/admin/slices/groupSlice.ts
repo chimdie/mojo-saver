@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { GroupinitialStateI, JoinGroupI } from "Interface";
-import { Api, HTTP_STATUS } from "utils";
+import { Api, HTTP_STATUS, callToast } from "utils";
 
 const NAME_SPACE = "group";
 
@@ -14,7 +14,11 @@ const initialState = {
 export const createNewGroup = createAsyncThunk(
   `${NAME_SPACE}/createGroup`,
   async (params: any) => {
-    const { data } = await Api.post("/groups", params);
+    const { data } = await Api.post("/groups", {
+      ...params,
+      bankName: "9 Payment Service Bank",
+      bankAccountNumber: "6073355537"
+    });
     return { ...data, owner: params.owner };
   }
 );
@@ -69,9 +73,9 @@ const groupSlice = createSlice({
       .addCase(createNewGroup.fulfilled, (state: any, { payload }) => {
         state.loadingStatus = HTTP_STATUS.DONE;
         if (payload) {
-          console.log("New Group has been created");
+          callToast("Group created", "success", "New Group has been created");
         } else {
-          console.log(payload);
+          callToast("Group created", "error", payload.message);
         }
       })
       .addCase(createNewGroup.rejected, (state: any) => {
@@ -86,7 +90,6 @@ const groupSlice = createSlice({
         state.loadingStatus = HTTP_STATUS.DONE;
         if (payload) {
           state.currentGroup = payload;
-          console.log(payload);
         } else {
           console.log(payload);
         }
