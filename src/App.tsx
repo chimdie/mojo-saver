@@ -32,8 +32,8 @@ export const App = () => {
           <Route path="/profile" element={<Profile />} />
 
           <Route path="/admin" element={<AdminHome />} />
-          <Route path="/admin.groups" element={<AdminGroups />} />
-          <Route path="/admin.profile" element={<AdminProfile />} />
+          <Route path="/admin/groups" element={<AdminGroups />} />
+          <Route path="/admin/profile" element={<AdminProfile />} />
         </Route>
       </Routes>
     </BrowserRouter>

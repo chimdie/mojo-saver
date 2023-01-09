@@ -16,7 +16,7 @@ import {
   AlertDialogOverlay,
   useDisclosure
 } from "@chakra-ui/react";
-import { PayStackApp, GroupCard, UserGroupCard } from "components";
+import { PayStackApp, MyGroupCard, UserGroupCard } from "components";
 import { DashboardLayout } from "layouts";
 import { useAppSelector, useAppDispatch } from "redux/hook";
 import { userData } from "utils";
@@ -33,6 +33,7 @@ export default function Groups(): JSX.Element {
 
   const currentUserId =
     userData() && userData()?.user?._id ? userData()?.user?._id : user?._id;
+  const currentUser = userData()?.user;
 
   const { data: trendingGroups, error: trendingGrpError } = useSWR("/groups/");
   const { data: myGroups, error: userGrpError } = useSWR(
@@ -47,7 +48,6 @@ export default function Groups(): JSX.Element {
   const handleJoinGroup = () => {
     dispatch(joinAGroup({ groupId: currentGroup?._id, userId: currentUserId }));
   };
-  const currentUser = userData()?.user;
 
   // TODO Loading status and error messages proper implementations
   if (trendingGrpError || userGrpError)
@@ -85,9 +85,7 @@ export default function Groups(): JSX.Element {
                       onClick={() => handleOpenGroup(group?._id)}
                       // handleJoinGroup={() => handleJoinGroup()}
                       amount={group?.monthlyDepositAmount}
-                      onOpen={function (): void {
-                        throw new Error("Function not implemented.");
-                      }}
+                      onOpen={onOpen}
                     />
                   );
                 })
@@ -102,10 +100,11 @@ export default function Groups(): JSX.Element {
               ) : (
                 myGroups?.groups?.map((group: any) => {
                   return (
-                    <GroupCard
+                    <MyGroupCard
                       key={group?._id}
                       title={group?.name}
                       description={group?.description}
+                      monthlyDepositAmount={group?.monthlyDepositAmount}
                     />
                   );
                 })
@@ -134,7 +133,7 @@ export default function Groups(): JSX.Element {
               <Button ref={cancelRef} onClick={onClose}>
                 Cancel
               </Button>
-              <Button colorScheme="blue">
+              <Button colorScheme="blue" onClick={onClose}>
                 <PayStackApp
                   callBackFn={handleJoinGroup}
                   emailAddress={currentUser?.emailAddress}

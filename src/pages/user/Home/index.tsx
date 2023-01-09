@@ -1,7 +1,7 @@
 import React from "react";
 import { DashboardLayout } from "layouts";
 import { Avatar, AvatarBadge, Box, Heading, Text } from "@chakra-ui/react";
-import { AiFillAndroid } from "react-icons/ai";
+// import { AiFillAndroid } from "react-icons/ai";
 import { BsWallet } from "react-icons/bs";
 import { AiOutlineFundProjectionScreen } from "react-icons/ai";
 import { useAppSelector } from "redux/hook";
@@ -44,9 +44,9 @@ export default function Home(): JSX.Element {
         py={4}
       >
         <DataCard
-          title="total Cash"
+          title="investments"
           // bg="#0085FF"
-          data={23434 || 0}
+          data={data?.totalWalletAmount || 0}
           icon={<BsWallet />}
         />
         <DataCard
@@ -55,12 +55,12 @@ export default function Home(): JSX.Element {
           data={data?.groups.length || 0}
           icon={<AiOutlineFundProjectionScreen />}
         />
-        <DataCard
+        {/* <DataCard
           title="investments"
           // bg="whatsapp.600"
-          data={23434 || 0}
+          data={data?.totalWalletAmount || 0}
           icon={<AiFillAndroid />}
-        />
+        /> */}
       </Box>
     </DashboardLayout>
   );

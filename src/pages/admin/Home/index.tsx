@@ -1,9 +1,9 @@
 import React from "react";
 import { DashboardLayout } from "layouts";
 import { Avatar, AvatarBadge, Box, Heading } from "@chakra-ui/react";
-import { AiFillAndroid } from "react-icons/ai";
+import { AiOutlineUsergroupAdd } from "react-icons/ai";
+import { HiOutlineUserGroup } from "react-icons/hi";
 import { BsWallet } from "react-icons/bs";
-import { AiOutlineFundProjectionScreen } from "react-icons/ai";
 import { useAppSelector } from "redux/hook";
 import { userData } from "utils";
 import useSWR from "swr";
@@ -15,6 +15,10 @@ export default function AdminHome(): JSX.Element {
     userData() && userData()?.user?._id ? userData()?.user?._id : user?._id;
 
   const { data } = useSWR(`/users/${currentUserId}`);
+  const { data: myGroups, error: myGrpsError } = useSWR(
+    `/users/${currentUserId}/groups`
+  );
+  console.log(myGrpsError);
   return (
     <DashboardLayout>
       <header className="flex justify-between items-center w-full">
@@ -40,22 +44,23 @@ export default function AdminHome(): JSX.Element {
         py={4}
       >
         <DataCard
-          title="total Cash"
-          bg="#0085FF"
-          data={23434 || 0}
+          title="investments"
+          // bg="#0085FF"
+          // color="#fff"
+          data={data?.totalWalletAmount || 0}
           icon={<BsWallet />}
         />
         <DataCard
-          title="groups"
+          title="groups created"
           // bg="pink.500"
-          data={data?.groups.length || 0}
-          icon={<AiOutlineFundProjectionScreen />}
+          data={myGroups?.length || 0}
+          icon={<HiOutlineUserGroup />}
         />
         <DataCard
-          title="investments"
+          title="groups joined"
           // bg="whatsapp.600"
-          data={23434 || 0}
-          icon={<AiFillAndroid />}
+          data={data?.groups.length || 0}
+          icon={<AiOutlineUsergroupAdd />}
         />
       </Box>
     </DashboardLayout>
