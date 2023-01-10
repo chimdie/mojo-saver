@@ -1,5 +1,5 @@
 import { PageLoader } from "./pageLoader";
-import { GroupCard, UserGroupCard, MyGroupCard } from "./cards";
+import { GroupCard, UserGroupCard, MyGroupCard, DataCard } from "./cards";
 import FLutterWave from "./flutterWave";
 import PayStackApp from "./paystack";
 
@@ -9,5 +9,6 @@ export {
   PageLoader,
   FLutterWave,
   PayStackApp,
-  MyGroupCard
+  MyGroupCard,
+  DataCard
 };

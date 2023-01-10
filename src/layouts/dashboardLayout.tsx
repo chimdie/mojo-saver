@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Box, useBreakpointValue, Text } from "@chakra-ui/react";
+import { PageLoader } from "components";
 import { BottomNaviagtion, SideBar } from "../components/Nav";
 import { getLogedInUser, logout } from "pages/auth/slices/authSlice";
 import { useAppSelector, useAppDispatch } from "redux/hook";
@@ -100,7 +101,7 @@ export default function DashboardLayout({
             >
               <Box as="section">
                 <Box as="main" p="14">
-                  {children}
+                  <PageLoader>{children}</PageLoader>
                 </Box>
               </Box>
               <Box as="footer" textAlign="center" py={5} justifySelf="self-ed">
