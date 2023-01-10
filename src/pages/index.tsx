@@ -135,7 +135,7 @@ export default function EntryPage() {
               gridGap="40px"
               padding="0 40px"
               borderRadius="10px"
-              bg="#f0f4f9"
+              bg="#e5f4ff"
             >
               <Box className="flex justify-center items-end py-4 md:order-1 order-1">
                 <Image src={teamRemovebg} />
@@ -157,7 +157,6 @@ export default function EntryPage() {
               title="Admin Plan"
               subText="Create groups and invite your friends."
               subTitle="Access to Admin Dashboard"
-              bg="#FAF089"
             />
           </Box>
         </Box>
