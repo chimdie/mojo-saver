@@ -20,7 +20,7 @@ const DataCard = ({ bg, icon, title, data }: DataCardProps): JSX.Element => {
     >
       <div className="p-3 w-full flex justify-between items-center">
         <div className="px-2 text-4xl">{icon}</div>
-        <div className="flex flex-col items-center p-3 justify-between">
+        <div className="flex flex-col items-center p-3 justify-between flex-wrap">
           <Heading
             className="uppercase"
             fontWeight="400"
@@ -31,7 +31,9 @@ const DataCard = ({ bg, icon, title, data }: DataCardProps): JSX.Element => {
           >
             {title}
           </Heading>
-          <div className="text-xl font-bold text-ellipsis">{data}</div>
+          <div className="text-sm md:text-base font-bold text-ellipsis">
+            {data}
+          </div>
         </div>
       </div>
     </Box>
