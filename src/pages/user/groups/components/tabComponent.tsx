@@ -26,6 +26,7 @@ export default function TabComponent({
                   key={group?._id}
                   title={group.name}
                   description={group.description}
+                  amount={group?.monthlyDepositAmount}
                   onClick={() => handleJoinGroup(group?._id)}
                 />
               );

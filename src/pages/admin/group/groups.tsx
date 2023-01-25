@@ -143,7 +143,7 @@ export default function AdminGroups() {
                       <UserGroupCard
                         key={group?._id}
                         title={group.name}
-                        groupTotal={group?.members?.length}
+                        // groupTotal={group?.members?.length}
                         description={group.description}
                         onClick={() => handleOpenGroup(group?._id)}
                         // handleJoinGroup={() => handleJoinGroup()}
