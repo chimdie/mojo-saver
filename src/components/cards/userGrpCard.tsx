@@ -4,7 +4,7 @@ import { landscapeImg, leavesImg, dancersImg, dancerImg } from "assets/card";
 // import { utilFn } from "utils";
 
 type CardProps = {
-  onOpen: () => void;
+  onOpen?: () => void;
   title: string;
   description: string;
   amount: number;
