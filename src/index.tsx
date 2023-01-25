@@ -10,7 +10,7 @@ import "./index.css";
 
 axios.defaults.baseURL = import.meta.env.VITE_APP_BASEURL
   ? import.meta.env.VITE_APP_BASEURL
-  : "http://localhost:1337/api/v1";
+  : "https://mojo-server-production.up.railway.app/api/v1";
 
 const container = document.getElementById("root");
 if (!container) throw new Error("Failed to find the root element");

@@ -37,7 +37,7 @@
     "yup": "^0.32.11"
   },
   "scripts": {
-    "start": "vite",
+    "start": "vite --port=3000",
     "build": "tsc && vite build",
     "lint": "eslint 'src/**/*.ts'",
     "serve": "vite preview"
