@@ -12,12 +12,12 @@ export default function PayStackApp({
   callBackFn?: () => void;
 }) {
   const config = {
-    // reference: new Date().getTime().toString(),
+    reference: new Date().getTime().toString(),
     email: emailAddress,
     amount: +amount,
     text: "Pay with Paystack",
     publicKey: "pk_test_b4e015b240dc7ac84d2c67791209a6e60e1fc0c8",
-    reference: "string",
+    // reference: "string",
     label: "string"
   };
 
@@ -54,6 +54,8 @@ export default function PayStackApp({
         onClick={() => {
           initializePayment(onSuccess, onClose);
         }}
+        bg="inherit"
+        _hover={{ bg: "inherit" }}
       >
         Make Payment
       </Button>
