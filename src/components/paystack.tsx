@@ -17,7 +17,6 @@ export default function PayStackApp({
     amount: +amount,
     text: "Pay with Paystack",
     publicKey: "pk_test_b4e015b240dc7ac84d2c67791209a6e60e1fc0c8",
-    // reference: "string",
     label: "string"
   };
 
@@ -26,27 +25,14 @@ export default function PayStackApp({
     if (callBackFn) {
       callBackFn();
     }
-    // Implementation for whatever you want to do with reference and after success call.
     console.log("success");
   };
 
-  // you can call this function anything
   const onClose = () => {
-    // implementation for  whatever you want to do when the Paystack dialog closed.
     console.log("closed");
   };
 
   const initializePayment = usePaystackPayment(config);
-
-  // const componentProps = {
-  //   reference: new Date().getTime().toString(),
-  //   email: emailAddress,
-  //   amount: amount,
-  //   publicKey: "pk_test_b4e015b240dc7ac84d2c67791209a6e60e1fc0c8",
-  //   text: "Pay with Paystack",
-  //   onSuccess: (reference: any) => handlePaystackSuccessAction(reference),
-  //   onClose: handlePaystackCloseAction
-  // };
 
   return (
     <div className="App">
