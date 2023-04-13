@@ -8,5 +8,10 @@ export default defineConfig({
   plugins: [react(), viteTsconfigPaths(), svgrPlugin()],
   define: {
     "process.env": process.env
+  },
+  server: {
+    port: 3000,
+    strictPort: true,
+    host: "localhost"
   }
 });
