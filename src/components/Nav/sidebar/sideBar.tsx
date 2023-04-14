@@ -47,7 +47,6 @@ export default function MainSidebar({
           ) => {
             return (
               <Link
-                end
                 as={ReactLink}
                 key={link.url + i}
                 to={link.url}
