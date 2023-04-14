@@ -2,7 +2,7 @@ import React from "react";
 import { Button } from "@chakra-ui/react";
 import { usePaystackPayment } from "react-paystack";
 
-const publicKey = import.meta.env.VITE_PAYSTACK_PUBLIC_KEY;
+// const publicKey = import.meta.env.VITE_PAYSTACK_PUBLIC_KEY;
 
 interface PaystackI {
   emailAddress: string;
@@ -20,7 +20,7 @@ export default function PayStackApp({
     email: emailAddress,
     amount: +amount,
     text: "Pay with Paystack",
-    publicKey: publicKey,
+    publicKey: "pk_test_b4e015b240dc7ac84d2c67791209a6e60e1fc0c8",
     label: "string"
   };
 
