@@ -62,19 +62,19 @@ export default function Profile() {
 
       <Box className="flex flex-wrap gap-4  md:gap-8 w-full justify-evenly">
         <DataCard
-          title="phoneNumber"
+          title="phone Number"
           // bg="#0085FF"
           data={data?.phoneNumber}
           icon={<BsWallet />}
         />
         <DataCard
-          title="emailAddress"
+          title="email Address"
           // bg="#0085FF"
           data={data?.emailAddress}
           icon={<BsWallet />}
         />
         <DataCard
-          title="bankAccountNumber"
+          title="bank AccountNumber"
           // bg="#0085FF"
           data={data?.bankAccountNumber}
           icon={<BsWallet />}
