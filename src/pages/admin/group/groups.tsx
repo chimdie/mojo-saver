@@ -44,11 +44,9 @@ export default function AdminGroups() {
     userData() && userData()?.user?._id ? userData()?.user?._id : user?._id;
   const _currentUser = userData()?.user;
 
-  const {
-    data: myGroups,
-    error: myGrpsError,
-    mutate: mutateMyGroups
-  } = useSWR(`/users/${currentUserId}/groups`);
+  const { data: myGroups, error: myGrpsError } = useSWR(
+    `/users/${currentUserId}/groups`
+  );
   const { data: trendingGroups, error: trendingGrpError } = useSWR("/groups");
   // const { data: groupWallet } = useSWR(`/wallet/groups/${currentGroup?._id}`);
 
@@ -85,10 +83,6 @@ export default function AdminGroups() {
 
   const handleJoinGroup = () => {
     dispatch(joinAGroup({ groupId: currentGroup?._id, userId: currentUserId }));
-    mutateMyGroups((data: []) => ({
-      ...data,
-      [currentGroup?._id]: currentGroup
-    }));
   };
   // console.log(groupWallet);
   if (myGrpsError || trendingGrpError)
