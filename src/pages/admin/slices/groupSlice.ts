@@ -1,6 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { GroupinitialStateI, JoinGroupI } from "Interface";
-import { Api, HTTP_STATUS, callToast } from "utils";
+import { Api, HTTP_STATUS, callToast, userData } from "utils";
+
+const accessToken = userData()?.accessToken;
 
 const NAME_SPACE = "group";
 
@@ -14,14 +16,31 @@ const initialState = {
 export const createNewGroup = createAsyncThunk(
   `${NAME_SPACE}/createGroup`,
   async (params: any) => {
-    const { data } = await Api.post("/groups", {
-      ...params,
-      bankName: "9 Payment Service Bank",
-      bankAccountNumber: "6073355537"
-    });
-    return { ...data, owner: params.owner };
+    const { data } = await createGroup(params);
+
+    const joinG = await joinGroup(data?._id, data?.owner);
+
+    return { ...data, owner: params.owner, joinG };
   }
 );
+
+const createGroup = async (params: any) => {
+  return await Api.post("/groups", {
+    ...params,
+    bankName: "9 Payment Service Bank",
+    bankAccountNumber: "6073355537"
+  });
+};
+
+const joinGroup = async (groupId: string, memberId: string) => {
+  return await Api.put(
+    `/groups/${groupId}/members`,
+    {
+      member: memberId
+    },
+    { headers: { Authorization: `Bearer ${accessToken}` } }
+  );
+};
 
 export const getSelectedGroup = createAsyncThunk(
   `${NAME_SPACE}/oneGroup`,

@@ -6,21 +6,19 @@ import {
   TabList,
   TabPanels,
   Tab,
-  TabPanel,
-  Button,
-  AlertDialog,
-  AlertDialogBody,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogContent,
-  AlertDialogOverlay
+  TabPanel
 } from "@chakra-ui/react";
 import useSWR from "swr";
-import { PayStackApp, GroupCard, UserGroupCard } from "components";
+import {
+  PayStackApp,
+  GroupCard,
+  UserGroupCard,
+  CreateGroup,
+  GroupMemDrawer
+} from "components";
 import { DashboardLayout } from "layouts";
 import { useAppSelector, useAppDispatch } from "redux/hook";
 import { userData } from "utils";
-import { CreateGroup, GroupMemDrawer } from "../components";
 import {
   getSelectedGroup,
   getSelectedGroupMembers,
@@ -28,12 +26,17 @@ import {
   joinAGroup
 } from "../slices/groupSlice";
 
+interface GroupI {
+  id: string;
+  name: string;
+  description: string;
+}
+
 export default function AdminGroups() {
   const [currentUser, setCurrentUser] = useState<string>("");
+  const cancelRef = useRef<HTMLButtonElement>(null);
 
   const dispatch = useAppDispatch();
-
-  const cancelRef = useRef<HTMLButtonElement>(null);
 
   const { user } = useAppSelector((state: any) => state.account);
   const { currentGroupMembers, currentGroup } = useAppSelector(
@@ -45,10 +48,10 @@ export default function AdminGroups() {
   const _currentUser = userData()?.user;
 
   const {
-    data: myGroups,
+    data: myGroups = [],
     error: myGrpsError,
     mutate: mutateMyGroups
-  } = useSWR(`/users/${currentUserId}/groups`);
+  } = useSWR<GroupI[]>(`/users/${currentUserId}/groups`);
   const { data: trendingGroups, error: trendingGrpError } = useSWR("/groups");
   // const { data: groupWallet } = useSWR(`/wallet/groups/${currentGroup?._id}`);
 
@@ -85,7 +88,7 @@ export default function AdminGroups() {
 
   const handleJoinGroup = () => {
     dispatch(joinAGroup({ groupId: currentGroup?._id, userId: currentUserId }));
-    mutateMyGroups((data: []) => ({
+    mutateMyGroups((data: any) => ({
       ...data,
       [currentGroup?._id]: currentGroup
     }));
@@ -123,15 +126,17 @@ export default function AdminGroups() {
           <TabPanels>
             <TabPanel>
               <Box className="flex gap-6 flex-wrap">
-                {myGroups?.length === 0 ? (
+                {myGroups && myGroups?.length === 0 ? (
                   <Box>No Groups available</Box>
                 ) : (
+                  myGroups.length > 0 &&
                   myGroups?.map((group: any) => {
                     return (
                       <GroupCard
                         key={group?._id}
                         title={group.name}
                         description={group.description}
+                        monthlyDepositAmount={group?.monthlyDepositAmount}
                         onClick={() => handleGroupFn(group?._id)}
                       />
                     );
@@ -164,36 +169,14 @@ export default function AdminGroups() {
           </TabPanels>
         </Tabs>
 
-        <AlertDialog
-          isOpen={isOpen}
-          leastDestructiveRef={cancelRef}
+        <PayStackApp
+          callBackFn={handleJoinGroup}
+          emailAddress={_currentUser?.emailAddress}
+          amount={currentGroup?.monthlyDepositAmount}
+          cancelRef={cancelRef}
           onClose={onClose}
-          size={{ base: "xs", md: "md" }}
-        >
-          <AlertDialogOverlay>
-            <AlertDialogContent>
-              <AlertDialogHeader fontSize="lg" fontWeight="bold">
-                Join a Group
-              </AlertDialogHeader>
-              <AlertDialogBody>
-                You're about to join this group? You can't undo this action at
-                the moment.
-              </AlertDialogBody>
-              <AlertDialogFooter display="flex" justifyContent="space-between">
-                <Button ref={cancelRef} onClick={onClose}>
-                  Cancel
-                </Button>
-                <Button colorScheme="blue" onClick={onClose}>
-                  <PayStackApp
-                    callBackFn={handleJoinGroup}
-                    emailAddress={_currentUser?.emailAddress}
-                    amount={currentGroup?.monthlyDepositAmount}
-                  />
-                </Button>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialogOverlay>
-        </AlertDialog>
+          isOpen={isOpen}
+        />
 
         <GroupMemDrawer
           isGroupOpen={isGroupOpen}

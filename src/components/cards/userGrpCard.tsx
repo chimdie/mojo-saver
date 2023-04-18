@@ -1,7 +1,7 @@
 import React, { MouseEventHandler } from "react";
 import { Box, Button, Heading, Image, Text } from "@chakra-ui/react";
 import { landscapeImg, leavesImg, dancersImg, dancerImg } from "assets/card";
-// import { utilFn } from "utils";
+import { utilFn } from "utils";
 
 type CardProps = {
   onOpen?: () => void;
@@ -34,7 +34,7 @@ const UserGroupCard = ({
           {title}
         </Heading>
         <Text className="py-1 text-xs">{description}</Text>
-        <Text className="py-1 text-md">₦{amount}</Text>
+        <Text className="py-1 text-md">₦{utilFn.formatMoney(amount)}</Text>
       </Box>
       <Box onClick={onClick}>
         <Button onClick={onOpen} w="100%" py={3} borderRadius="0">

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -18,7 +18,7 @@ import {
 } from "@chakra-ui/react";
 import { IoMdAdd } from "react-icons/io";
 import { useAppDispatch } from "redux/hook";
-import { createNewGroup } from "../slices/groupSlice";
+import { createNewGroup } from "../pages/admin/slices/groupSlice";
 
 const schema = yup.object().shape({
   name: yup.string().required(),
@@ -26,13 +26,13 @@ const schema = yup.object().shape({
   monthlyDepositAmount: yup.number().required()
 });
 
-type FormValueProps = {
+type FormValueT = {
   name: string;
   description: string;
   monthlyDepositAmount: number;
 };
 
-type CreateGroupProps = {
+type CreateGroupT = {
   isOpen: boolean;
   onOpen: () => void;
   onClose: () => void;
@@ -44,21 +44,44 @@ export default function CreateGroup({
   onOpen,
   onClose,
   currentUserId
-}: CreateGroupProps) {
+}: CreateGroupT) {
   const dispatch = useAppDispatch();
 
   const {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors }
-  } = useForm<FormValueProps>({
+  } = useForm<FormValueT>({
     mode: "onBlur",
     resolver: yupResolver(schema)
   });
 
-  const onSubmit = (data: any) => {
-    dispatch(createNewGroup({ ...data, owner: currentUserId }));
+  useEffect(() => {
+    const input = document.getElementById("monthlyDepositAmount");
+    if (input) {
+      const handleChange = (e: any) => {
+        const value = e.target.value.replace(/\D/g, "");
+        const formattedValue = new Intl.NumberFormat("en-NG").format(value);
+        setValue("monthlyDepositAmount", value);
+        e.target.value = formattedValue;
+      };
+      input.addEventListener("input", handleChange);
+      return () => input.removeEventListener("input", handleChange);
+    }
+  }, [setValue]);
+
+  // const onSubmit = (data: any) => {
+  //   dispatch(createNewGroup({ ...data, owner: currentUserId }));
+  //   handleJoinGroup();
+  //   reset();
+  //   onClose();
+  // };
+
+  const onSubmit = async (data: any) => {
+    await dispatch(createNewGroup({ ...data, owner: currentUserId }));
+    // handleJoinGroup();
     reset();
     onClose();
   };

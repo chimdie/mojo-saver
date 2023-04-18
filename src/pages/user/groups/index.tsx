@@ -7,13 +7,6 @@ import {
   Tab,
   TabPanel,
   Box,
-  Button,
-  AlertDialog,
-  AlertDialogBody,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogContent,
-  AlertDialogOverlay,
   useDisclosure
 } from "@chakra-ui/react";
 import { PayStackApp, MyGroupCard, UserGroupCard } from "components";
@@ -115,36 +108,14 @@ export default function Groups(): JSX.Element {
         </TabPanels>
       </Tabs>
 
-      <AlertDialog
-        isOpen={isOpen}
-        leastDestructiveRef={cancelRef}
+      <PayStackApp
+        callBackFn={handleJoinGroup}
+        emailAddress={currentUser?.emailAddress}
+        amount={currentGroup?.monthlyDepositAmount}
+        cancelRef={cancelRef}
         onClose={onClose}
-        size={{ base: "xs", md: "md" }}
-      >
-        <AlertDialogOverlay>
-          <AlertDialogContent>
-            <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              Join a Group
-            </AlertDialogHeader>
-            <AlertDialogBody>
-              You're about to join this group? You can't undo this action at the
-              moment.
-            </AlertDialogBody>
-            <AlertDialogFooter display="flex" justifyContent="space-between">
-              <Button ref={cancelRef} onClick={onClose}>
-                Cancel
-              </Button>
-              <Button colorScheme="blue" onClick={onClose}>
-                <PayStackApp
-                  callBackFn={handleJoinGroup}
-                  emailAddress={currentUser?.emailAddress}
-                  amount={currentGroup?.monthlyDepositAmount}
-                />
-              </Button>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialogOverlay>
-      </AlertDialog>
+        isOpen={isOpen}
+      />
     </DashboardLayout>
   );
 }
