@@ -7,7 +7,7 @@ import {
 } from "./constants";
 import callToast from "./toast";
 import { LoginSchema, SignupSchema, ForgotPasswordSchema } from "./schema";
-import { quote1, quote2, quote3, quote4 } from "./quotes";
+import * as quotes from "./quotes";
 import * as utilFn from "./globals";
 
 export {
@@ -21,8 +21,5 @@ export {
   saveWithExpiry,
   callToast,
   utilFn,
-  quote1,
-  quote2,
-  quote3,
-  quote4
+  quotes
 };
