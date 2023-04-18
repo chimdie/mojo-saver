@@ -1,12 +1,12 @@
-import React, { MouseEventHandler } from "react";
+import React from "react";
 import { Box, Button, Heading, Image, Text } from "@chakra-ui/react";
 import { landscapeImg, leavesImg, dancersImg, dancerImg } from "assets/card";
+import { utilFn } from "utils";
 
 type CardProps = {
   title: string;
-  monthlyDepositAmount: string;
+  monthlyDepositAmount: number;
   description: string;
-  onClick?: MouseEventHandler<HTMLDivElement> & MouseEventHandler<HTMLElement>;
 };
 
 const MyGroupCard = ({
@@ -30,7 +30,9 @@ const MyGroupCard = ({
         >
           {title}
         </Heading>
-        <Text className="py-2">₦{monthlyDepositAmount}</Text>
+        <Text className="py-2">
+          ₦{utilFn.formatMoney(monthlyDepositAmount)}
+        </Text>
       </Box>
       <Button
         borderRadius="none"
