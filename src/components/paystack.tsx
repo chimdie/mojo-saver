@@ -9,7 +9,7 @@ import {
   AlertDialogOverlay
 } from "@chakra-ui/react";
 import { usePaystackPayment } from "react-paystack";
-import { utilFn } from "utils";
+import { utilFn, callToast } from "utils";
 
 interface PaymentI {
   emailAddress: string;
@@ -42,6 +42,11 @@ export default function PayStackApp({
       callBackFn();
     }
     // eslint-disable-next-line no-console
+    callToast(
+      "Success.",
+      "success",
+      "Welcome to Mojo. Please Login to continue."
+    );
     console.log("success");
   };
 
