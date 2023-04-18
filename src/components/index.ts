@@ -1,6 +1,8 @@
 import { PageLoader } from "./pageLoader";
 import { GroupCard, UserGroupCard, MyGroupCard, DataCard } from "./cards";
 import PayStackApp from "./paystack";
+import CreateGroup from "./createGroup";
+import GroupMemDrawer from "./groupMemDrawer";
 
 export {
   GroupCard,
@@ -8,5 +10,7 @@ export {
   PageLoader,
   PayStackApp,
   MyGroupCard,
-  DataCard
+  DataCard,
+  CreateGroup,
+  GroupMemDrawer
 };

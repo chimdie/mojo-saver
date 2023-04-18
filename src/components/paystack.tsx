@@ -1,50 +1,86 @@
 import React from "react";
-import { Button } from "@chakra-ui/react";
+import {
+  Button,
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogContent,
+  AlertDialogOverlay
+} from "@chakra-ui/react";
 import { usePaystackPayment } from "react-paystack";
+import { utilFn } from "utils";
+
+interface PaymentI {
+  emailAddress: string;
+  amount: string;
+  callBackFn?: () => void;
+  isOpen: boolean;
+  onClose: () => void;
+  cancelRef: React.RefObject<HTMLButtonElement>;
+}
 
 export default function PayStackApp({
   emailAddress,
   amount,
-  callBackFn
-}: {
-  emailAddress: string;
-  amount: string;
-  callBackFn?: () => void;
-}) {
+  callBackFn,
+  isOpen,
+  onClose,
+  cancelRef
+}: PaymentI) {
   const config = {
     reference: new Date().getTime().toString(),
     email: emailAddress,
-    amount: +amount,
+    amount: utilFn.nairaToKobo(+amount),
     text: "Pay with Paystack",
     publicKey: "pk_test_b4e015b240dc7ac84d2c67791209a6e60e1fc0c8",
     label: "string"
   };
 
-  // you can call this function anything
   const onSuccess = (): void => {
     if (callBackFn) {
       callBackFn();
     }
+    // eslint-disable-next-line no-console
     console.log("success");
-  };
-
-  const onClose = () => {
-    console.log("closed");
   };
 
   const initializePayment = usePaystackPayment(config);
 
   return (
-    <div className="App">
-      <Button
-        onClick={() => {
-          initializePayment(onSuccess, onClose);
-        }}
-        bg="inherit"
-        _hover={{ bg: "inherit" }}
-      >
-        Make Payment
-      </Button>
-    </div>
+    <AlertDialog
+      isOpen={isOpen}
+      leastDestructiveRef={cancelRef}
+      onClose={onClose}
+      size={{ base: "xs", md: "md" }}
+    >
+      <AlertDialogOverlay>
+        <AlertDialogContent>
+          <AlertDialogHeader fontSize="lg" fontWeight="bold">
+            Join a Group
+          </AlertDialogHeader>
+          <AlertDialogBody>
+            You're about to join this group? You can't undo this action at the
+            moment.
+          </AlertDialogBody>
+          <AlertDialogFooter display="flex" justifyContent="space-between">
+            <Button ref={cancelRef} onClick={onClose}>
+              Cancel
+            </Button>
+            <Button colorScheme="blue" onClick={onClose}>
+              <Button
+                onClick={() => {
+                  initializePayment(onSuccess, onClose);
+                }}
+                bg="inherit"
+                _hover={{ bg: "inherit" }}
+              >
+                Make Payment
+              </Button>
+            </Button>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialogOverlay>
+    </AlertDialog>
   );
 }
