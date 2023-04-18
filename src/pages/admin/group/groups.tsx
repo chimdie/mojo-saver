@@ -23,7 +23,8 @@ import {
   getSelectedGroup,
   getSelectedGroupMembers,
   deleteUser,
-  joinAGroup
+  joinAGroup,
+  createNewGroup
 } from "../slices/groupSlice";
 
 interface GroupI {
@@ -93,6 +94,12 @@ export default function AdminGroups() {
       [currentGroup?._id]: currentGroup
     }));
   };
+
+  const handleCreateGroup = (data: any) => {
+    dispatch(createNewGroup({ ...data, owner: currentUserId }));
+    mutateMyGroups(() => [...myGroups, data], false);
+  };
+
   // console.log(groupWallet);
   if (myGrpsError || trendingGrpError)
     return (
@@ -115,6 +122,7 @@ export default function AdminGroups() {
           onOpen={onCreateGroupOpen}
           onClose={onCreateGroupClose}
           currentUserId={currentUserId}
+          handleCreateGroup={handleCreateGroup}
         />
       </Box>
       <>
@@ -125,7 +133,7 @@ export default function AdminGroups() {
           </TabList>
           <TabPanels>
             <TabPanel>
-              <Box className="flex gap-6 flex-wrap">
+              <Box className="flex gap-6 flex-wrap justify-between">
                 {myGroups && myGroups?.length === 0 ? (
                   <Box>No Groups available</Box>
                 ) : (
@@ -145,7 +153,7 @@ export default function AdminGroups() {
               </Box>
             </TabPanel>
             <TabPanel>
-              <Box className="flex gap-6 md:gap-10 flex-wrap">
+              <Box className="flex gap-6 flex-wrap justify-between">
                 {trendingGroups?.length === 0 ? (
                   <Box>No Groups available</Box>
                 ) : (
