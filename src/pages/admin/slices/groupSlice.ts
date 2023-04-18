@@ -15,7 +15,7 @@ const initialState = {
 
 export const createNewGroup = createAsyncThunk(
   `${NAME_SPACE}/createGroup`,
-  async (params: any) => {
+  async (params: { owner: string }) => {
     const { data } = await createGroup(params);
 
     const joinG = await joinGroup(data?._id, data?.owner);

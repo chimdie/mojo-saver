@@ -100,7 +100,7 @@ export default function DashboardLayout({
               minHeight="100vh"
             >
               <Box as="section">
-                <Box as="main" p="14">
+                <Box as="main" p="10">
                   <PageLoader>{children}</PageLoader>
                 </Box>
               </Box>

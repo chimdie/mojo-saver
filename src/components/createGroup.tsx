@@ -17,8 +17,8 @@ import {
   ModalCloseButton
 } from "@chakra-ui/react";
 import { IoMdAdd } from "react-icons/io";
-import { useAppDispatch } from "redux/hook";
-import { createNewGroup } from "../pages/admin/slices/groupSlice";
+// import { useAppDispatch } from "redux/hook";
+// import { createNewGroup } from "../pages/admin/slices/groupSlice";
 
 const schema = yup.object().shape({
   name: yup.string().required(),
@@ -37,15 +37,16 @@ type CreateGroupT = {
   onOpen: () => void;
   onClose: () => void;
   currentUserId: string;
+  handleCreateGroup: (data: any) => void;
 };
 
 export default function CreateGroup({
   isOpen,
   onOpen,
   onClose,
-  currentUserId
+  handleCreateGroup
 }: CreateGroupT) {
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
 
   const {
     register,
@@ -80,8 +81,7 @@ export default function CreateGroup({
   // };
 
   const onSubmit = async (data: any) => {
-    await dispatch(createNewGroup({ ...data, owner: currentUserId }));
-    // handleJoinGroup();
+    await handleCreateGroup(data);
     reset();
     onClose();
   };
