@@ -47,7 +47,6 @@ export default function PayStackApp({
       "success",
       "Welcome to Mojo. Please Login to continue."
     );
-    console.log("success");
   };
 
   const initializePayment = usePaystackPayment(config);

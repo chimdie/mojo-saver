@@ -18,13 +18,13 @@ export const createNewGroup = createAsyncThunk(
   async (params: { owner: string }) => {
     const { data } = await createGroup(params);
 
-    const joinG = await joinGroup(data?._id, data?.owner);
+    await joinGroup(data?._id, data?.owner);
 
-    return { ...data, owner: params.owner, joinG };
+    return { ...data, owner: params.owner };
   }
 );
 
-const createGroup = async (params: any) => {
+const createGroup = async (params: {}) => {
   return await Api.post("/groups", {
     ...params,
     bankName: "9 Payment Service Bank",
@@ -53,9 +53,31 @@ export const getSelectedGroup = createAsyncThunk(
 export const joinAGroup = createAsyncThunk(
   `${NAME_SPACE}/joinGroup`,
   async (params: JoinGroupI) => {
-    const { data } = await Api.put(`/groups/${params.groupId}/members`, {
-      member: params.userId
+    const groupId = params.groupId;
+    const userId = params.userId;
+
+    const getGroupMembers = await Api.get(`/groups/${groupId}/members`, {
+      headers: { Authorization: `Bearer ${accessToken}` }
     });
+
+    const grpMembers = getGroupMembers?.data?.members;
+
+    if (grpMembers === 0) {
+      return false;
+    }
+
+    const existingMember = grpMembers.find(
+      (member: { _id: string }) => member?._id === userId
+    );
+
+    if (existingMember) {
+      callToast("Cannot join Group", "error", "User already exists");
+    }
+
+    const { data } = await Api.put(`/groups/${groupId}/members`, {
+      member: userId
+    });
+
     return data;
   }
 );
