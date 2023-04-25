@@ -1,6 +1,6 @@
 # Mojo Saver
 
-[Mojo Saver](https://mojo-saver.vercel.app/) is a web app that helps you save money in groups or among peers in periods. This project was bootstrapped with
+[Mojo Saver](https://mojo-saver.vercel.app/) is a web app that helps you save money in groups or among peers periodically. This project was bootstrapped with
 [Create Vite](https://github.com/vitejs/vite/tree/main/packages/create-vite) and deployed with [Vercel](https://vercel.com/).
 
 ## Available Scripts
