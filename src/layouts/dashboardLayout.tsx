@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Box, useBreakpointValue, Text } from "@chakra-ui/react";
 import { PageLoader } from "components";
-import { BottomNaviagtion, SideBar } from "../components/Nav";
+import { BottomNaviagtion, SideBar } from "components/Nav";
 import { getLogedInUser, logout } from "pages/auth/slices/authSlice";
 import { useAppSelector, useAppDispatch } from "redux/hook";
 import { userData } from "utils";
@@ -51,7 +51,7 @@ export default function DashboardLayout({
   }
 
   return (
-    <>
+    <Box bgColor="#f8f9fd">
       <ProtectedRoute />
       <Box as="main" height="100%" width="100%">
         {variants?.navigation === "mobileNav" ? (
@@ -114,6 +114,6 @@ export default function DashboardLayout({
           </Box>
         )}
       </Box>
-    </>
+    </Box>
   );
 }

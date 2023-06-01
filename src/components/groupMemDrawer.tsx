@@ -16,7 +16,7 @@ import {
   MenuItem,
   AvatarBadge
 } from "@chakra-ui/react";
-import { UserCardI } from "Interface";
+import { UserCardI } from "types";
 
 interface GroupMemDrawerI {
   isGroupOpen: boolean;

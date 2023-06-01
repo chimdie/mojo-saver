@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { AuthinitialStateI } from "Interface";
+import { AuthinitialStateI } from "types";
 import {
   Api,
   deleteStorage,
@@ -27,7 +27,7 @@ export const signupNewUser = createAsyncThunk(
 
 export const login = createAsyncThunk(
   `${NAME_SPACE}/login`,
-  async (_data: (data: object) => void) => {
+  async (_data: (data: AuthinitialStateI) => void) => {
     const { data } = await Api.post("/users/login", _data);
     return data;
   }

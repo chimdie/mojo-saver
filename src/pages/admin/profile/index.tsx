@@ -80,7 +80,7 @@ export default function AdminProfile() {
           icon={<BsWallet />}
         />
         <DataCard
-          title="bank AccountNumber"
+          title="bank Account Number"
           // bg="#0085FF"
           data={data?.bankAccountNumber}
           icon={<BsWallet />}

@@ -23,7 +23,6 @@ export default function Profile() {
     userData() && userData()?.user?._id ? userData()?.user?._id : user?._id;
 
   const { data } = useSWR(`/users/${currentUserId}`);
-  console.log(data);
 
   return (
     <DashboardLayout>
@@ -74,7 +73,7 @@ export default function Profile() {
           icon={<BsWallet />}
         />
         <DataCard
-          title="bank AccountNumber"
+          title="bank Account Number"
           // bg="#0085FF"
           data={data?.bankAccountNumber}
           icon={<BsWallet />}
