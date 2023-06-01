@@ -33,7 +33,7 @@ export default function PayStackApp({
     email: emailAddress,
     amount: utilFn.nairaToKobo(+amount),
     text: "Pay with Paystack",
-    publicKey: import.meta.env.VITE_APP_PAYSTACK_PUBLIC_KEY,
+    publicKey: "pk_test_b4e015b240dc7ac84d2c67791209a6e60e1fc0c8",
     label: "string"
   };
 
@@ -47,7 +47,6 @@ export default function PayStackApp({
       "success",
       "Welcome to Mojo. Please Login to continue."
     );
-    console.log("success");
   };
 
   const initializePayment = usePaystackPayment(config);
