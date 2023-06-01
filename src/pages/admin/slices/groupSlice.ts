@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { GroupinitialStateI, JoinGroupI } from "Interface";
+import { GroupinitialStateI, JoinGroupI } from "types";
 import { Api, HTTP_STATUS, callToast, userData } from "utils";
 
 const accessToken = userData()?.accessToken;
