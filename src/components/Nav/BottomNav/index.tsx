@@ -26,6 +26,7 @@ const BottomNaviagtion = ({ currentUser }: any): JSX.Element => {
       {currentUser.map((link: any) => {
         return (
           <Link
+            end
             as={ReactLink}
             to={link.url}
             key={link.title}
