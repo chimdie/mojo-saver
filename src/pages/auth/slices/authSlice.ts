@@ -11,7 +11,7 @@ import {
 
 const NAME_SPACE = "auth";
 
-const initialState = {
+const initialState: AuthinitialStateI = {
   user: {},
   isAdmin: false,
   loadingStatus: HTTP_STATUS.IDLE
@@ -97,8 +97,9 @@ const authSlice = createSlice({
       });
 
     builder
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      .addCase(getLogedInUser.pending, (state, action) => {})
+      .addCase(getLogedInUser.pending, (state: AuthinitialStateI) => {
+        state.loadingStatus = HTTP_STATUS.LOADING;
+      })
       .addCase(getLogedInUser.fulfilled, (state, { payload }) => {
         if (payload.success) {
           state.user = payload;

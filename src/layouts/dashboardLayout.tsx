@@ -39,11 +39,6 @@ export default function DashboardLayout({
     }
   }, [user, location]);
 
-  if (!currentUser) {
-    navigate("/", { replace: true });
-    return <></>;
-  }
-
   function handleLogout() {
     dispatch(logout());
     window.location.href = `${window.location.protocol}//${window.location.host}/`;
@@ -51,7 +46,7 @@ export default function DashboardLayout({
   }
 
   return (
-    <Box bgColor="#f8f9fd">
+    <Box bgColor="#f8f9fd" height="100vh">
       <ProtectedRoute />
       <Box as="main" height="100%" width="100%">
         {variants?.navigation === "mobileNav" ? (
