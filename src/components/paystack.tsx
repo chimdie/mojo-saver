@@ -11,6 +11,8 @@ import {
 import { usePaystackPayment } from "react-paystack";
 import { utilFn, callToast } from "utils";
 
+const payStackPub = import.meta.env.VITE_REACT_APP_API_KEY;
+
 interface PaymentI {
   emailAddress: string;
   amount: string;
@@ -33,7 +35,7 @@ export default function PayStackApp({
     email: emailAddress,
     amount: utilFn.nairaToKobo(+amount),
     text: "Pay with Paystack",
-    publicKey: "pk_test_b4e015b240dc7ac84d2c67791209a6e60e1fc0c8",
+    publicKey: payStackPub,
     label: "string"
   };
 
